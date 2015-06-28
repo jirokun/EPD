@@ -1,0 +1,7 @@
+{
+  "name": "epd",
+  "private": true,
+  "dependencies": {
+    "handsontable": "~0.15.0-beta6"
+  }
+}

@@ -1,0 +1,41 @@
+$selectedColor: #337ab7;
+$selectedBackgroundColor: #d9edf7;
+
+.edit-mode {
+  position: relative;
+  .empty {
+    border: 1px solid #ccc;
+    height: 34px;
+    cursor: pointer;
+  }
+  .selected {
+    color: $selectedColor;
+    table > caption {
+      color: $selectedColor;
+    }
+    .empty {
+      border: solid 2px $selectedColor;
+      background-color: $selectedBackgroundColor;
+    }
+    hr {
+      border-color: $selectedColor;
+    }
+    input {
+      background-color: $selectedBackgroundColor;
+    }
+    select {
+      background-color: $selectedBackgroundColor;
+    }
+  }
+}
+.contextmenu {
+  position: absolute;
+}
+.contextmenu > ul {
+  display: block;
+}
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
