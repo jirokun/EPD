@@ -25,7 +25,8 @@ var Toolbox = React.createClass({
       interfaceText: '',
       options: [],
       columns: [],
-      buttons: []
+      leftButtons: [],
+      rightButtons: []
     };
   },
   componentDidMount: function() {
@@ -264,6 +265,7 @@ var Toolbox = React.createClass({
     var PageStore = this.getPageStore();
     try {
       PageStore.load(JSON.parse(this.state.interfaceText));
+      ToolboxStore.load(JSON.parse(this.state.interfaceText));
     } catch(e) {
     }
   },
@@ -341,9 +343,9 @@ var Toolbox = React.createClass({
     </div>
     <div className="tab-pane" id="buttons">
       <label>Left buttons</label>
-      <ButtonEditor onChange={this._onLeftButtonChange} columns={this.state.buttons}/>
+      <ButtonEditor onChange={this._onLeftButtonChange} buttons={this.state.leftButtons}/>
       <label>Right buttons</label>
-      <ButtonEditor onChange={this._onRightButtonChange} columns={this.state.buttons}/>
+      <ButtonEditor onChange={this._onRightButtonChange} buttons={this.state.rightButtons}/>
     </div>
   </div>
 </div>)

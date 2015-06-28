@@ -11,7 +11,7 @@ var ButtonEditor = React.createClass({
   },
   getInitialProps: function() {
     return {
-      columns: []
+      buttons: []
     };
   },
 
@@ -19,12 +19,15 @@ var ButtonEditor = React.createClass({
   componentWillReceiveProps: function(nextProp) { },
   componentWillUnmount: function() {},
   shouldComponentUpdate: function(nextProps, nextState) {
-    return JSON.stringify(nextProps.columns) !== JSON.stringify(this.props.columns);
+    return JSON.stringify(nextProps.buttons) !== JSON.stringify(this.props.buttons);
   },
   componentDidMount: function() {
+    this._renderHandsontable(this.props.buttons);
+  },
+  _renderHandsontable: function(buttons) {
     var _this = this;
     this._handsontable = new Handsontable(this.refs.handsontable.getDOMNode(), {
-      data: this._convertColumns(this.props.columns),
+      data: this._convertButtons(buttons),
       columns: [
         { type: 'text' },
         {
@@ -47,12 +50,14 @@ var ButtonEditor = React.createClass({
     this._handsontable.render();
   },
   componentWillUpdate: function(nextProp, nextState) {
+    this._handsontable.destroy();
+    this._renderHandsontable(nextProp.buttons);
   },
   componentWillUnmount: function() {
     this._handsontable.destroy();
   },
-  _convertColumns: function(columns) {
-    return columns.map(function(column) { return [column.label, column.sample]});
+  _convertButtons: function(buttons) {
+    return buttons.map(function(button) { return [button.label, button.type ]});
   },
   render: function() {
     return (
