@@ -8,7 +8,7 @@ var CHANGE_EVENT = 'change';
 var CELL_CHANGE_EVENT = 'cellSelect';
 
 var _pageTitle, _editMode = true, _showLabel = false, _dataid, _name, _label, _type, _size,
-  _rowSize, _options, _columns, _align, _color, _leftButtons, _rightButtons;
+  _rowSize, _options, _columns, _align, _color, _leftButtons = [], _rightButtons = [];
 
 function updateType(type) {
   _type = type;
@@ -39,6 +39,12 @@ var ToolboxStore = merge(EventEmitter.prototype, {
   getColumns: function() { return _columns; },
   getLeftButtons: function() { return _leftButtons; },
   getRightButtons: function() { return _rightButtons; },
+  load: function(json) {
+    _leftButtons = json.leftButtons;
+    _rightButtons = json.rightButtons;
+    _pageTitle = json.pageTitle;
+    this.emitChange();
+  },
   findComponentConstructor: function(type) {
     for (var i = 0, len = ToolboxConstants.COMPONENTS.length; i < len; i++) {
       var component = ToolboxConstants.COMPONENTS[i];
