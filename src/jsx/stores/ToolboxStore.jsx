@@ -2,12 +2,14 @@ var ToolboxDispatcher = require('../dispatchers/ToolboxDispatcher');
 var EventEmitter = require('events').EventEmitter;
 var ToolboxConstants = require('../ToolboxConstants');
 var PageConstants = require('../PageConstants');
+var beautify_html = require('js-beautify').html;
+var Util = require('../Util');
 var merge = require('react/lib/merge');
 
 var CHANGE_EVENT = 'change';
 var CELL_CHANGE_EVENT = 'cellSelect';
 
-var _pageTitle, _editMode = true, _showLabel = false, _dataid, _name, _label, _type, _size,
+var _pageTitle, _editMode = true, _showLabel = false, _dataid, _name, _label, _type, _size, _html,
   _rowSize, _options, _columns, _align, _color, _leftButtons = [], _rightButtons = [];
 
 function updateType(type) {
@@ -21,7 +23,16 @@ function updateType(type) {
   if (component.editors.forceShowLabel) _showLabel = false; // Buttonのために使用
   if (_size > component.maxSize) _size = component.maxSize;
   if (typeof(_label) === 'undefined') _label = component.defaultLabel;
+  updateHTML();
   ToolboxStore.emitChange();
+}
+function updateHTML() {
+  var previewIframe = document.getElementById('preview');
+  var d = previewIframe.contentWindow.document;
+  var el = d.querySelector('div[data-dataid="' + _dataid + '"]').cloneNode(true);
+  Util.removeSystemAttributes(el);
+  var html = beautify_html(el.innerHTML, { indent_size: 2 });
+  _html = html;
 }
 var ToolboxStore = merge(EventEmitter.prototype, {
   getPageTitle: function() { return _pageTitle; },
@@ -33,6 +44,7 @@ var ToolboxStore = merge(EventEmitter.prototype, {
   getType: function() { return _type; },
   getAlign: function() { return _align; },
   getSize: function() { return _size; },
+  getHtml: function() { return _html; },
   getColor: function() { return _color; },
   getRowSize: function() { return _rowSize; },
   getOptions: function() { return _options; },
@@ -101,6 +113,10 @@ ToolboxDispatcher.register(function(payload) {
       break;
     case ToolboxConstants.UPDATE_SIZE:
       _size = parseInt(payload.size, 10);
+      ToolboxStore.emitChange();
+      break;
+    case ToolboxConstants.UPDATE_HTML:
+      _html = payload.html;
       ToolboxStore.emitChange();
       break;
     case ToolboxConstants.UPDATE_COLOR:

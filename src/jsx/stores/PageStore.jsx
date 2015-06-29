@@ -3,6 +3,8 @@ var EventEmitter = require('events').EventEmitter;
 var PageConstants = require('../PageConstants');
 var ToolboxConstants = require('../ToolboxConstants');
 var merge = require('react/lib/merge');
+var beautify_html = require('js-beautify').html;
+var Util = require('../Util');
 
 var PAGE_STORE_CHANGE = 'PAGE_STORE_CHANGE';
 var ROWS_CHANGE= 'ROWS_CHANGE';
@@ -55,11 +57,6 @@ function deleteRow(y) {
   _rows = rows;
 }
 
-function updateCell(cell) {
-  var index = findIndex(cell.dataid);
-  _rows[index.y][index.x] = cell;
-}
-
 function paste(newCell) {
   if (!_copiedCell || !_selectedCell) return;
   var dataid = _selectedCell.dataid;
@@ -84,12 +81,14 @@ function replaceCell(newCell) {
           row.splice(j + 1, 0, createEmpty());
         }
       }
+      console.log(cell.dataid);
       cell.name = newCell.name;
       cell.showLabel = newCell.showLabel;
-      cell.label = newCell.label;
       cell.type = newCell.type;
+      cell.label = newCell.label;
       cell.align = newCell.align;
       cell.size = newCell.size;
+      cell.html = newCell.html;
       cell.color = newCell.color;
       cell.rowSize = newCell.rowSize;
       cell.options = newCell.options;
