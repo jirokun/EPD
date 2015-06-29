@@ -8,6 +8,7 @@ var ToolboxStore = require('../stores/ToolboxStore');
 var ToolboxDispatcher = require('../dispatchers/ToolboxDispatcher');
 var ToolboxConstants = require('../ToolboxConstants');
 var beautify_html = require('js-beautify').html;
+var Util = require('../Util');
 require('bootstrap');
 
 var Toolbox = React.createClass({
@@ -71,6 +72,7 @@ var Toolbox = React.createClass({
       type: ToolboxStore.getType(),
       align: ToolboxStore.getAlign(),
       size: ToolboxStore.getSize(),
+      html: ToolboxStore.getHtml(),
       color: ToolboxStore.getColor(),
       rowSize: ToolboxStore.getRowSize(),
       options: ToolboxStore.getOptions(),
@@ -118,6 +120,9 @@ var Toolbox = React.createClass({
   },
   _changeSize: function(e) {
     ToolboxAction.updateSize(e.target.value);
+  },
+  _changeHtml: function(e) {
+    ToolboxAction.updateHtml(e.target.value);
   },
   _changeColor: function(e) {
     ToolboxAction.updateColor(e.target.value);
@@ -245,6 +250,16 @@ var Toolbox = React.createClass({
     if (!component || !component.editors.option) return null;
     return <OptionEditor type={this.state.type} options={this.state.options}/>;
   },
+  _htmlEditor: function() {
+    var component = ToolboxStore.findComponentConstructor(this.state.type);
+    if (!component || !component.editors.html) return null;
+    return (
+      <div className="form-group">
+        <label htmlFor="size">HTML</label>
+        <textarea className="form-control" value={this.state.html} onChange={this._changeHtml}/>
+      </div>
+    );
+  },
   _rowSizeEditor: function() {
     var component = ToolboxStore.findComponentConstructor(this.state.type);
     if (!component || !component.editors.rowSize) return null;
@@ -281,17 +296,10 @@ var Toolbox = React.createClass({
     buttons.splice(buttons.length - 1, 1);
     ToolboxAction.updateRightButtons(buttons);
   },
-  _removeSystemAttributes: function(node) {
-    node.removeAttribute('data-dataid');
-    node.removeAttribute('data-reactid');
-    for (var i = 0, len = node.children.length; i < len; i++) {
-      this._removeSystemAttributes(node.children[i]);
-    }
-  },
   _onClickHTML: function(e) {
     var previewIframe = document.getElementById(this.props.preview);
     var el = previewIframe.contentWindow.document.getElementById('container').cloneNode(true);
-    this._removeSystemAttributes(el);
+    Util.removeSystemAttributes(el);
     var html = beautify_html(el.outerHTML, { indent_size: 2 });
     this.setState({interfaceText: html});
   },
@@ -338,6 +346,7 @@ var Toolbox = React.createClass({
         { this._colorEditor() }
         { this._rowSizeEditor() }
         { this._optionEditor() }
+        { this._htmlEditor() }
         { this._tableEditor() }
       </form>
     </div>

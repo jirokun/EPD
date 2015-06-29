@@ -6,6 +6,7 @@ var FormPassword = React.createClass({
     editors: {
       name: true,
       label: true,
+      showLabel: true,
       size: true,
       align: false,
       color: [ 'default', 'warning', 'error', 'success' ],

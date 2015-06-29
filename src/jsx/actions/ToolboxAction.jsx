@@ -50,6 +50,12 @@ var ToolboxAction = {
       size: size
     });
   },
+  updateHtml: function(html) {
+    ToolboxDispatcher.dispatch({
+      actionType: ToolboxConstants.UPDATE_HTML,
+      html: html 
+    });
+  },
   updateColor: function(color) {
     ToolboxDispatcher.dispatch({
       actionType: ToolboxConstants.UPDATE_COLOR,

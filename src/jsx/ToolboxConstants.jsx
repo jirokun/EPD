@@ -15,6 +15,7 @@ var Button = require('./components/items/button');
 var Alert = require('./components/items/alert');
 var Calendar = require('./components/items/calendar');
 var MasterSearchBox = require('./components/items/master_search_box');
+var Html = require('./components/items/html');
 
 module.exports = {
   CELL_CHANGE: 'CELL_CHANGE',
@@ -22,6 +23,7 @@ module.exports = {
   UPDATE_EDIT_MODE: 'UPDATE_EDIT_MODE',
   UPDATE_TYPE: 'UPDATE_TYPE',
   UPDATE_SIZE: 'UPDATE_SIZE',
+  UPDATE_HTML: 'UPDATE_HTML',
   UPDATE_SELECT_SIZE: 'UPDATE_SELECT_SIZE',
   UPDATE_OPTIONS: 'UPDATE_OPTIONS',
   UPDATE_COLUMNS: 'UPDATE_COLUMNS',
@@ -53,6 +55,7 @@ module.exports = {
     { alias: 'button', constructor: Button},
     { alias: 'label', constructor: Label},
     { alias: 'alert', constructor: Alert},
+    { alias: 'html', constructor: Html},
   ]
 
 };
