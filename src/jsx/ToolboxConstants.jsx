@@ -12,6 +12,7 @@ var Table = require('./components/items/table');
 var Hr = require('./components/items/hr');
 var Label = require('./components/items/label');
 var Button = require('./components/items/button');
+var Pagination = require('./components/items/pagination');
 var Alert = require('./components/items/alert');
 var Calendar = require('./components/items/calendar');
 var MasterSearchBox = require('./components/items/master_search_box');
@@ -53,6 +54,7 @@ module.exports = {
     { alias: 'master_saerch_box', constructor: MasterSearchBox},
     { alias: 'hr', constructor: Hr},
     { alias: 'button', constructor: Button},
+    { alias: 'pagination', constructor: Pagination},
     { alias: 'label', constructor: Label},
     { alias: 'alert', constructor: Alert},
     { alias: 'html', constructor: Html},
