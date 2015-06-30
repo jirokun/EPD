@@ -81,7 +81,6 @@ function replaceCell(newCell) {
           row.splice(j + 1, 0, createEmpty());
         }
       }
-      console.log(cell.dataid);
       cell.name = newCell.name;
       cell.showLabel = newCell.showLabel;
       cell.type = newCell.type;
