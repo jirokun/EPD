@@ -37,7 +37,7 @@ var FormRadioInline = React.createClass({
       );
     });
     return (
-<div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect}>
+<div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
   {this.label()}
   <div className={sizeClassName}>
     { options }
