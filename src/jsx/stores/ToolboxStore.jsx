@@ -159,6 +159,7 @@ ToolboxDispatcher.register(function(payload) {
             _type = cell.type;
             _align = cell.align;
             _size = cell.size;
+            _html = cell.html;
             _color = cell.color;
             _rowSize = cell.rowSize;
             _options = cell.options;
