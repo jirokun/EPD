@@ -1,7 +1,7 @@
 var React = require('react');
 var ToolboxAction = require('../actions/ToolboxAction');
 var ToolboxDispatcher = require('../dispatchers/ToolboxDispatcher');
-var PageStore = require('../stores/PageStore');
+var ToolboxStore = require('../stores/ToolboxStore');
 
 var TabEditor = React.createClass({
   propTypes: {},
@@ -24,7 +24,7 @@ var TabEditor = React.createClass({
     if (!tabs[tabIndex]) {
       tabs[tabIndex] = {
         label: e.target.value,
-        rows: PageStore.createEmptyCells()
+        rows: [ToolboxStore.getPageStore().createEmptyCells()]
       };
     } else {
       tabs[tabIndex].label = e.target.value;
@@ -58,7 +58,6 @@ var TabEditor = React.createClass({
         </div>
       );
     }
-    console.log(rows);
     return rows;
   },
   _addTab: function() {
@@ -66,7 +65,7 @@ var TabEditor = React.createClass({
     tabs.push({
       label: 'Default Label',
       active: tabs.length === 0,
-      rows: PageStore.createEmptyCells()
+      rows: [ToolboxStore.getPageStore().createEmptyCells()]
     });
     ToolboxAction.updateTabs(tabs);
   },

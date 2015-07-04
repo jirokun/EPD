@@ -1,5 +1,4 @@
 var React = require('react');
-var ToolboxStore = require('../stores/ToolboxStore');
 
 var Grid = React.createClass({
   render: function() {
@@ -22,3 +21,5 @@ var Grid = React.createClass({
 });
 
 module.exports = Grid;
+
+var ToolboxStore = require('../stores/ToolboxStore');

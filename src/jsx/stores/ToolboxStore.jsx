@@ -1,14 +1,13 @@
+var ToolboxConstants = require('../ToolboxConstants');
 var ToolboxDispatcher = require('../dispatchers/ToolboxDispatcher');
 var EventEmitter = require('events').EventEmitter;
 var PageConstants = require('../PageConstants');
 var beautify_html = require('js-beautify').html;
 var Util = require('../Util');
 var merge = require('react/lib/merge');
-var ToolboxConstants = require('../ToolboxConstants');
 
 var CHANGE_EVENT = 'change';
 var CELL_CHANGE_EVENT = 'cellSelect';
-console.log(ToolboxConstants);
 
 var _pageTitle, _editMode = true, _showLabel = false, _dataid, _name, _label, _type, _size, _html,
   _rowSize, _options, _columns, _tabs, _align, _color, _leftButtons = [], _rightButtons = [];
@@ -53,6 +52,11 @@ var ToolboxStore = merge(EventEmitter.prototype, {
   getTabs: function() { return _tabs; },
   getLeftButtons: function() { return _leftButtons; },
   getRightButtons: function() { return _rightButtons; },
+  getPageStore: function() {
+      var previewIframe = document.getElementById('preview');
+      var w = previewIframe.contentWindow;
+      return w.PageStore;
+  },
   load: function(json) {
     _leftButtons = json.leftButtons;
     _rightButtons = json.rightButtons;

@@ -31,6 +31,23 @@ function createEmpty() {
   };
 }
 
+function findTargetRows(rows, dataid) {
+  for (var i = 0, len = rows.length; i < len; i++) {
+    var row = rows[i];
+    for (var j = 0, jlen = row.length; j < jlen; j++) {
+      var cell = row[j];
+      if (cell.dataid === dataid) return rows;
+      if (cell.tabs) {
+        for (var k = 0, klen = cell.tabs.length; k < klen; k++) {
+          var tab = cell.tabs[k];
+          var ret = findTargetRows(tab.rows, dataid);
+          if (ret !== null) return ret;
+        }
+      }
+    }
+  }
+  return null;
+}
 /**
  * find cell index (y, x) which has dataid
  */
@@ -42,7 +59,7 @@ function findIndex(dataid) {
       if (cell.dataid === dataid) return {y: i, x: j};
     }
   }
-  return null;
+  throw 'unknwon dataid: ' + dataid;
 }
 function deleteRow(dataid) {
   var y = findIndex(dataid).y;
@@ -70,7 +87,7 @@ function paste(newCell) {
   PageStore.emitChange();
 }
 function replaceCell(newCell) {
-  var rows = _rows;
+  var rows = findTargetRows(_rows, newCell.dataid);
   for (var i = 0, len = rows.length; i < len; i++) {
     var row = rows[i];
     for (var j = 0; j < row.length; j++) {
@@ -166,10 +183,15 @@ var PageStore = merge(EventEmitter.prototype, {
     _sequence = json.sequence;
     this.emitChange();
   },
+  
+  // if rows isn't specified, check _rows variables
   calcFreeSpace: function(dataid) {
+    if (!dataid) return -1;
+    var rows = findTargetRows(_rows, dataid);
+    console.log(rows);
     var componentSize;
-    for (var i = 0, len = _rows.length; i < len; i++) {
-      var row = _rows[i];
+    for (var i = 0, len = rows.length; i < len; i++) {
+      var row = rows[i];
       var freeSpace = -1;
       for (var j = 0, jlen = row.length; j < jlen; j++) {
         var cell = row[j];

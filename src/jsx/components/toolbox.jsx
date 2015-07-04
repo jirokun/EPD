@@ -33,7 +33,7 @@ var Toolbox = React.createClass({
     };
   },
   componentDidMount: function() {
-    var PageStore = this.getPageStore();
+    var PageStore = ToolboxStore.getPageStore();
     ToolboxStore.addChangeListener(this._onToolboxStoreChange);
     ToolboxStore.addCellChangeListener(this._onCellChange);
     ToolboxAction.initializeToolbox();
@@ -44,11 +44,6 @@ var Toolbox = React.createClass({
   },
   componentWillUnmount: function() {
     Toolbox.removeChangeListener(this._onToolboxStoreChange);
-  },
-  getPageStore: function() {
-    var previewIframe = document.getElementById(this.props.preview);
-    var w = previewIframe.contentWindow;
-    return w.PageStore;
   },
   getPageAction: function() {
     var previewIframe = document.getElementById(this.props.preview);
@@ -94,7 +89,7 @@ var Toolbox = React.createClass({
   },
   _calcAvailableTypes: function() {
     var options = [];
-    var PageStore = this.getPageStore();
+    var PageStore = ToolboxStore.getPageStore();
     var freeSpace = PageStore.calcFreeSpace(this.state.dataid);
     for (var i = 0, len = ToolboxConstants.COMPONENTS.length; i < len; i++) {
       var component = ToolboxConstants.COMPONENTS[i];
@@ -235,7 +230,7 @@ var Toolbox = React.createClass({
     var component = ToolboxStore.findComponentConstructor(this.state.type);
     if (!component || !component.editors.size) return null;
     if (component) {
-      var PageStore = this.getPageStore();
+      var PageStore = ToolboxStore.getPageStore();
       var freeSpace = PageStore.calcFreeSpace(this.state.dataid);
       for (var i = component.minSize; i <= freeSpace; i++) {
         options.push(<option>{i}</option>);
@@ -280,12 +275,12 @@ var Toolbox = React.createClass({
     this.setState({interfaceText: e.target.value});
   },
   _onClickExport: function(e) {
-    var PageStore = this.getPageStore();
+    var PageStore = ToolboxStore.getPageStore();
     var json = PageStore.toJSON();
     this.setState({interfaceText: JSON.stringify(json, null, '  ')});
   },
   _onClickImport: function(e) {
-    var PageStore = this.getPageStore();
+    var PageStore = ToolboxStore.getPageStore();
     try {
       PageStore.load(JSON.parse(this.state.interfaceText));
       ToolboxStore.load(JSON.parse(this.state.interfaceText));
