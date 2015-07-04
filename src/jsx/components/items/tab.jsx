@@ -18,18 +18,26 @@ var Tab = React.createClass({
     maxSize: 12
   },
   mixins: [Component],
+  _tabChange: function(e) {
+    var href = e.target.href;
+    var index = href.indexOf('#');
+    var id = href.substr(index + 1);
+  },
   _labels: function() {
-    return this.props.cell.tabs.map(function(tab) {
-      return <li className={tab.active ? 'active' : ''}><a href="#home" data-toggle="tab">{tab.label}</a></li>;
+    var _this = this;
+    return this.props.cell.tabs.map(function(tab, i) {
+      var tabName = '#tab-' + i;
+      return <li className={tab.active ? 'active' : ''}><a href={tabName} data-toggle="tab" onClick={_this._tabChange}>{tab.label}</a></li>;
     });
   },
   _tabContents: function() {
     var selectedDataid = PageStore.getSelectedCell().dataid;
-    return this.props.cell.tabs.map(function(tab) {
+    return this.props.cell.tabs.map(function(tab, i) {
       var className = 'tab-pane';
       if (tab.active) className += ' active';
+      var tabName = 'tab-' + i;
       return (
-        <div className={className}>
+        <div id={tabName} className={className}>
           <Grid rows={tab.rows} selectedDataid={selectedDataid}/>
         </div>
       );

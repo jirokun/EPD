@@ -13,9 +13,6 @@ var PAGE_STATE_CHANGE = 'PAGE_STATE_CHANGE';
 var _pageTitle, _editMode = true, _selectedCell = {}, _selectedElement, _rows = [], _sequence = 0,
   _copiedCell, _leftButtons, _rightButtons;
 
-function _nextSequence() {
-  return ++_sequence;
-}
 function createEmpty() {
   return {
     type: 'empty',
@@ -24,7 +21,7 @@ function createEmpty() {
     size: 1,
     color: 'default',
     options: [],
-    dataid: _nextSequence(),
+    dataid: ++_sequence,
     rowSize: 3,
     columns: [],
     tabs: []
@@ -129,29 +126,14 @@ function createEmptyCells() {
  * ex. insertRow(0) insert row first.
  */
 function insertRow(dataid, below) {
-  var rows = [];
   if (_rows.length === 0) {
-    rows.push(createEmptyCells());
-    _rows = rows;
+    _rows.push(createEmptyCells());
     return;
   }
+  var rows = findTargetRows(_rows, dataid);
   var y = findIndex(dataid).y;
   if (below) y += 1;
-  if (_rows.length === y) {
-    for (var i = 0, len = _rows.length; i < len; i++) {
-      rows.push(_rows[i]);
-    }
-    rows.push(createEmptyCells());
-    _rows = rows;
-    return;
-  }
-  for (var i = 0, len = _rows.length; i < len; i++) {
-    if (i === y) {
-      rows.push(createEmptyCells());
-    }
-    rows.push(_rows[i]);
-  }
-  _rows = rows;
+  rows.splice(y, 0, createEmptyCells());
 }
 
 var PageStore = merge(EventEmitter.prototype, {
@@ -188,7 +170,6 @@ var PageStore = merge(EventEmitter.prototype, {
   calcFreeSpace: function(dataid) {
     if (!dataid) return -1;
     var rows = findTargetRows(_rows, dataid);
-    console.log(rows);
     var componentSize;
     for (var i = 0, len = rows.length; i < len; i++) {
       var row = rows[i];

@@ -53,12 +53,22 @@ var TabEditor = React.createClass({
           </span>
           <input type="text" className="form-control" value={label} data-index={i} onChange={this._labelChange}/>
           <span className="input-group-btn">
-            <button type="button" className="btn btn-danger"><span className="glyphicon glyphicon-remove"></span></button>
+            <button type="button" className="btn btn-danger" data-index={i} onClick={this._removeTab}><span className="glyphicon glyphicon-remove"></span></button>
           </span>
         </div>
       );
     }
     return rows;
+  },
+  _removeTab: function(e) {
+    var tabIndex = e.target.getAttribute('data-index');
+    var tabs = this.props.tabs;
+    tabs.splice(tabIndex, 1);
+    if (tabs.length === 0) this._addTab();
+    if (tabs.filter(function(tab) { return tab.active; }).length === 0) {
+      tabs[0].active = true;
+    }
+    ToolboxAction.updateTabs(tabs);
   },
   _addTab: function() {
     var tabs = this.props.tabs;
