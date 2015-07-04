@@ -26,7 +26,8 @@ function createEmpty() {
     options: [],
     dataid: _nextSequence(),
     rowSize: 3,
-    columns: []
+    columns: [],
+    tabs: []
   };
 }
 
@@ -93,6 +94,7 @@ function replaceCell(newCell) {
       cell.rowSize = newCell.rowSize;
       cell.options = newCell.options;
       cell.columns = newCell.columns;
+      cell.tabs = newCell.tabs;
       break;
     }
   }
@@ -146,6 +148,7 @@ var PageStore = merge(EventEmitter.prototype, {
   getSelectedCellRowIndex: function() {
     return this.getRowIndex(_selectedCell.dataid);
   },
+  createEmptyCells: createEmptyCells,
   toJSON: function() {
     return {
       rows: _rows,

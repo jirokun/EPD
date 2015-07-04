@@ -2,6 +2,7 @@ var React = require('react');
 var OptionEditor = require('./option_editor');
 var RowSizeEditor = require('./row_size_editor');
 var TableEditor = require('./table_editor');
+var TabEditor = require('./tab_editor');
 var ButtonEditor = require('./button_editor');
 var ToolboxAction = require('../actions/ToolboxAction');
 var ToolboxStore = require('../stores/ToolboxStore');
@@ -26,6 +27,7 @@ var Toolbox = React.createClass({
       interfaceText: '',
       options: [],
       columns: [],
+      tabs: [],
       leftButtons: [],
       rightButtons: []
     };
@@ -77,6 +79,7 @@ var Toolbox = React.createClass({
       rowSize: ToolboxStore.getRowSize(),
       options: ToolboxStore.getOptions(),
       columns: ToolboxStore.getColumns(),
+      tabs: ToolboxStore.getTabs(),
       leftButtons: ToolboxStore.getLeftButtons(),
       rightButtons: ToolboxStore.getRightButtons()
     };
@@ -260,6 +263,11 @@ var Toolbox = React.createClass({
       </div>
     );
   },
+  _tabEditor: function() {
+    var component = ToolboxStore.findComponentConstructor(this.state.type);
+    if (!component || !component.editors.tab) return null;
+    return <TabEditor type={this.state.type} tabs={this.state.tabs}/>;
+  },
   _rowSizeEditor: function() {
     var component = ToolboxStore.findComponentConstructor(this.state.type);
     if (!component || !component.editors.rowSize) return null;
@@ -347,6 +355,7 @@ var Toolbox = React.createClass({
         { this._rowSizeEditor() }
         { this._optionEditor() }
         { this._htmlEditor() }
+        { this._tabEditor() }
         { this._tableEditor() }
       </form>
     </div>

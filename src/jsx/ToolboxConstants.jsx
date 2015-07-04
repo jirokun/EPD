@@ -17,6 +17,7 @@ var Alert = require('./components/items/alert');
 var Calendar = require('./components/items/calendar');
 var MasterSearchBox = require('./components/items/master_search_box');
 var Html = require('./components/items/html');
+var Tab = require('./components/items/tab');
 
 module.exports = {
   CELL_CHANGE: 'CELL_CHANGE',
@@ -28,6 +29,7 @@ module.exports = {
   UPDATE_SELECT_SIZE: 'UPDATE_SELECT_SIZE',
   UPDATE_OPTIONS: 'UPDATE_OPTIONS',
   UPDATE_COLUMNS: 'UPDATE_COLUMNS',
+  UPDATE_TABS: 'UPDATE_TABS',
   UPDATE_LEFT_BUTTONS: 'UPDATE_LEFT_BUTTONS',
   UPDATE_RIGHT_BUTTONS: 'UPDATE_RIGHT_BUTTONS',
   UPDATE_NAME: 'UPDATE_NAME',
@@ -58,6 +60,6 @@ module.exports = {
     { alias: 'label', constructor: Label},
     { alias: 'alert', constructor: Alert},
     { alias: 'html', constructor: Html},
+    { alias: 'tab', constructor: Tab}
   ]
-
 };

@@ -74,6 +74,12 @@ var ToolboxAction = {
       columns: columns 
     });
   },
+  updateTabs: function(tabs) {
+    ToolboxDispatcher.dispatch({
+      actionType: ToolboxConstants.UPDATE_TABS,
+      tabs: tabs 
+    });
+  },
   updateLeftButtons: function(buttons) {
     ToolboxDispatcher.dispatch({
       actionType: ToolboxConstants.UPDATE_LEFT_BUTTONS,

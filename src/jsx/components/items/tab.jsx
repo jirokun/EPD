@@ -1,38 +1,51 @@
 var React = require('react');
 var Component = require('./component');
+//var Grid = require('../grid');
 
-var FormText = React.createClass({
+var Tab = React.createClass({
   statics: {
     editors: {
       name: true,
       label: false,
       size: true,
       align: false,
-      color: false
+      color: false,
       option: false,
       rowSize: false,
+      tab: true,
       table: false
     },
     minSize: 4,
     maxSize: 12
   },
   mixins: [Component],
+  _labels: function() {
+    return this.props.cell.tabs.map(function(tab) {
+      return <li className={tab.active ? 'active' : ''}><a href="#home" data-toggle="tab">{tab.label}</a></li>;
+    });
+  },
+  _tabContents: function() {
+    var selectedDataid = PageStore.getSelectedCell().dataid;
+    return this.props.cell.tabs.map(function(tab) {
+      var className = 'tab-pane';
+      if (tab.active) className += ' active';
+      return (
+        <div className={className}>
+          <Grid rows={tab.rows} selectedDataid={selectedDataid}/>
+        </div>
+      );
+    });
+  },
   render: function() {
-    var color = this.props.cell.color;
-    if (color == 'danger') color = 'error';
-    var componentClassName = "epd-component" + (this.props.selected ? " selected" : "") + ' has-' + color;
-    var sizeClassName = "col-md-" + this.props.size;
+    var sizeClassName = "col-md-" + this.props.cell.size;
     return (
-      <div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
+      <div key={this.props.cell.dataid} className="epd-component" onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
         <div className={sizeClassName}>
-        <div>
-          <ul className="nav nav-tabs">
-            <li className="active"><a href="#home" data-toggle="tab">Home</a></li>
+          <ul className="nav nav-tabs" role="tablist">
+            {this._labels()}
           </ul>
           <div className="tab-content">
-            <div role="tabpanel" className="tab-pane active" id="home">
-              <Grid rows={rows}/>
-            </div>
+            {this._tabContents()}
           </div>
         </div>
       </div>
@@ -40,4 +53,4 @@ var FormText = React.createClass({
   }
 });
 
-module.exports = FormText;
+module.exports = Tab;
