@@ -33,16 +33,17 @@ var PageAction = {
       element: element
     });
   },
-  insertRow: function(y) {
+  insertRow: function(dataid, below) {
     PageDispatcher.dispatch({
       actionType: PageConstants.INSERT_ROW,
-      y: y
+      dataid: dataid,
+      below: below
     });
   },
-  deleteRow: function(y) {
+  deleteRow: function(dataid) {
     PageDispatcher.dispatch({
       actionType: PageConstants.DELETE_ROW,
-      y: y
+      dataid: dataid
     });
   },
   updateCell: function(cell) {

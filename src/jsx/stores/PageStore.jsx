@@ -43,7 +43,8 @@ function findIndex(dataid) {
   }
   return null;
 }
-function deleteRow(y) {
+function deleteRow(dataid) {
+  var y = findIndex(dataid).y;
   var rows = [];
   for (var i = 0, len = _rows.length; i < len; i++) {
     if (y === i) continue;
@@ -98,34 +99,36 @@ function replaceCell(newCell) {
 }
 
 
+function createEmptyCells() {
+  var row = [];
+  for (var j = 0; j < 12; j++) row.push(createEmpty());
+  return row;
+}
+
 /**
  * insert row.
  * ex. insertRow(0) insert row first.
  */
-function insertRow(y) {
+function insertRow(dataid, below) {
   var rows = [];
   if (_rows.length === 0) {
-    var row = [];
-    for (var j = 0; j < 12; j++) row.push(createEmpty());
-    rows.push(row);
+    rows.push(createEmptyCells());
     _rows = rows;
     return;
   }
+  var y = findIndex(dataid).y;
+  if (below) y += 1;
   if (_rows.length === y) {
     for (var i = 0, len = _rows.length; i < len; i++) {
       rows.push(_rows[i]);
     }
-    var row = [];
-    for (var j = 0; j < 12; j++)  row.push(createEmpty());
-    rows.push(row);
+    rows.push(createEmptyCells());
     _rows = rows;
     return;
   }
   for (var i = 0, len = _rows.length; i < len; i++) {
     if (i === y) {
-      var row = [];
-      for (var j = 0; j < 12; j++)  row.push(createEmpty());
-      rows.push(row);
+      rows.push(createEmptyCells());
     }
     rows.push(_rows[i]);
   }
@@ -138,7 +141,6 @@ var PageStore = merge(EventEmitter.prototype, {
   getSelectedCell: function() { return _selectedCell; },  
   getSelectedElement: function() { return _selectedElement; },
   getRows: function() { return _rows; },
-  getRowIndex: function(dataid) { return findIndex(dataid).y; },
   getLeftButtons: function() { return _leftButtons; },
   getRightButtons: function() { return _rightButtons; },
   getSelectedCellRowIndex: function() {
@@ -217,11 +219,11 @@ PageDispatcher.register(function(payload) {
       PageStore.emitChange();
       break;
     case PageConstants.INSERT_ROW:
-      insertRow(payload.y);
+      insertRow(payload.dataid, payload.below);
       PageStore.emitChange();
       break;
     case PageConstants.DELETE_ROW:
-      deleteRow(payload.y);
+      deleteRow(payload.dataid);
       PageStore.emitChange();
       break;
     case PageConstants.UPDATE_CELL:
