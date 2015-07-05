@@ -66,6 +66,8 @@ var Toolbox = React.createClass({
       name: ToolboxStore.getName(),
       showLabel: ToolboxStore.isShowLabel(),
       label: ToolboxStore.getLabel(),
+      preText: ToolboxStore.getPreText(),
+      postText: ToolboxStore.getPostText(),
       type: ToolboxStore.getType(),
       align: ToolboxStore.getAlign(),
       size: ToolboxStore.getSize(),
@@ -109,6 +111,12 @@ var Toolbox = React.createClass({
   },
   _changeLabel: function(e) {
     ToolboxAction.updateLabel(e.target.value);
+  },
+  _changePreText: function(e) {
+    ToolboxAction.updatePreText(e.target.value);
+  },
+  _changePostText: function(e) {
+    ToolboxAction.updatePostText(e.target.value);
   },
   _changeType: function(e) {
     ToolboxAction.updateType(e.target.value);
@@ -180,6 +188,27 @@ var Toolbox = React.createClass({
       </div>
     );
   },
+  _preTextEditor: function() {
+    var component = ToolboxStore.findComponentConstructor(this.state.type);
+    if (!component || !component.editors.preText) return null;
+    return (
+      <div className="form-group">
+        <label htmlFor="label">PreText</label>
+        <input type="text" className="form-control" value={this.state.preText} onChange={this._changePreText}/>
+      </div>
+    );
+  },
+  _postTextEditor: function() {
+    var component = ToolboxStore.findComponentConstructor(this.state.type);
+    if (!component || !component.editors.postText) return null;
+    return (
+      <div className="form-group">
+        <label htmlFor="label">PostText</label>
+        <input type="text" className="form-control" value={this.state.postText} onChange={this._changePostText}/>
+      </div>
+    );
+  },
+
   _alignEditor: function() {
     var component = ToolboxStore.findComponentConstructor(this.state.type);
     if (!component || !component.editors.align) return null;
@@ -344,6 +373,8 @@ var Toolbox = React.createClass({
         { this._nameEditor() }
         { this._showLabelEditor() }
         { this._labelEditor() }
+        { this._preTextEditor() }
+        { this._postTextEditor() }
         { this._sizeEditor() }
         { this._alignEditor() }
         { this._colorEditor() }

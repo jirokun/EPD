@@ -9,8 +9,9 @@ var merge = require('react/lib/merge');
 var CHANGE_EVENT = 'change';
 var CELL_CHANGE_EVENT = 'cellSelect';
 
-var _pageTitle, _editMode = true, _showLabel = false, _dataid, _name, _label, _type, _size, _html,
-  _rowSize, _options, _columns, _tabs, _align, _color, _leftButtons = [], _rightButtons = [];
+var _pageTitle, _editMode = true, _showLabel = false, _dataid, _name, _label, _preText, _postText,
+    _type, _size, _html, _rowSize, _options, _columns, _tabs, _align, _color, _leftButtons = [],
+    _rightButtons = [];
 
 function updateType(type) {
   _type = type;
@@ -41,6 +42,8 @@ var ToolboxStore = merge(EventEmitter.prototype, {
   getDataid: function() { return _dataid; },
   getName: function() { return _name; },
   getLabel: function() { return _label; },
+  getPreText: function() { return _preText; },
+  getPostText: function() { return _postText; },
   getType: function() { return _type; },
   getAlign: function() { return _align; },
   getSize: function() { return _size; },
@@ -111,6 +114,14 @@ ToolboxDispatcher.register(function(payload) {
       break;
     case ToolboxConstants.UPDATE_LABEL:
       _label = payload.label;
+      ToolboxStore.emitChange();
+      break;
+    case ToolboxConstants.UPDATE_PRE_TEXT:
+      _preText = payload.preText;
+      ToolboxStore.emitChange();
+      break;
+    case ToolboxConstants.UPDATE_POST_TEXT:
+      _postText = payload.postText;
       ToolboxStore.emitChange();
       break;
     case ToolboxConstants.UPDATE_ALIGN:
