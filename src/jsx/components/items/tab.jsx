@@ -21,16 +21,17 @@ var Tab = React.createClass({
   _labels: function() {
     var _this = this;
     return this.props.cell.tabs.map(function(tab, i) {
-      var tabName = '#tab-' + i;
+      var tabName = '#tab-' + _this.props.cell.dataid + '-' + i;
       return <li className={tab.active ? 'active' : ''}><a href={tabName} data-toggle="tab">{tab.label}</a></li>;
     });
   },
   _tabContents: function() {
+    var _this = this;
     var selectedDataid = PageStore.getSelectedCell().dataid;
     return this.props.cell.tabs.map(function(tab, i) {
       var className = 'tab-pane';
       if (tab.active) className += ' active';
-      var tabName = 'tab-' + i;
+      var tabName = 'tab-' + _this.props.cell.dataid + '-' + i;
       return (
         <div id={tabName} className={className}>
           <Grid rows={tab.rows} selectedDataid={selectedDataid}/>

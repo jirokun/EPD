@@ -114,15 +114,44 @@ function replaceCell(newCell) {
       cell.rowSize = newCell.rowSize;
       cell.options = newCell.options;
       cell.columns = newCell.columns;
-      cell.tabs = newCell.tabs;
-      if (cell.type === 'panel' && !cell.rows) {
-        cell.rows = [createEmptyCells()];
+      if (cell.type === 'tab') {
+        cell.tabs = replaceDataid(newCell.tabs);
+      }
+      if (cell.type === 'panel') {
+        if (!newCell.rows) {
+          cell.rows = [createEmptyCells()];
+        } else {
+          cell.rows = replaceDataid(newCell.rows);
+        }
       }
       break;
     }
   }
 }
+function is(type, obj) {
+  var clas = Object.prototype.toString.call(obj).slice(8, -1);
+  return obj !== undefined && obj !== null && clas === type;
+}
 
+function replaceDataid(obj, needLessClone) {
+  if (!needLessClone) {
+    obj = JSON.parse(JSON.stringify(obj));
+  }
+  if (Array.isArray(obj)) {
+    obj.forEach(function(e) { replaceDataid(e, true);});
+  } else {
+    for (var prop in obj) {
+      if (!obj.hasOwnProperty(prop)) continue;
+      if (prop === 'dataid') {
+        obj.dataid = ++_sequence;
+      }
+      if (is('Object', obj)) {
+        replaceDataid(obj[prop], true);
+      }
+    }
+  }
+  return obj;
+}
 
 function createEmptyCells() {
   var row = [];
@@ -140,7 +169,6 @@ function insertRow(dataid, below) {
     return;
   }
   var rows = findTargetRows(_rows, dataid);
-  console.log(rows, dataid);
   var y = findIndex(dataid).y;
   if (below) y += 1;
   rows.splice(y, 0, createEmptyCells());
