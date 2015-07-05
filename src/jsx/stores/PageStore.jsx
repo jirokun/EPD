@@ -54,8 +54,9 @@ function findTargetRows(rows, dataid) {
  * find cell index (y, x) which has dataid
  */
 function findIndex(dataid) {
-  for (var i = 0, len = _rows.length; i < len; i++) {
-    var row = _rows[i];
+  var rows = findTargetRows(_rows, dataid);
+  for (var i = 0, len = rows.length; i < len; i++) {
+    var row = rows[i];
     for (var j = 0, jlen = row.length; j < jlen; j++) {
       var cell = row[j];
       if (cell.dataid === dataid) return {y: i, x: j};
@@ -139,6 +140,7 @@ function insertRow(dataid, below) {
     return;
   }
   var rows = findTargetRows(_rows, dataid);
+  console.log(rows, dataid);
   var y = findIndex(dataid).y;
   if (below) y += 1;
   rows.splice(y, 0, createEmptyCells());
