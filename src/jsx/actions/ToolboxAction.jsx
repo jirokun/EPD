@@ -38,6 +38,18 @@ var ToolboxAction = {
       label: label
     });
   },
+  updatePreText: function(preText) {
+    ToolboxDispatcher.dispatch({
+      actionType: ToolboxConstants.UPDATE_PRE_TEXT,
+      preText: preText
+    });
+  },
+  updatePostText: function(postText) {
+    ToolboxDispatcher.dispatch({
+      actionType: ToolboxConstants.UPDATE_POST_TEXT,
+      postText: postText
+    });
+  },
   updateAlign: function(align) {
     ToolboxDispatcher.dispatch({
       actionType: ToolboxConstants.UPDATE_ALIGN,

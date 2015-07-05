@@ -33,7 +33,6 @@ var Toolbox = React.createClass({
     };
   },
   componentDidMount: function() {
-    var PageStore = ToolboxStore.getPageStore();
     ToolboxStore.addChangeListener(this._onToolboxStoreChange);
     ToolboxStore.addCellChangeListener(this._onCellChange);
     ToolboxAction.initializeToolbox();
@@ -66,6 +65,8 @@ var Toolbox = React.createClass({
       name: ToolboxStore.getName(),
       showLabel: ToolboxStore.isShowLabel(),
       label: ToolboxStore.getLabel(),
+      preText: ToolboxStore.getPreText(),
+      postText: ToolboxStore.getPostText(),
       type: ToolboxStore.getType(),
       align: ToolboxStore.getAlign(),
       size: ToolboxStore.getSize(),
@@ -79,7 +80,7 @@ var Toolbox = React.createClass({
       rightButtons: ToolboxStore.getRightButtons()
     };
     this.setState(newState);
-    if (this.getPageDispatcher().isDispatching()) return;
+    if (this.getPageDispatcher().isDispatching() || !newState.dataid) return;
     var PageAction = this.getPageAction();
     PageAction.updateCell(newState);
     PageAction.updateEditMode(newState.editMode);
@@ -110,6 +111,12 @@ var Toolbox = React.createClass({
   _changeLabel: function(e) {
     ToolboxAction.updateLabel(e.target.value);
   },
+  _changePreText: function(e) {
+    ToolboxAction.updatePreText(e.target.value);
+  },
+  _changePostText: function(e) {
+    ToolboxAction.updatePostText(e.target.value);
+  },
   _changeType: function(e) {
     ToolboxAction.updateType(e.target.value);
   },
@@ -124,9 +131,6 @@ var Toolbox = React.createClass({
   },
   _changeColor: function(e) {
     ToolboxAction.updateColor(e.target.value);
-  },
-  _changeSelectDataid: function(dataid) {
-    this.setState({dataid: dataid});
   },
   _onSubmit: function(e) {
     e.preventDefault();
@@ -180,6 +184,27 @@ var Toolbox = React.createClass({
       </div>
     );
   },
+  _preTextEditor: function() {
+    var component = ToolboxStore.findComponentConstructor(this.state.type);
+    if (!component || !component.editors.preText) return null;
+    return (
+      <div className="form-group">
+        <label htmlFor="label">PreText</label>
+        <input type="text" className="form-control" value={this.state.preText} onChange={this._changePreText}/>
+      </div>
+    );
+  },
+  _postTextEditor: function() {
+    var component = ToolboxStore.findComponentConstructor(this.state.type);
+    if (!component || !component.editors.postText) return null;
+    return (
+      <div className="form-group">
+        <label htmlFor="label">PostText</label>
+        <input type="text" className="form-control" value={this.state.postText} onChange={this._changePostText}/>
+      </div>
+    );
+  },
+
   _alignEditor: function() {
     var component = ToolboxStore.findComponentConstructor(this.state.type);
     if (!component || !component.editors.align) return null;
@@ -282,9 +307,11 @@ var Toolbox = React.createClass({
   _onClickImport: function(e) {
     var PageStore = ToolboxStore.getPageStore();
     try {
-      PageStore.load(JSON.parse(this.state.interfaceText));
-      ToolboxStore.load(JSON.parse(this.state.interfaceText));
+      var json = JSON.parse(this.state.interfaceText);
+      PageStore.load(json);
+      ToolboxStore.load(json);
     } catch(e) {
+      console.error(e);
     }
   },
   _onLeftButtonChange: function(hot) {
@@ -344,6 +371,8 @@ var Toolbox = React.createClass({
         { this._nameEditor() }
         { this._showLabelEditor() }
         { this._labelEditor() }
+        { this._preTextEditor() }
+        { this._postTextEditor() }
         { this._sizeEditor() }
         { this._alignEditor() }
         { this._colorEditor() }
