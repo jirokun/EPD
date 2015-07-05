@@ -14,6 +14,7 @@ var ContextMenu = React.createClass({
     var _this = this;
     $(document.body).on('contextmenu', '.epd-component', function(e) {
       e.preventDefault();
+      e.stopPropagation();
       var dataid = $(this).data('dataid');
       _this.setState({
         dataid: dataid,
@@ -46,18 +47,15 @@ var ContextMenu = React.createClass({
   },
   _onClickInsertRowAbove: function(e) {
     this.setState({show: false});
-    var y = PageStore.getRowIndex(this.state.dataid);
-    PageAction.insertRow(y);
+    PageAction.insertRow(this.state.dataid, false);
   },
   _onClickInsertRowBelow: function(e) {
     this.setState({show: false});
-    var y = PageStore.getRowIndex(this.state.dataid);
-    PageAction.insertRow(y + 1);
+    PageAction.insertRow(this.state.dataid, true);
   },
   _onClickDeleteRow: function(e) {
     this.setState({show: false});
-    var y = PageStore.getRowIndex(this.state.dataid);
-    PageAction.deleteRow(y);
+    PageAction.deleteRow(this.state.dataid);
   }
 });
 

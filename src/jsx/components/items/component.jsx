@@ -11,6 +11,7 @@ var Component = {
     return this.props.cell.showLabel ? this.props.cell.size - 2 : this.props.cell.size;
   },
   onComponentSelect: function(e) {
+    e.stopPropagation();
     PageAction.componentSelect(this.props.cell, e.target);
   }
 };
