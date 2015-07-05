@@ -13,9 +13,6 @@ var PAGE_STATE_CHANGE = 'PAGE_STATE_CHANGE';
 var _pageTitle, _editMode = true, _selectedCell = {}, _selectedElement, _rows = [], _sequence = 0,
   _copiedCell, _leftButtons, _rightButtons;
 
-function _nextSequence() {
-  return ++_sequence;
-}
 function createEmpty() {
   return {
     type: 'empty',
@@ -24,24 +21,48 @@ function createEmpty() {
     size: 1,
     color: 'default',
     options: [],
-    dataid: _nextSequence(),
+    dataid: ++_sequence,
     rowSize: 3,
-    columns: []
+    columns: [],
+    tabs: []
   };
 }
 
+// for container. like tab
+function findTargetRows(rows, dataid) {
+  for (var i = 0, len = rows.length; i < len; i++) {
+    var row = rows[i];
+    for (var j = 0, jlen = row.length; j < jlen; j++) {
+      var cell = row[j];
+      if (cell.dataid === dataid) return rows;
+      if (cell.tabs) {
+        for (var k = 0, klen = cell.tabs.length; k < klen; k++) {
+          var tab = cell.tabs[k];
+          var ret = findTargetRows(tab.rows, dataid);
+          if (ret !== null) return ret;
+        }
+      }
+      if (cell.rows) {
+        var ret = findTargetRows(cell.rows, dataid);
+        if (ret !== null) return ret;
+      }
+    }
+  }
+  return null;
+}
 /**
  * find cell index (y, x) which has dataid
  */
 function findIndex(dataid) {
-  for (var i = 0, len = _rows.length; i < len; i++) {
-    var row = _rows[i];
+  var rows = findTargetRows(_rows, dataid);
+  for (var i = 0, len = rows.length; i < len; i++) {
+    var row = rows[i];
     for (var j = 0, jlen = row.length; j < jlen; j++) {
       var cell = row[j];
       if (cell.dataid === dataid) return {y: i, x: j};
     }
   }
-  return null;
+  throw 'unknwon dataid: ' + dataid;
 }
 function deleteRow(dataid) {
   var y = findIndex(dataid).y;
@@ -69,7 +90,7 @@ function paste(newCell) {
   PageStore.emitChange();
 }
 function replaceCell(newCell) {
-  var rows = _rows;
+  var rows = findTargetRows(_rows, newCell.dataid);
   for (var i = 0, len = rows.length; i < len; i++) {
     var row = rows[i];
     for (var j = 0; j < row.length; j++) {
@@ -93,11 +114,44 @@ function replaceCell(newCell) {
       cell.rowSize = newCell.rowSize;
       cell.options = newCell.options;
       cell.columns = newCell.columns;
+      if (cell.type === 'tab') {
+        cell.tabs = replaceDataid(newCell.tabs);
+      }
+      if (cell.type === 'panel') {
+        if (!newCell.rows) {
+          cell.rows = [createEmptyCells()];
+        } else {
+          cell.rows = replaceDataid(newCell.rows);
+        }
+      }
       break;
     }
   }
 }
+function is(type, obj) {
+  var clas = Object.prototype.toString.call(obj).slice(8, -1);
+  return obj !== undefined && obj !== null && clas === type;
+}
 
+function replaceDataid(obj, needLessClone) {
+  if (!needLessClone) {
+    obj = JSON.parse(JSON.stringify(obj));
+  }
+  if (Array.isArray(obj)) {
+    obj.forEach(function(e) { replaceDataid(e, true);});
+  } else {
+    for (var prop in obj) {
+      if (!obj.hasOwnProperty(prop)) continue;
+      if (prop === 'dataid') {
+        obj.dataid = ++_sequence;
+      }
+      if (is('Object', obj)) {
+        replaceDataid(obj[prop], true);
+      }
+    }
+  }
+  return obj;
+}
 
 function createEmptyCells() {
   var row = [];
@@ -110,29 +164,14 @@ function createEmptyCells() {
  * ex. insertRow(0) insert row first.
  */
 function insertRow(dataid, below) {
-  var rows = [];
   if (_rows.length === 0) {
-    rows.push(createEmptyCells());
-    _rows = rows;
+    _rows.push(createEmptyCells());
     return;
   }
+  var rows = findTargetRows(_rows, dataid);
   var y = findIndex(dataid).y;
   if (below) y += 1;
-  if (_rows.length === y) {
-    for (var i = 0, len = _rows.length; i < len; i++) {
-      rows.push(_rows[i]);
-    }
-    rows.push(createEmptyCells());
-    _rows = rows;
-    return;
-  }
-  for (var i = 0, len = _rows.length; i < len; i++) {
-    if (i === y) {
-      rows.push(createEmptyCells());
-    }
-    rows.push(_rows[i]);
-  }
-  _rows = rows;
+  rows.splice(y, 0, createEmptyCells());
 }
 
 var PageStore = merge(EventEmitter.prototype, {
@@ -146,6 +185,7 @@ var PageStore = merge(EventEmitter.prototype, {
   getSelectedCellRowIndex: function() {
     return this.getRowIndex(_selectedCell.dataid);
   },
+  createEmptyCells: createEmptyCells,
   toJSON: function() {
     return {
       rows: _rows,
@@ -163,10 +203,14 @@ var PageStore = merge(EventEmitter.prototype, {
     _sequence = json.sequence;
     this.emitChange();
   },
+  
+  // if rows isn't specified, check _rows variables
   calcFreeSpace: function(dataid) {
+    if (!dataid) return -1;
+    var rows = findTargetRows(_rows, dataid);
     var componentSize;
-    for (var i = 0, len = _rows.length; i < len; i++) {
-      var row = _rows[i];
+    for (var i = 0, len = rows.length; i < len; i++) {
+      var row = rows[i];
       var freeSpace = -1;
       for (var j = 0, jlen = row.length; j < jlen; j++) {
         var cell = row[j];

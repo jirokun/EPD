@@ -1,6 +1,6 @@
+var ToolboxConstants = require('../ToolboxConstants');
 var ToolboxDispatcher = require('../dispatchers/ToolboxDispatcher');
 var EventEmitter = require('events').EventEmitter;
-var ToolboxConstants = require('../ToolboxConstants');
 var PageConstants = require('../PageConstants');
 var beautify_html = require('js-beautify').html;
 var Util = require('../Util');
@@ -10,7 +10,7 @@ var CHANGE_EVENT = 'change';
 var CELL_CHANGE_EVENT = 'cellSelect';
 
 var _pageTitle, _editMode = true, _showLabel = false, _dataid, _name, _label, _type, _size, _html,
-  _rowSize, _options, _columns, _align, _color, _leftButtons = [], _rightButtons = [];
+  _rowSize, _options, _columns, _tabs, _align, _color, _leftButtons = [], _rightButtons = [];
 
 function updateType(type) {
   _type = type;
@@ -49,8 +49,14 @@ var ToolboxStore = merge(EventEmitter.prototype, {
   getRowSize: function() { return _rowSize; },
   getOptions: function() { return _options; },
   getColumns: function() { return _columns; },
+  getTabs: function() { return _tabs; },
   getLeftButtons: function() { return _leftButtons; },
   getRightButtons: function() { return _rightButtons; },
+  getPageStore: function() {
+      var previewIframe = document.getElementById('preview');
+      var w = previewIframe.contentWindow;
+      return w.PageStore;
+  },
   load: function(json) {
     _leftButtons = json.leftButtons;
     _rightButtons = json.rightButtons;
@@ -143,6 +149,10 @@ ToolboxDispatcher.register(function(payload) {
       _rowSize = payload.rowSize;
       ToolboxStore.emitChange();
       break;
+    case ToolboxConstants.UPDATE_TABS:
+      _tabs = payload.tabs;
+      ToolboxStore.emitChange();
+      break;
     case ToolboxConstants.UPDATE_TYPE:
       updateType(payload.type);
       break;
@@ -164,6 +174,7 @@ ToolboxDispatcher.register(function(payload) {
             _rowSize = cell.rowSize;
             _options = cell.options;
             _columns = cell.columns;
+            _tabs = cell.tabs;
             ToolboxStore.emitCellChange();
             ToolboxStore.emitChange();
             break;

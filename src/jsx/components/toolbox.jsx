@@ -2,6 +2,7 @@ var React = require('react');
 var OptionEditor = require('./option_editor');
 var RowSizeEditor = require('./row_size_editor');
 var TableEditor = require('./table_editor');
+var TabEditor = require('./tab_editor');
 var ButtonEditor = require('./button_editor');
 var ToolboxAction = require('../actions/ToolboxAction');
 var ToolboxStore = require('../stores/ToolboxStore');
@@ -26,12 +27,13 @@ var Toolbox = React.createClass({
       interfaceText: '',
       options: [],
       columns: [],
+      tabs: [],
       leftButtons: [],
       rightButtons: []
     };
   },
   componentDidMount: function() {
-    var PageStore = this.getPageStore();
+    var PageStore = ToolboxStore.getPageStore();
     ToolboxStore.addChangeListener(this._onToolboxStoreChange);
     ToolboxStore.addCellChangeListener(this._onCellChange);
     ToolboxAction.initializeToolbox();
@@ -42,11 +44,6 @@ var Toolbox = React.createClass({
   },
   componentWillUnmount: function() {
     Toolbox.removeChangeListener(this._onToolboxStoreChange);
-  },
-  getPageStore: function() {
-    var previewIframe = document.getElementById(this.props.preview);
-    var w = previewIframe.contentWindow;
-    return w.PageStore;
   },
   getPageAction: function() {
     var previewIframe = document.getElementById(this.props.preview);
@@ -77,6 +74,7 @@ var Toolbox = React.createClass({
       rowSize: ToolboxStore.getRowSize(),
       options: ToolboxStore.getOptions(),
       columns: ToolboxStore.getColumns(),
+      tabs: ToolboxStore.getTabs(),
       leftButtons: ToolboxStore.getLeftButtons(),
       rightButtons: ToolboxStore.getRightButtons()
     };
@@ -91,7 +89,7 @@ var Toolbox = React.createClass({
   },
   _calcAvailableTypes: function() {
     var options = [];
-    var PageStore = this.getPageStore();
+    var PageStore = ToolboxStore.getPageStore();
     var freeSpace = PageStore.calcFreeSpace(this.state.dataid);
     for (var i = 0, len = ToolboxConstants.COMPONENTS.length; i < len; i++) {
       var component = ToolboxConstants.COMPONENTS[i];
@@ -232,7 +230,7 @@ var Toolbox = React.createClass({
     var component = ToolboxStore.findComponentConstructor(this.state.type);
     if (!component || !component.editors.size) return null;
     if (component) {
-      var PageStore = this.getPageStore();
+      var PageStore = ToolboxStore.getPageStore();
       var freeSpace = PageStore.calcFreeSpace(this.state.dataid);
       for (var i = component.minSize; i <= freeSpace; i++) {
         options.push(<option>{i}</option>);
@@ -260,6 +258,11 @@ var Toolbox = React.createClass({
       </div>
     );
   },
+  _tabEditor: function() {
+    var component = ToolboxStore.findComponentConstructor(this.state.type);
+    if (!component || !component.editors.tab) return null;
+    return <TabEditor type={this.state.type} tabs={this.state.tabs}/>;
+  },
   _rowSizeEditor: function() {
     var component = ToolboxStore.findComponentConstructor(this.state.type);
     if (!component || !component.editors.rowSize) return null;
@@ -272,12 +275,12 @@ var Toolbox = React.createClass({
     this.setState({interfaceText: e.target.value});
   },
   _onClickExport: function(e) {
-    var PageStore = this.getPageStore();
+    var PageStore = ToolboxStore.getPageStore();
     var json = PageStore.toJSON();
     this.setState({interfaceText: JSON.stringify(json, null, '  ')});
   },
   _onClickImport: function(e) {
-    var PageStore = this.getPageStore();
+    var PageStore = ToolboxStore.getPageStore();
     try {
       PageStore.load(JSON.parse(this.state.interfaceText));
       ToolboxStore.load(JSON.parse(this.state.interfaceText));
@@ -347,6 +350,7 @@ var Toolbox = React.createClass({
         { this._rowSizeEditor() }
         { this._optionEditor() }
         { this._htmlEditor() }
+        { this._tabEditor() }
         { this._tableEditor() }
       </form>
     </div>

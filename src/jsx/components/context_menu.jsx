@@ -14,6 +14,7 @@ var ContextMenu = React.createClass({
     var _this = this;
     $(document.body).on('contextmenu', '.epd-component', function(e) {
       e.preventDefault();
+      e.stopPropagation();
       var dataid = $(this).data('dataid');
       _this.setState({
         dataid: dataid,
