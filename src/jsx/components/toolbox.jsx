@@ -330,7 +330,32 @@ var Toolbox = React.createClass({
     var previewIframe = document.getElementById(this.props.preview);
     var el = previewIframe.contentWindow.document.getElementById('container').cloneNode(true);
     Util.removeSystemAttributes(el);
-    var html = beautify_html(el.outerHTML, { indent_size: 2 });
+    var html = '<!doctype html>\
+<html class="no-js">\
+  <head>\
+    <meta charset="utf-8">\
+    <title>EPD</title>\
+    <meta name="viewport" content="width=device-width">\
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">\
+    <style>\
+      .docked-footer {\
+        position: fixed;\
+        bottom: 0;\
+        left: 0;\
+        width: 100%;\
+        box-shadow: 10px 10px 10px 10px black;\
+        background: #fff;\
+        z-index: 5;\
+      }\
+    </style>\
+  </head>\
+  <body>\
+    ' + el.outerHTML + '\
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>\
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>\
+  </body>\
+</html>';
+    html = beautify_html(html, { indent_size: 2 });
     this.setState({interfaceText: html});
   },
   render: function() {
