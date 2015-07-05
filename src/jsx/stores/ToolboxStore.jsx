@@ -177,6 +177,8 @@ ToolboxDispatcher.register(function(payload) {
             _dataid = cell.dataid;
             _showLabel = cell.showLabel;
             _label = cell.label;
+            _preText = cell.preText;
+            _postText = cell.postText;
             _type = cell.type;
             _align = cell.align;
             _size = cell.size;

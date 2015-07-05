@@ -33,7 +33,6 @@ var Toolbox = React.createClass({
     };
   },
   componentDidMount: function() {
-    var PageStore = ToolboxStore.getPageStore();
     ToolboxStore.addChangeListener(this._onToolboxStoreChange);
     ToolboxStore.addCellChangeListener(this._onCellChange);
     ToolboxAction.initializeToolbox();
@@ -132,9 +131,6 @@ var Toolbox = React.createClass({
   },
   _changeColor: function(e) {
     ToolboxAction.updateColor(e.target.value);
-  },
-  _changeSelectDataid: function(dataid) {
-    this.setState({dataid: dataid});
   },
   _onSubmit: function(e) {
     e.preventDefault();

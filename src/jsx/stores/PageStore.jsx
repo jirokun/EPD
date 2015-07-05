@@ -48,7 +48,7 @@ function findTargetRows(rows, dataid) {
       }
     }
   }
-  return null;
+  throw 'unknown dataid: ' + dataid;
 }
 /**
  * find cell index (y, x) which has dataid
@@ -62,7 +62,7 @@ function findIndex(dataid) {
       if (cell.dataid === dataid) return {y: i, x: j};
     }
   }
-  throw 'unknwon dataid: ' + dataid;
+  throw 'unknown dataid: ' + dataid;
 }
 function deleteRow(dataid) {
   var y = findIndex(dataid).y;
