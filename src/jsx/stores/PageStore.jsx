@@ -48,7 +48,7 @@ function findTargetRows(rows, dataid) {
       }
     }
   }
-  throw 'unknown dataid: ' + dataid;
+  return null;
 }
 /**
  * find cell index (y, x) which has dataid

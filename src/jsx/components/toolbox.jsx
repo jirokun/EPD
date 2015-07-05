@@ -80,7 +80,7 @@ var Toolbox = React.createClass({
       rightButtons: ToolboxStore.getRightButtons()
     };
     this.setState(newState);
-    if (this.getPageDispatcher().isDispatching()) return;
+    if (this.getPageDispatcher().isDispatching() || !newState.dataid) return;
     var PageAction = this.getPageAction();
     PageAction.updateCell(newState);
     PageAction.updateEditMode(newState.editMode);
@@ -307,9 +307,11 @@ var Toolbox = React.createClass({
   _onClickImport: function(e) {
     var PageStore = ToolboxStore.getPageStore();
     try {
-      PageStore.load(JSON.parse(this.state.interfaceText));
-      ToolboxStore.load(JSON.parse(this.state.interfaceText));
+      var json = JSON.parse(this.state.interfaceText);
+      PageStore.load(json);
+      ToolboxStore.load(json);
     } catch(e) {
+      console.error(e);
     }
   },
   _onLeftButtonChange: function(hot) {
