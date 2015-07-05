@@ -62,7 +62,7 @@ function findIndex(dataid) {
       if (cell.dataid === dataid) return {y: i, x: j};
     }
   }
-  throw 'unknwon dataid: ' + dataid;
+  throw 'unknown dataid: ' + dataid;
 }
 function deleteRow(dataid) {
   var y = findIndex(dataid).y;
@@ -107,6 +107,8 @@ function replaceCell(newCell) {
       cell.showLabel = newCell.showLabel;
       cell.type = newCell.type;
       cell.label = newCell.label;
+      cell.preText = newCell.preText;
+      cell.postText = newCell.postText;
       cell.align = newCell.align;
       cell.size = newCell.size;
       cell.html = newCell.html;
