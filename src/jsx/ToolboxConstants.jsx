@@ -42,6 +42,7 @@ var Calendar = require('./components/items/calendar');
 var MasterSearchBox = require('./components/items/master_search_box');
 var Html = require('./components/items/html');
 var Tab = require('./components/items/tab');
+var Panel = require('./components/items/panel');
 
 module.exports.COMPONENTS = [
   { alias: 'empty', constructor: Empty },
@@ -63,6 +64,7 @@ module.exports.COMPONENTS = [
   { alias: 'label', constructor: Label},
   { alias: 'alert', constructor: Alert},
   { alias: 'html', constructor: Html},
-  { alias: 'tab', constructor: Tab}
+  { alias: 'tab', constructor: Tab},
+  { alias: 'panel', constructor: Panel}
 ];
 

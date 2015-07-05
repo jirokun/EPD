@@ -28,6 +28,7 @@ function createEmpty() {
   };
 }
 
+// for container. like tab
 function findTargetRows(rows, dataid) {
   for (var i = 0, len = rows.length; i < len; i++) {
     var row = rows[i];
@@ -40,6 +41,10 @@ function findTargetRows(rows, dataid) {
           var ret = findTargetRows(tab.rows, dataid);
           if (ret !== null) return ret;
         }
+      }
+      if (cell.rows) {
+        var ret = findTargetRows(cell.rows, dataid);
+        if (ret !== null) return ret;
       }
     }
   }
@@ -109,6 +114,9 @@ function replaceCell(newCell) {
       cell.options = newCell.options;
       cell.columns = newCell.columns;
       cell.tabs = newCell.tabs;
+      if (cell.type === 'panel' && !cell.rows) {
+        cell.rows = [createEmptyCells()];
+      }
       break;
     }
   }
