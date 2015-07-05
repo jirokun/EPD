@@ -23,13 +23,16 @@ var Alert = React.createClass({
   mixins: [Component],
   render: function() {
     var componentClassName = "epd-component" + (this.props.selected ? " selected" : "");
-    var className = 'col-md-' + this.calcSizeClassName() + ' alert alert-' + this.props.cell.color;
+    var sizeClassName = 'col-md-' + this.calcSizeClassName();
+    var className = 'alert alert-' + this.props.cell.color;
     var style = {
       textAlign: this.props.cell.align
     };
     return (
 <div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
-  <div className={className} style={style}>{this.props.cell.label}</div>
+  <div className={sizeClassName}>
+    <div className={className} style={style}>{this.props.cell.label}</div>
+  </div>
 </div>
     );
   }
