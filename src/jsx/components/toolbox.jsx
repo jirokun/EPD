@@ -77,11 +77,11 @@ var Toolbox = React.createClass({
       rightButtons: ToolboxStore.getRightButtons()
     };
     this.setState(newState);
-    if (this.getPageDispatcher().isDispatching() || !newState.dataid) return;
     var PageAction = this.getPageAction();
-    PageAction.updateCell(newState);
     PageAction.updateLeftButtons(newState.leftButtons);
     PageAction.updateRightButtons(newState.rightButtons);
+    if (this.getPageDispatcher().isDispatching() || !newState.dataid) return;
+    PageAction.updateCell(newState);
   },
   _calcAvailableTypes: function() {
     var options = [];
@@ -285,16 +285,12 @@ var Toolbox = React.createClass({
     if (!component || !component.editors.rowSize) return null;
     return <RowSizeEditor type={this.state.type} rowSize={this.state.rowSize}/>;
   },
-  _onLeftButtonChange: function(hot) {
+  _onLeftButtonChange: function(buttons) {
     if (ToolboxDispatcher.isDispatching()) return;
-    var buttons = hot.getData().map(function(arr) { return {label: arr[0], type: arr[1] }; }).filter(function(obj) { return obj.label != '' });
-    buttons.splice(buttons.length - 1, 1);
     ToolboxAction.updateLeftButtons(buttons);
   },
-  _onRightButtonChange: function(hot) {
+  _onRightButtonChange: function(buttons) {
     if (ToolboxDispatcher.isDispatching()) return;
-    var buttons = hot.getData().map(function(arr) { return {label: arr[0], type: arr[1] }; }).filter(function(obj) { return obj.label != '' });
-    buttons.splice(buttons.length - 1, 1);
     ToolboxAction.updateRightButtons(buttons);
   },
   render: function() {

@@ -7,7 +7,9 @@ var ButtonEditor = React.createClass({
   mixins : [],
 
   getInitialState: function() {
-    return {};
+    return {
+      buttons: []
+    };
   },
   getInitialProps: function() {
     return {
@@ -27,10 +29,11 @@ var ButtonEditor = React.createClass({
   _renderHandsontable: function(buttons) {
     var _this = this;
     this._handsontable = new Handsontable(this.refs.handsontable.getDOMNode(), {
-      data: this._convertButtons(buttons),
+      data: buttons,
       columns: [
-        { type: 'text' },
+        { data: 'label', type: 'text' },
         {
+          data: 'type',
           editor: 'select',
           selectOptions: [ 'default', 'primary', 'success', 'info', 'warning', 'danger', 'link' ]
         }
@@ -44,20 +47,17 @@ var ButtonEditor = React.createClass({
       minSpareRows: 1,
       contextMenu: ["row_above", "row_below", "remove_row", "undo", "redo"],
       afterChange: function() {
-        _this.props.onChange(this);
+        var buttons = this.getData().filter(function(obj) { return obj.label != '' && typeof obj.label !== 'undefined'});
+        _this.props.onChange(buttons);
       }
     });
     this._handsontable.render();
   },
   componentWillUpdate: function(nextProp, nextState) {
-    this._handsontable.destroy();
-    this._renderHandsontable(nextProp.buttons);
+    this._handsontable.loadData(nextProp.buttons);
   },
   componentWillUnmount: function() {
     this._handsontable.destroy();
-  },
-  _convertButtons: function(buttons) {
-    return buttons.map(function(button) { return [button.label, button.type ]});
   },
   render: function() {
     return (

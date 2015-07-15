@@ -11,7 +11,7 @@ var ROWS_CHANGE= 'ROWS_CHANGE';
 var PAGE_STATE_CHANGE = 'PAGE_STATE_CHANGE';
 
 var _pageTitle, _editMode = true, _selectedCell = {}, _selectedElement, _rows = [], _sequence = 0,
-  _copiedCell, _leftButtons = [], _rightButtons = [];
+  _copiedCell, _leftButtons = [], _rightButtons = [], _containerMode;
 
 function createEmpty() {
   return {
@@ -179,6 +179,7 @@ function insertRow(dataid, below) {
 var PageStore = merge(EventEmitter.prototype, {
   getPageTitle: function() { return _pageTitle; },
   isEditMode: function() { return _editMode; },
+  getContainerMode: function() { return _containerMode; },
   getSelectedCell: function() { return _selectedCell; },  
   getSelectedElement: function() { return _selectedElement; },
   getRows: function() { return _rows; },
@@ -243,12 +244,10 @@ var PageStore = merge(EventEmitter.prototype, {
 // Register to handle all updates
 PageDispatcher.register(function(payload) {
   switch(payload.actionType) {
-    case PageConstants.UPDATE_PAGE_TITLE:
-      _pageTitle = payload.pageTitle;
-      PageStore.emitChange();
-      break;
-    case PageConstants.UPDATE_EDIT_MODE:
-      _editMode = payload.editMode;
+    case PageConstants.UPDATE_PAGE_INFO:
+      _pageTitle = payload.info.pageTitle;
+      _editMode = payload.info.editMode;
+      _containerMode = payload.info.containerMode;
       PageStore.emitChange();
       break;
     case PageConstants.UPDATE_LEFT_BUTTONS:

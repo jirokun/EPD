@@ -10,6 +10,7 @@ var Page = React.createClass({
     return {
       editMode: true,
       pageTitle: "",
+      containerMode: 'container-fluid',
       selectedDataid: null,
       rows: [],
       buttons: []
@@ -63,19 +64,21 @@ var Page = React.createClass({
       selectedDataid: PageStore.getSelectedCell().dataid,
       rows: PageStore.getRows(),
       editMode: PageStore.isEditMode(),
-      pageTitle: PageStore.getPageTitle()
+      pageTitle: PageStore.getPageTitle(),
+      containerMode: PageStore.getContainerMode()
     });
   },
   render: function() {
+    var containerClassName = "form-horizontal " + this.state.containerMode;
     var className = this.state.editMode ? 'edit-mode' : '';
     return (
-<div>
+<div className={containerClassName}>
   <div ref="container" className={className}>
     <h1>{this.state.pageTitle}</h1>
     <Grid rows={this.state.rows} selectedDataid={this.state.selectedDataid}/>
   </div>
   <div className="docked-footer">
-    <div className="container">
+    <div className={this.state.containerMode}>
       {this._leftButtons()}
       {this._rightButtons()}
     </div>

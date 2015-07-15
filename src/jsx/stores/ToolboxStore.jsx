@@ -11,7 +11,7 @@ var CELL_CHANGE_EVENT = 'cellSelect';
 
 var _pageTitle, _editMode = true, _showLabel = false, _dataid, _name, _label, _preText, _postText,
     _type, _size, _html, _rowSize, _options, _columns, _tabs, _align, _color, _leftButtons = [],
-    _rightButtons = [];
+    _rightButtons = [], _containerMode = 'container-fluid';
 
 function updateType(type) {
   _type = type;
@@ -38,6 +38,7 @@ function updateHTML() {
 var ToolboxStore = merge(EventEmitter.prototype, {
   getPageTitle: function() { return _pageTitle; },
   isEditMode: function() { return _editMode; },
+  getContainerMode: function() { return _containerMode; },
   isShowLabel: function() { return _showLabel; },
   getDataid: function() { return _dataid; },
   getName: function() { return _name; },
@@ -102,6 +103,10 @@ ToolboxDispatcher.register(function(payload) {
       break;
     case ToolboxConstants.UPDATE_EDIT_MODE:
       _editMode = payload.editMode;
+      ToolboxStore.emitChange();
+      break;
+    case ToolboxConstants.UPDATE_CONTAINER_MODE:
+      _containerMode = payload.containerMode;
       ToolboxStore.emitChange();
       break;
     case ToolboxConstants.UPDATE_NAME:
