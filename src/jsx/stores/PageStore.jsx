@@ -11,7 +11,7 @@ var ROWS_CHANGE= 'ROWS_CHANGE';
 var PAGE_STATE_CHANGE = 'PAGE_STATE_CHANGE';
 
 var _pageTitle, _editMode = true, _selectedCell = {}, _selectedElement, _rows = [], _sequence = 0,
-  _copiedCell, _leftButtons, _rightButtons;
+  _copiedCell, _leftButtons = [], _rightButtons = [];
 
 function createEmpty() {
   return {
