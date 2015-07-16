@@ -78,9 +78,10 @@ var Toolbox = React.createClass({
     };
     this.setState(newState);
     var PageAction = this.getPageAction();
+    if (this.getPageDispatcher().isDispatching()) return;
     PageAction.updateLeftButtons(newState.leftButtons);
     PageAction.updateRightButtons(newState.rightButtons);
-    if (this.getPageDispatcher().isDispatching() || !newState.dataid) return;
+    if (!newState.dataid) return;
     PageAction.updateCell(newState);
   },
   _calcAvailableTypes: function() {

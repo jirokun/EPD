@@ -46,7 +46,8 @@ var ButtonEditor = React.createClass({
       minRows: 2,
       minSpareRows: 1,
       contextMenu: ["row_above", "row_below", "remove_row", "undo", "redo"],
-      afterChange: function() {
+      afterChange: function(data, eventName) {
+        if (eventName === 'loadData') return;
         var buttons = this.getData().filter(function(obj) { return obj.label != '' && typeof obj.label !== 'undefined'});
         _this.props.onChange(buttons);
       }

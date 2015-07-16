@@ -195,6 +195,7 @@ var PageStore = merge(EventEmitter.prototype, {
       pageTitle: _pageTitle,
       leftButtons: _leftButtons,
       rightButtons: _rightButtons,
+      containerMode: _containerMode,
       sequence: _sequence
     };
   },
@@ -203,6 +204,7 @@ var PageStore = merge(EventEmitter.prototype, {
     _pageTitle = json.pageTitle;
     _leftButtons = json.leftButtons;
     _rightButtons = json.rightButtons;
+    _containerMode = json.containerMode;
     _sequence = json.sequence;
     this.emitChange();
   },
