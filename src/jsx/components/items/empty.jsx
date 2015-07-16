@@ -1,5 +1,6 @@
 var React = require('react');
 var Component = require('./component');
+var PageStore = require('../../stores/PageStore');
 
 var Empty = React.createClass({
   statics: {
@@ -22,7 +23,7 @@ var Empty = React.createClass({
   editors: {
   },
   render: function() {
-    var sizeClassName = "col-md-" + this.props.cell.size + " empty";
+    var sizeClassName = PageStore.getCellType() + "-" + this.props.cell.size + " empty";
     var componentClassName = "epd-component" + (this.props.selected ? " selected" : "");
     return (
 <div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>

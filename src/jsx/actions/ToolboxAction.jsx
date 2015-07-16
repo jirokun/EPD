@@ -14,6 +14,18 @@ var ToolboxAction = {
       editMode: editMode
     });
   },
+  updateContainerMode: function(mode) {
+    ToolboxDispatcher.dispatch({
+      actionType: ToolboxConstants.UPDATE_CONTAINER_MODE,
+      containerMode: mode 
+    });
+  },
+  updateCellType: function(type) {
+    ToolboxDispatcher.dispatch({
+      actionType: ToolboxConstants.UPDATE_CELL_TYPE,
+      cellType: type
+    });
+  },
   updateType: function(type) {
     ToolboxDispatcher.dispatch({
       actionType: ToolboxConstants.UPDATE_TYPE,

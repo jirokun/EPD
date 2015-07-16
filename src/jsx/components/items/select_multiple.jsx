@@ -1,5 +1,6 @@
 var React = require('react');
 var Component = require('./component');
+var PageStore = require('../../stores/PageStore');
 
 var FormSelectMultiple = React.createClass({
   statics: {
@@ -27,7 +28,7 @@ var FormSelectMultiple = React.createClass({
     var color = this.props.cell.color;
     if (color == 'danger') color = 'error';
     var componentClassName = "epd-component" + (this.props.selected ? " selected" : "") + ' has-' + color;
-    var sizeClassName = "col-md-" + this.calcSizeClassName();
+    var sizeClassName = PageStore.getCellType() + "-" + this.calcSizeClassName();
     var options = this.props.cell.options.map(function(option) { return <option value={option.value}>{option.label}</option>; });
     return (
 <div className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>

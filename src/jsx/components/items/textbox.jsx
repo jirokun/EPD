@@ -1,6 +1,7 @@
 var React = require('react');
 var Component = require('./component');
 var Util = require('../../Util');
+var PageStore = require('../../stores/PageStore');
 
 var FormText = React.createClass({
   statics: {
@@ -47,7 +48,7 @@ var FormText = React.createClass({
     return (
       <div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
         {this.label()}
-        <div className={"col-md-" + this.calcSizeClassName()}>
+        <div className={PageStore.getCellType() + "-" + this.calcSizeClassName()}>
           {this._inputGroup()}
         </div>
       </div>
