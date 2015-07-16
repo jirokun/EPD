@@ -65,18 +65,15 @@ function findIndex(dataid) {
   throw 'unknown dataid: ' + dataid;
 }
 function deleteRow(dataid) {
+  var rows = findTargetRows(_rows, dataid);
+  console.log(dataid);
   var y = findIndex(dataid).y;
-  var rows = [];
-  for (var i = 0, len = _rows.length; i < len; i++) {
-    if (y === i) continue;
-    rows.push(_rows[i]);
-  }
+  rows.splice(y, 1);
   if (rows.length === 0) {
     var row = [];
     for (var j = 0; j < 12; j++) row.push(createEmpty());
     rows.push(row);
   }
-  _rows = rows;
 }
 
 function paste(newCell) {
