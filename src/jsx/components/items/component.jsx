@@ -1,11 +1,13 @@
 var React = require('react');
 var PageAction = require('../../actions/PageAction');
+var PageStore = require('../../stores/PageStore');
 
 var Component = {
   label: function() {
     if (!this.props.cell.showLabel) return null;
     var style = { align: 'right' };
-    return <label className="col-md-2 control-label" style={style}>{this.props.cell.label}</label>;
+    var className = PageStore.getCellType() + '-2 control-label';
+    return <label className={className} style={style}>{this.props.cell.label}</label>;
   },
   calcSizeClassName: function() {
     return this.props.cell.showLabel ? this.props.cell.size - 2 : this.props.cell.size;

@@ -1,5 +1,6 @@
 var React = require('react');
 var Component = require('./component');
+var PageStore = require('../../stores/PageStore');
 
 var Panel = React.createClass({
   statics: {
@@ -33,7 +34,7 @@ var Panel = React.createClass({
     });
   },
   render: function() {
-    var sizeClassName = "col-md-" + this.props.cell.size;
+    var sizeClassName = PageStore.getCellType() + "-" + this.props.cell.size;
     var panelClassName = "panel panel-" + this.props.cell.color;
     var selectedDataid = PageStore.getSelectedCell().dataid;
     return (

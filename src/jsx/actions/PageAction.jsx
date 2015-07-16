@@ -2,16 +2,10 @@ var PageDispatcher = require('../dispatchers/PageDispatcher');
 var PageConstants = require('../PageConstants');
 
 var PageAction = {
-  updatePageTitle: function(pageTitle) {
+  updatePageInfo: function(info) {
     PageDispatcher.dispatch({
-      actionType: PageConstants.UPDATE_PAGE_TITLE,
-      pageTitle: pageTitle
-    });
-  },
-  updateEditMode: function(editMode) {
-    PageDispatcher.dispatch({
-      actionType: PageConstants.UPDATE_EDIT_MODE,
-      editMode: editMode
+      actionType: PageConstants.UPDATE_PAGE_INFO,
+      info: info 
     });
   },
   updateLeftButtons: function(buttons) {

@@ -1,5 +1,6 @@
 var React = require('react');
 var Component = require('./component');
+var PageStore = require('../../stores/PageStore');
 
 var Table = React.createClass({
   statics: {
@@ -24,7 +25,7 @@ var Table = React.createClass({
   },
   mixins: [Component],
   render: function() {
-    var sizeClassName = "col-md-" + this.calcSizeClassName();
+    var sizeClassName = PageStore.getCellType() + "-" + this.calcSizeClassName();
     var componentClassName = "epd-component" + (this.props.selected ? " selected" : "");
     var columns = this.props.cell.columns;
     columns = columns ? columns : [{label:'sample', sample: 'value'}];

@@ -1,5 +1,6 @@
 var React = require('react');
 var Component = require('./component');
+var PageStore = require('../../stores/PageStore');
 
 var Tab = React.createClass({
   statics: {
@@ -40,7 +41,7 @@ var Tab = React.createClass({
     });
   },
   render: function() {
-    var sizeClassName = "col-md-" + this.props.cell.size;
+    var sizeClassName = PageStore.getCellType() + "-" + this.props.cell.size;
     return (
       <div key={this.props.cell.dataid} className="epd-component" onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
         <div className={sizeClassName}>

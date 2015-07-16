@@ -11,7 +11,7 @@ var ROWS_CHANGE= 'ROWS_CHANGE';
 var PAGE_STATE_CHANGE = 'PAGE_STATE_CHANGE';
 
 var _pageTitle, _editMode = true, _selectedCell = {}, _selectedElement, _rows = [], _sequence = 0,
-  _copiedCell, _leftButtons = [], _rightButtons = [];
+  _copiedCell, _leftButtons = [], _rightButtons = [], _containerMode, _cellType = 'col-md';
 
 function createEmpty() {
   return {
@@ -65,18 +65,15 @@ function findIndex(dataid) {
   throw 'unknown dataid: ' + dataid;
 }
 function deleteRow(dataid) {
+  var rows = findTargetRows(_rows, dataid);
+  console.log(dataid);
   var y = findIndex(dataid).y;
-  var rows = [];
-  for (var i = 0, len = _rows.length; i < len; i++) {
-    if (y === i) continue;
-    rows.push(_rows[i]);
-  }
+  rows.splice(y, 1);
   if (rows.length === 0) {
     var row = [];
     for (var j = 0; j < 12; j++) row.push(createEmpty());
     rows.push(row);
   }
-  _rows = rows;
 }
 
 function paste(newCell) {
@@ -179,6 +176,8 @@ function insertRow(dataid, below) {
 var PageStore = merge(EventEmitter.prototype, {
   getPageTitle: function() { return _pageTitle; },
   isEditMode: function() { return _editMode; },
+  getContainerMode: function() { return _containerMode; },
+  getCellType: function() { return _cellType; },
   getSelectedCell: function() { return _selectedCell; },  
   getSelectedElement: function() { return _selectedElement; },
   getRows: function() { return _rows; },
@@ -194,6 +193,8 @@ var PageStore = merge(EventEmitter.prototype, {
       pageTitle: _pageTitle,
       leftButtons: _leftButtons,
       rightButtons: _rightButtons,
+      containerMode: _containerMode,
+      cellType: _cellType,
       sequence: _sequence
     };
   },
@@ -202,6 +203,8 @@ var PageStore = merge(EventEmitter.prototype, {
     _pageTitle = json.pageTitle;
     _leftButtons = json.leftButtons;
     _rightButtons = json.rightButtons;
+    _containerMode = json.containerMode;
+    _cellType = json.cellType;
     _sequence = json.sequence;
     this.emitChange();
   },
@@ -243,12 +246,11 @@ var PageStore = merge(EventEmitter.prototype, {
 // Register to handle all updates
 PageDispatcher.register(function(payload) {
   switch(payload.actionType) {
-    case PageConstants.UPDATE_PAGE_TITLE:
-      _pageTitle = payload.pageTitle;
-      PageStore.emitChange();
-      break;
-    case PageConstants.UPDATE_EDIT_MODE:
-      _editMode = payload.editMode;
+    case PageConstants.UPDATE_PAGE_INFO:
+      _pageTitle = payload.info.pageTitle;
+      _editMode = payload.info.editMode;
+      _containerMode = payload.info.containerMode;
+      _cellType = payload.info.cellType;
       PageStore.emitChange();
       break;
     case PageConstants.UPDATE_LEFT_BUTTONS:

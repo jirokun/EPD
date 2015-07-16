@@ -1,5 +1,6 @@
 var React = require('react');
 var Component = require('./component');
+var PageStore = require('../../stores/PageStore');
 
 var Calendar = React.createClass({
   statics: {
@@ -26,7 +27,7 @@ var Calendar = React.createClass({
     return (
       <div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
         {this.label()}
-        <div className={"col-md-" + this.calcSizeClassName()}>
+        <div className={PageStore.getCellType() + "-" + this.calcSizeClassName()}>
           <div className="input-group">
             <input type="text" className="form-control" />
             <span className="input-group-btn">

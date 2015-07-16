@@ -16,7 +16,9 @@ var ToolboxTabPage = React.createClass({
     return {
       editMode: true,
       pageTitle: '',
-      interfaceText: ''
+      interfaceText: '',
+      containerMode: 'container-fluid',
+      cellType: 'col-md'
     };
   },
   componentDidMount: function() {
@@ -35,14 +37,14 @@ var ToolboxTabPage = React.createClass({
   _onToolboxStoreChange: function() {
     var newState = {
       pageTitle: ToolboxStore.getPageTitle(),
-      editMode: ToolboxStore.isEditMode()
+      editMode: ToolboxStore.isEditMode(),
+      containerMode: ToolboxStore.getContainerMode(),
+      cellType: ToolboxStore.getCellType()
     };
     this.setState(newState);
-    console.log(newState);
     if (this.getPageDispatcher().isDispatching()) return;
     var PageAction = this.getPageAction();
-    PageAction.updateEditMode(newState.editMode);
-    PageAction.updatePageTitle(newState.pageTitle);
+    PageAction.updatePageInfo(newState);
   },
 
   _onClickExport: function(e) {
@@ -101,6 +103,12 @@ var ToolboxTabPage = React.createClass({
   _onChangeInterfaceText: function(e) {
     this.setState({interfaceText: e.target.value});
   },
+  _onChangeContainerMode: function(e) {
+    ToolboxAction.updateContainerMode(e.target.value);
+  },
+  _onChangeCellType: function(e) {
+    ToolboxAction.updateCellType(e.target.value);
+  },
   render: function() {
     return  (
       <form>
@@ -112,6 +120,22 @@ var ToolboxTabPage = React.createClass({
           <label>
             <input type="checkbox" checked={this.state.editMode} onChange={this._onChangeEditMode}/> Edit Mode
           </label>
+        </div>
+        <div className="form-group">
+          <label htmlFor="container-mode">Container Mode</label>
+          <select className="form-control" id="container-mode" value={this.state.contaierMode} onChange={this._onChangeContainerMode}>
+            <option value="container-fluid">container-fluid</option>
+            <option value="container">container</option>
+          </select>
+        </div>
+        <div className="form-group">
+          <label htmlFor="cell-type">Cell Type</label>
+          <select className="form-control" id="cell-type" value={this.state.cellType} onChange={this._onChangeCellType}>
+            <option value="col-xs">col-xs</option>
+            <option value="col-sm">col-sm</option>
+            <option value="col-md">col-md</option>
+            <option value="col-lg">col-lg</option>
+          </select>
         </div>
         <div className="btn-group">
           <button type="button" className="btn btn-primary" onClick={this._onClickExport}>Export</button>
