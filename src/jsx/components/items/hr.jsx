@@ -1,5 +1,6 @@
 var React = require('react');
 var Component = require('./component');
+var PageStore = require('../../stores/PageStore');
 
 var Hr = React.createClass({
   statics: {
@@ -21,7 +22,7 @@ var Hr = React.createClass({
   },
   mixins: [Component],
   render: function() {
-    var sizeClassName = "col-md-" + this.props.cell.size;
+    var sizeClassName = PageStore.getCellType() + "-" + this.props.cell.size;
     var componentClassName = "epd-component" + (this.props.selected ? " selected" : "");
     var columns = this.props.cell.columns;
     columns = columns ? columns : [{label:'sample', sample: 'value'}];

@@ -1,5 +1,6 @@
 var React = require('react');
 var Component = require('./component');
+var PageStore = require('../../stores/PageStore');
 
 var FormPassword = React.createClass({
   statics: {
@@ -20,7 +21,7 @@ var FormPassword = React.createClass({
   },
   mixins: [Component],
   render: function() {
-    var sizeClassName = "col-md-" + this.calcSizeClassName();
+    var sizeClassName = PageStore.getCellType() + "-" + this.calcSizeClassName();
     var color = this.props.cell.color;
     if (color == 'danger') color = 'error';
     var componentClassName = "epd-component" + (this.props.selected ? " selected" : "") + ' has-' + color;

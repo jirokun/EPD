@@ -1,5 +1,6 @@
 var React = require('react');
 var Component = require('./component');
+var PageStore = require('../../stores/PageStore');
 
 var Alert = React.createClass({
   statics: {
@@ -23,7 +24,7 @@ var Alert = React.createClass({
   mixins: [Component],
   render: function() {
     var componentClassName = "epd-component" + (this.props.selected ? " selected" : "");
-    var sizeClassName = 'col-md-' + this.calcSizeClassName();
+    var sizeClassName = PageStore.getCellType() + '-' + this.calcSizeClassName();
     var className = 'alert alert-' + this.props.cell.color;
     var style = {
       textAlign: this.props.cell.align

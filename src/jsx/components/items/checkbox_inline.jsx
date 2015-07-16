@@ -1,5 +1,6 @@
 var React = require('react');
 var Component = require('./component');
+var PageStore = require('../../stores/PageStore');
 
 var FormCheckboxInline = React.createClass({
   statics: {
@@ -27,7 +28,7 @@ var FormCheckboxInline = React.createClass({
     if (color == 'danger') color = 'error';
     var componentClassName = "epd-component" + (this.props.selected ? " selected" : "") + ' has-' + color;
     var _this = this;
-    var sizeClassName = "col-md-" + this.calcSizeClassName();
+    var sizeClassName = PageStore.getCellType() + "-" + this.calcSizeClassName();
     var options = this.props.cell.options.map(function(option) {
       return (
         <label className="checkbox-inline">

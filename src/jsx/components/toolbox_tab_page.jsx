@@ -17,7 +17,8 @@ var ToolboxTabPage = React.createClass({
       editMode: true,
       pageTitle: '',
       interfaceText: '',
-      containerMode: 'container-fluid'
+      containerMode: 'container-fluid',
+      cellType: 'col-md'
     };
   },
   componentDidMount: function() {
@@ -38,6 +39,7 @@ var ToolboxTabPage = React.createClass({
       pageTitle: ToolboxStore.getPageTitle(),
       editMode: ToolboxStore.isEditMode(),
       containerMode: ToolboxStore.getContainerMode(),
+      cellType: ToolboxStore.getCellType()
     };
     this.setState(newState);
     if (this.getPageDispatcher().isDispatching()) return;
@@ -104,6 +106,9 @@ var ToolboxTabPage = React.createClass({
   _onChangeContainerMode: function(e) {
     ToolboxAction.updateContainerMode(e.target.value);
   },
+  _onChangeCellType: function(e) {
+    ToolboxAction.updateCellType(e.target.value);
+  },
   render: function() {
     return  (
       <form>
@@ -121,6 +126,15 @@ var ToolboxTabPage = React.createClass({
           <select className="form-control" id="container-mode" value={this.state.contaierMode} onChange={this._onChangeContainerMode}>
             <option value="container-fluid">container-fluid</option>
             <option value="container">container</option>
+          </select>
+        </div>
+        <div className="form-group">
+          <label htmlFor="cell-type">Cell Type</label>
+          <select className="form-control" id="cell-type" value={this.state.cellType} onChange={this._onChangeCellType}>
+            <option value="col-xs">col-xs</option>
+            <option value="col-sm">col-sm</option>
+            <option value="col-md">col-md</option>
+            <option value="col-lg">col-lg</option>
           </select>
         </div>
         <div className="btn-group">
