@@ -66,7 +66,6 @@ function findIndex(dataid) {
 }
 function deleteRow(dataid) {
   var rows = findTargetRows(_rows, dataid);
-  console.log(dataid);
   var y = findIndex(dataid).y;
   rows.splice(y, 1);
   if (rows.length === 0) {

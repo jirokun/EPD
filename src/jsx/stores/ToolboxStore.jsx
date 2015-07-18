@@ -10,7 +10,7 @@ var CHANGE_EVENT = 'change';
 var CELL_CHANGE_EVENT = 'cellSelect';
 
 var _pageTitle, _editMode = true, _showLabel = false, _dataid, _name, _label, _preText, _postText,
-    _type, _size, _html, _rowSize, _options, _columns, _tabs, _align, _color, _leftButtons = [],
+    _type, _size, _html, _rowSize, _options, _columns, _tabs, _align, _color, _leftButtons = [], _rows,
     _rightButtons = [], _containerMode = 'container-fluid', _cellType = 'col-md';
 
 function updateType(type) {
@@ -55,6 +55,7 @@ var ToolboxStore = merge(EventEmitter.prototype, {
   getOptions: function() { return _options; },
   getColumns: function() { return _columns; },
   getTabs: function() { return _tabs; },
+  getRows: function() { return _rows; },
   getLeftButtons: function() { return _leftButtons; },
   getRightButtons: function() { return _rightButtons; },
   getPageStore: function() {
@@ -198,6 +199,7 @@ ToolboxDispatcher.register(function(payload) {
             _options = cell.options;
             _columns = cell.columns;
             _tabs = cell.tabs;
+            _rows = cell.rows;
             ToolboxStore.emitCellChange();
             ToolboxStore.emitChange();
             break;
