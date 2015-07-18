@@ -73,6 +73,7 @@ var Toolbox = React.createClass({
       options: ToolboxStore.getOptions(),
       columns: ToolboxStore.getColumns(),
       tabs: ToolboxStore.getTabs(),
+      rows: ToolboxStore.getRows(),
       leftButtons: ToolboxStore.getLeftButtons(),
       rightButtons: ToolboxStore.getRightButtons()
     };
