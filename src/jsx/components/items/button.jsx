@@ -24,11 +24,14 @@ var Button = React.createClass({
   mixins: [Component],
   render: function() {
     var componentClassName = "epd-component" + (this.props.selected ? " selected" : "");
-    var className = PageStore.getCellType() + '-' + this.calcSizeClassName() + ' btn btn-' + this.props.cell.color;
+    var sizeClassName = PageStore.getCellType() + '-' + this.calcSizeClassName();
+    var className = 'btn btn-block btn-' + this.props.cell.color;
     return (
 <div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
   {this.label()}
-  <button type="button" className={className}>{this.props.cell.label}</button>
+  <div className={sizeClassName}>
+    <button type="button" className={className}>{this.props.cell.label}</button>
+  </div>
 </div>
     );
   }
