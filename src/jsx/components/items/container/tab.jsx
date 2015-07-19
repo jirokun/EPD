@@ -1,11 +1,12 @@
 var React = require('react');
-var Component = require('./component');
-var PageStore = require('../../stores/PageStore');
+var Component = require('../component');
+var PageStore = require('../../../stores/PageStore');
 
 var Tab = React.createClass({
   statics: {
     editors: {
       name: true,
+      toggleLabel: false,
       label: false,
       size: true,
       align: false,
@@ -15,7 +16,7 @@ var Tab = React.createClass({
       tab: true,
       table: false
     },
-    minSize: 4,
+    minSize: 1,
     maxSize: 12
   },
   mixins: [Component],
@@ -57,4 +58,4 @@ var Tab = React.createClass({
   }
 });
 module.exports = Tab;
-var Grid = require('../grid');
+var Grid = require('../../grid');

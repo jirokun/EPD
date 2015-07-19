@@ -1,16 +1,16 @@
 var React = require('react');
-var Component = require('./component');
-var PageStore = require('../../stores/PageStore');
+var Component = require('../component');
+var PageStore = require('../../../stores/PageStore');
 
-var Alert = React.createClass({
+var Label = React.createClass({
   statics: {
     editors: {
       name: false,
-      forceShowLabel: true,
+      toggleLabel: false,
       label: true,
       size: true,
       align: true,
-      color: [ 'success', 'info', 'warning', 'danger' ],
+      color: [ 'default', 'muted', 'primary', 'success', 'info', 'warning', 'danger' ],
       option: false,
       rowSize: false,
       table: false
@@ -24,19 +24,16 @@ var Alert = React.createClass({
   mixins: [Component],
   render: function() {
     var componentClassName = "epd-component" + (this.props.selected ? " selected" : "");
-    var sizeClassName = PageStore.getCellType() + '-' + this.calcSizeClassName();
-    var className = 'alert alert-' + this.props.cell.color;
+    var className = PageStore.getCellType() + '-' + this.props.cell.size + ' control-label text-' + this.props.cell.color;
     var style = {
       textAlign: this.props.cell.align
     };
     return (
 <div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
-  <div className={sizeClassName}>
-    <div className={className} style={style}>{this.props.cell.label}</div>
-  </div>
+  <label className={className} style={style}>{this.props.cell.label}</label>
 </div>
     );
   }
 });
 
-module.exports = Alert;
+module.exports = Label;

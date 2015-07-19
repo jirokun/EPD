@@ -1,11 +1,12 @@
 var React = require('react');
-var Component = require('./component');
-var PageStore = require('../../stores/PageStore');
+var Component = require('../component');
+var PageStore = require('../../../stores/PageStore');
 
 var Panel = React.createClass({
   statics: {
     editors: {
       name: true,
+      toggleLabel: true,
       label: true,
       size: true,
       align: false,
@@ -16,7 +17,7 @@ var Panel = React.createClass({
       table: false
     },
     defaultLabel: 'Default Label',
-    minSize: 4,
+    minSize: 1,
     maxSize: 12
   },
   mixins: [Component],
@@ -64,4 +65,4 @@ var Panel = React.createClass({
   }
 });
 module.exports = Panel;
-var Grid = require('../grid');
+var Grid = require('../../grid');

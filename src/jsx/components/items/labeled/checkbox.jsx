@@ -1,11 +1,12 @@
 var React = require('react');
-var Component = require('./component');
-var PageStore = require('../../stores/PageStore');
+var Component = require('../component');
+var PageStore = require('../../../stores/PageStore');
 
-var FormRadioInline = React.createClass({
+var FormCheckbox = React.createClass({
   statics: {
     editors: {
       name: true,
+      showLabel: true,
       label: true,
       size: true,
       align: false,
@@ -15,7 +16,7 @@ var FormRadioInline = React.createClass({
       table: false
     },
     defaultLabel: 'Default Label',
-    minSize: 3,
+    minSize: 4,
     maxSize: 12
   },
   getDefaultProps: function() {
@@ -32,9 +33,11 @@ var FormRadioInline = React.createClass({
     var sizeClassName = PageStore.getCellType() + "-" + this.calcSizeClassName();
     var options = this.props.cell.options.map(function(option) {
       return (
-        <label className="radio-inline">
-          <input type="radio" name={_this.props.cell.name} value={option.value}/>&nbsp;{option.label}
-        </label>
+        <div className="checkbox">
+          <label>
+            <input type="checkbox" name={_this.props.cell.name} value={option.value}/>&nbsp;{option.label}
+          </label>
+        </div>
       );
     });
     return (
@@ -48,4 +51,4 @@ var FormRadioInline = React.createClass({
   }
 });
 
-module.exports = FormRadioInline;
+module.exports = FormCheckbox;

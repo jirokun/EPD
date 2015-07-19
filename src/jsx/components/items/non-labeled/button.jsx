@@ -1,12 +1,12 @@
 var React = require('react');
-var Component = require('./component');
-var PageStore = require('../../stores/PageStore');
+var Component = require('../component');
+var PageStore = require('../../../stores/PageStore');
 
 var Button = React.createClass({
   statics: {
     editors: {
       name: true,
-      forceShowLabel: true,
+      toggleLabel: false,
       label: true,
       size: true,
       align: false,
@@ -28,7 +28,6 @@ var Button = React.createClass({
     var className = 'btn btn-block btn-' + this.props.cell.color;
     return (
 <div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
-  {this.label()}
   <div className={sizeClassName}>
     <button type="button" className={className}>{this.props.cell.label}</button>
   </div>

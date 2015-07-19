@@ -1,43 +1,42 @@
 var React = require('react');
-var Component = require('./component');
-var Util = require('../../Util');
-var PageStore = require('../../stores/PageStore');
+var Component = require('../component');
+var PageStore = require('../../../stores/PageStore');
+var Util = require('../../../Util');
 
 var FormText = React.createClass({
   statics: {
     editors: {
       name: true,
-      showLabel: true,
-      label: true,
+      showLabel: false,
+      label: false,
       size: true,
       align: false,
       color: [ 'default', 'warning', 'error', 'success' ],
       option: false,
       rowSize: false,
-      preText: true,
-      postText: true,
+      preHtml: true,
+      postHtml: true,
       table: false
     },
-    defaultLabel: 'Default Label',
-    minSize: 3,
+    minSize: 1,
     maxSize: 12
   },
   mixins: [Component],
-  _preText: function() {
-    if (Util.isEmpty(this.props.cell.preText)) return null;
-    return <span className="input-group-addon" dangerouslySetInnerHTML={{__html: this.props.cell.preText}}/>
+  _preHtml: function() {
+    if (Util.isEmpty(this.props.cell.preHtml)) return null;
+    return <span className="input-group-addon" dangerouslySetInnerHTML={{__html: this.props.cell.preHtml}}/>
   },
-  _postText: function() {
-    if (Util.isEmpty(this.props.cell.postText)) return null;
-    return <span className="input-group-addon" dangerouslySetInnerHTML={{__html: this.props.cell.postText}}/>
+  _postHtml: function() {
+    if (Util.isEmpty(this.props.cell.postHtml)) return null;
+    return <span className="input-group-addon" dangerouslySetInnerHTML={{__html: this.props.cell.postHtml}}/>
   },
   _inputGroup: function() {
-    var inputGroupClassName = Util.isEmpty(this.props.cell.preText) && Util.isEmpty(this.props.cell.postText) ? '' : 'input-group';
+    var inputGroupClassName = Util.isEmpty(this.props.cell.preHtml) && Util.isEmpty(this.props.cell.postHtml) ? '' : 'input-group';
     return (
       <div className={inputGroupClassName}>
-        {this._preText()}
+        {this._preHtml()}
         <input type="text" className="form-control" />
-        {this._postText()}
+        {this._postHtml()}
       </div>
     );
   },
@@ -47,7 +46,6 @@ var FormText = React.createClass({
     var componentClassName = "epd-component" + (this.props.selected ? " selected" : "") + ' has-' + color;
     return (
       <div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
-        {this.label()}
         <div className={PageStore.getCellType() + "-" + this.calcSizeClassName()}>
           {this._inputGroup()}
         </div>
