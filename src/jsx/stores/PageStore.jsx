@@ -103,8 +103,8 @@ function replaceCell(newCell) {
       cell.showLabel = newCell.showLabel;
       cell.type = newCell.type;
       cell.label = newCell.label;
-      cell.preText = newCell.preText;
-      cell.postText = newCell.postText;
+      cell.preHtml = newCell.preHtml;
+      cell.postHtml = newCell.postHtml;
       cell.align = newCell.align;
       cell.size = newCell.size;
       cell.html = newCell.html;

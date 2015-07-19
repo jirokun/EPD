@@ -1,21 +1,22 @@
 var React = require('react');
-var Component = require('./component');
-var PageStore = require('../../stores/PageStore');
+var Component = require('../component');
+var PageStore = require('../../../stores/PageStore');
 
-var FormSelect = React.createClass({
+var FormSelectMultiple = React.createClass({
   statics: {
     editors: {
       name: true,
+      showLabel: true,
       label: true,
       size: true,
       align: false,
       color: [ 'default', 'warning', 'error', 'success' ],
       option: true,
-      rowSize: false,
+      rowSize: true,
       table: false
     },
     defaultLabel: 'Default Label',
-    minSize: 3,
+    minSize: 4,
     maxSize: 12
   },
   getDefaultProps: function() {
@@ -34,11 +35,11 @@ var FormSelect = React.createClass({
 <div className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
   {this.label()}
   <div className={sizeClassName}>
-    <select name={this.props.cell.name} className="form-control">{options}</select>
+    <select name={this.props.cell.name} className="form-control" multiple="true" size={this.props.cell.rowSize}>{options}</select>
   </div>
 </div>
     );
   }
 });
 
-module.exports = FormSelect;
+module.exports = FormSelectMultiple;

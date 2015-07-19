@@ -1,11 +1,12 @@
 var React = require('react');
-var Component = require('./component');
-var PageStore = require('../../stores/PageStore');
+var Component = require('../component');
+var PageStore = require('../../../stores/PageStore');
 
 var FormRadio = React.createClass({
   statics: {
     editors: {
       name: true,
+      showLabel: true,
       label: true,
       size: true,
       align: false,
@@ -15,7 +16,7 @@ var FormRadio = React.createClass({
       table: false
     },
     defaultLabel: 'Default Label',
-    minSize: 3,
+    minSize: 4,
     maxSize: 12
   },
   getDefaultProps: function() {

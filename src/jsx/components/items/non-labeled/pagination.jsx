@@ -1,12 +1,11 @@
 var React = require('react');
-var Component = require('./component');
-var PageStore = require('../../stores/PageStore');
+var Component = require('../component');
+var PageStore = require('../../../stores/PageStore');
 
 var Pagination = React.createClass({
   statics: {
     editors: {
       name: true,
-      forceShowLabel: false,
       label: false,
       size: true,
       align: false,

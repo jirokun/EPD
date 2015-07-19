@@ -62,8 +62,8 @@ var Toolbox = React.createClass({
       name: ToolboxStore.getName(),
       showLabel: ToolboxStore.isShowLabel(),
       label: ToolboxStore.getLabel(),
-      preText: ToolboxStore.getPreText(),
-      postText: ToolboxStore.getPostText(),
+      preHtml: ToolboxStore.getPreHtml(),
+      postHtml: ToolboxStore.getPostHtml(),
       type: ToolboxStore.getType(),
       align: ToolboxStore.getAlign(),
       size: ToolboxStore.getSize(),
@@ -86,15 +86,21 @@ var Toolbox = React.createClass({
     PageAction.updateCell(newState);
   },
   _calcAvailableTypes: function() {
-    var options = [];
     var PageStore = ToolboxStore.getPageStore();
     var freeSpace = PageStore.calcFreeSpace(this.state.dataid);
+    var optgroups = [];
     for (var i = 0, len = ToolboxConstants.COMPONENTS.length; i < len; i++) {
-      var component = ToolboxConstants.COMPONENTS[i];
-      var disabled = component.constructor.minSize > freeSpace
-      options.push(<option disabled={disabled}>{component.alias}</option>);
+      var group = ToolboxConstants.COMPONENTS[i];
+      var label = group.label;
+      var options = [];
+      for (var j = 0, jlen = group.components.length; j < jlen; j++) {
+        var component = group.components[j];
+        var disabled = component.constructor.minSize > freeSpace;
+        options.push(<option disabled={disabled}>{component.alias}</option>);
+      }
+      optgroups.push(<optgroup label={label}>{options}</optgroup>);
     }
-    return options;
+    return optgroups;
   },
   _changeName: function(e) {
     ToolboxAction.updateName(e.target.value);
@@ -105,11 +111,11 @@ var Toolbox = React.createClass({
   _changeLabel: function(e) {
     ToolboxAction.updateLabel(e.target.value);
   },
-  _changePreText: function(e) {
-    ToolboxAction.updatePreText(e.target.value);
+  _changePreHtml: function(e) {
+    ToolboxAction.updatePreHtml(e.target.value);
   },
-  _changePostText: function(e) {
-    ToolboxAction.updatePostText(e.target.value);
+  _changePostHtml: function(e) {
+    ToolboxAction.updatePostHtml(e.target.value);
   },
   _changeType: function(e) {
     ToolboxAction.updateType(e.target.value);
@@ -156,13 +162,13 @@ var Toolbox = React.createClass({
     return <TableEditor type={this.state.type} columns={this.state.columns}/>;
   },
 
-  _showLabelEditor: function() {
+  _toggleLabelEditor: function() {
     var component = ToolboxStore.findComponentConstructor(this.state.type);
-    if (!component || component.editors.forceShowLabel || !component.editors.label) return null;
+    if (!component || component.editors.toggleLabel !== true) return null;
     return (
       <div className="checkbox">
         <label>
-          <input type="checkbox" checked={this.state.showLabel} onChange={this._changeShowLabel} disabled={this.state.size < 3} /> Show Label
+          <input type="checkbox" checked={this.state.showLabel} onChange={this._changeShowLabel}/> Show Label
         </label>
       </div>
     );
@@ -170,7 +176,6 @@ var Toolbox = React.createClass({
   _labelEditor: function() {
     var component = ToolboxStore.findComponentConstructor(this.state.type);
     if (!component || !component.editors.label) return null;
-    if (!component.editors.forceShowLabel && !this.state.showLabel) return null;
     return (
       <div className="form-group">
         <label htmlFor="label">Label</label>
@@ -178,23 +183,23 @@ var Toolbox = React.createClass({
       </div>
     );
   },
-  _preTextEditor: function() {
+  _preHtmlEditor: function() {
     var component = ToolboxStore.findComponentConstructor(this.state.type);
-    if (!component || !component.editors.preText) return null;
+    if (!component || !component.editors.preHtml) return null;
     return (
       <div className="form-group">
-        <label htmlFor="label">PreText</label>
-        <input type="text" className="form-control" value={this.state.preText} onChange={this._changePreText}/>
+        <label htmlFor="label">Pre HTML</label>
+        <input type="text" className="form-control" value={this.state.preHtml} onChange={this._changePreHtml}/>
       </div>
     );
   },
-  _postTextEditor: function() {
+  _postHtmlEditor: function() {
     var component = ToolboxStore.findComponentConstructor(this.state.type);
-    if (!component || !component.editors.postText) return null;
+    if (!component || !component.editors.postHtml) return null;
     return (
       <div className="form-group">
-        <label htmlFor="label">PostText</label>
-        <input type="text" className="form-control" value={this.state.postText} onChange={this._changePostText}/>
+        <label htmlFor="label">Post HTML</label>
+        <input type="text" className="form-control" value={this.state.postHtml} onChange={this._changePostHtml}/>
       </div>
     );
   },
@@ -315,10 +320,10 @@ var Toolbox = React.createClass({
         </div>
         { this._typeEditor() }
         { this._nameEditor() }
-        { this._showLabelEditor() }
+        { this._toggleLabelEditor() }
         { this._labelEditor() }
-        { this._preTextEditor() }
-        { this._postTextEditor() }
+        { this._preHtmlEditor() }
+        { this._postHtmlEditor() }
         { this._sizeEditor() }
         { this._alignEditor() }
         { this._colorEditor() }

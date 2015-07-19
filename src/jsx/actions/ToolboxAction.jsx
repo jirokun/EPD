@@ -50,16 +50,16 @@ var ToolboxAction = {
       label: label
     });
   },
-  updatePreText: function(preText) {
+  updatePreHtml: function(preHtml) {
     ToolboxDispatcher.dispatch({
       actionType: ToolboxConstants.UPDATE_PRE_TEXT,
-      preText: preText
+      preHtml: preHtml
     });
   },
-  updatePostText: function(postText) {
+  updatePostHtml: function(postHtml) {
     ToolboxDispatcher.dispatch({
       actionType: ToolboxConstants.UPDATE_POST_TEXT,
-      postText: postText
+      postHtml: postHtml
     });
   },
   updateAlign: function(align) {

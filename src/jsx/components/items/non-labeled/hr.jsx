@@ -1,11 +1,12 @@
 var React = require('react');
-var Component = require('./component');
-var PageStore = require('../../stores/PageStore');
+var Component = require('../component');
+var PageStore = require('../../../stores/PageStore');
 
 var Hr = React.createClass({
   statics: {
     editors: {
       name: false,
+      toggleLabel: false,
       label: false,
       showLabel: false,
       size: true,

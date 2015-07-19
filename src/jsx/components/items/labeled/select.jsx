@@ -1,11 +1,12 @@
 var React = require('react');
-var Component = require('./component');
-var PageStore = require('../../stores/PageStore');
+var Component = require('../component');
+var PageStore = require('../../../stores/PageStore');
 
-var FormCheckbox = React.createClass({
+var FormSelect = React.createClass({
   statics: {
     editors: {
       name: true,
+      showLabel: true,
       label: true,
       size: true,
       align: false,
@@ -15,7 +16,7 @@ var FormCheckbox = React.createClass({
       table: false
     },
     defaultLabel: 'Default Label',
-    minSize: 3,
+    minSize: 4,
     maxSize: 12
   },
   getDefaultProps: function() {
@@ -28,26 +29,17 @@ var FormCheckbox = React.createClass({
     var color = this.props.cell.color;
     if (color == 'danger') color = 'error';
     var componentClassName = "epd-component" + (this.props.selected ? " selected" : "") + ' has-' + color;
-    var _this = this;
     var sizeClassName = PageStore.getCellType() + "-" + this.calcSizeClassName();
-    var options = this.props.cell.options.map(function(option) {
-      return (
-        <div className="checkbox">
-          <label>
-            <input type="checkbox" name={_this.props.cell.name} value={option.value}/>&nbsp;{option.label}
-          </label>
-        </div>
-      );
-    });
+    var options = this.props.cell.options.map(function(option) { return <option value={option.value}>{option.label}</option>; });
     return (
-<div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
+<div className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
   {this.label()}
   <div className={sizeClassName}>
-    { options }
+    <select name={this.props.cell.name} className="form-control">{options}</select>
   </div>
 </div>
     );
   }
 });
 
-module.exports = FormCheckbox;
+module.exports = FormSelect;

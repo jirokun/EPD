@@ -1,39 +1,49 @@
 var React = require('react');
-var Component = require('./component');
-var PageStore = require('../../stores/PageStore');
+var Component = require('../component');
+var PageStore = require('../../../stores/PageStore');
 
-var FormPassword = React.createClass({
+var FormRadioInline = React.createClass({
   statics: {
     editors: {
       name: true,
-      label: true,
-      showLabel: true,
+      label: false,
       size: true,
       align: false,
       color: [ 'default', 'warning', 'error', 'success' ],
-      option: false,
+      option: true,
       rowSize: false,
       table: false
     },
-    defaultLabel: 'Default Label',
-    minSize: 3,
+    minSize: 1,
     maxSize: 12
+  },
+  getDefaultProps: function() {
+    return {
+      options: []
+    };
   },
   mixins: [Component],
   render: function() {
-    var sizeClassName = PageStore.getCellType() + "-" + this.calcSizeClassName();
     var color = this.props.cell.color;
     if (color == 'danger') color = 'error';
     var componentClassName = "epd-component" + (this.props.selected ? " selected" : "") + ' has-' + color;
+    var _this = this;
+    var sizeClassName = PageStore.getCellType() + "-" + this.calcSizeClassName();
+    var options = this.props.cell.options.map(function(option) {
+      return (
+        <label className="radio-inline">
+          <input type="radio" name={_this.props.cell.name} value={option.value}/>&nbsp;{option.label}
+        </label>
+      );
+    });
     return (
 <div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
-  {this.label()}
   <div className={sizeClassName}>
-    <input type="password" name={this.props.cell.name} className="form-control" />
+    { options }
   </div>
 </div>
     );
   }
 });
 
-module.exports = FormPassword;
+module.exports = FormRadioInline;
