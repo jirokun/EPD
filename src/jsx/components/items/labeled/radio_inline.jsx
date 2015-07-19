@@ -1,8 +1,8 @@
 var React = require('react');
-var Component = require('./component');
-var PageStore = require('../../stores/PageStore');
+var Component = require('../component');
+var PageStore = require('../../../stores/PageStore');
 
-var FormCheckbox = React.createClass({
+var FormRadioInline = React.createClass({
   statics: {
     editors: {
       name: true,
@@ -32,11 +32,9 @@ var FormCheckbox = React.createClass({
     var sizeClassName = PageStore.getCellType() + "-" + this.calcSizeClassName();
     var options = this.props.cell.options.map(function(option) {
       return (
-        <div className="checkbox">
-          <label>
-            <input type="checkbox" name={_this.props.cell.name} value={option.value}/>&nbsp;{option.label}
-          </label>
-        </div>
+        <label className="radio-inline">
+          <input type="radio" name={_this.props.cell.name} value={option.value}/>&nbsp;{option.label}
+        </label>
       );
     });
     return (
@@ -50,4 +48,4 @@ var FormCheckbox = React.createClass({
   }
 });
 
-module.exports = FormCheckbox;
+module.exports = FormRadioInline;

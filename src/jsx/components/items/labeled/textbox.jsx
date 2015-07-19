@@ -1,7 +1,7 @@
 var React = require('react');
-var Component = require('./component');
-var Util = require('../../Util');
-var PageStore = require('../../stores/PageStore');
+var Component = require('../component');
+var PageStore = require('../../../stores/PageStore');
+var Util = require('../../../Util');
 
 var FormText = React.createClass({
   statics: {

@@ -1,6 +1,6 @@
 var React = require('react');
-var Component = require('./component');
-var PageStore = require('../../stores/PageStore');
+var Component = require('../component');
+var PageStore = require('../../../stores/PageStore');
 
 var Panel = React.createClass({
   statics: {
@@ -64,4 +64,4 @@ var Panel = React.createClass({
   }
 });
 module.exports = Panel;
-var Grid = require('../grid');
+var Grid = require('../../grid');
