@@ -71,8 +71,13 @@ var ToolboxStore = merge(EventEmitter.prototype, {
   },
   findComponentConstructor: function(type) {
     for (var i = 0, len = ToolboxConstants.COMPONENTS.length; i < len; i++) {
-      var component = ToolboxConstants.COMPONENTS[i];
-      if (component.alias === type) return component.constructor;
+      var group = ToolboxConstants.COMPONENTS[i];
+      var label = group.label;
+      var options = [];
+      for (var j = 0, jlen = group.components.length; j < jlen; j++) {
+        var component = group.components[j];
+        if (component.alias === type) return component.constructor;
+      }
     }
     return null;
   },

@@ -24,7 +24,7 @@ module.exports = {
   ALIGN_CENTER: 'center',
   ALIGN_RIGHT: 'right'
 };
-module.exports.COMPONENTS = []
+module.exports.COMPONENTS = [];
 
 var Empty = require('./components/items/empty');
 var FormText = require('./components/items/textbox');
@@ -49,26 +49,46 @@ var Tab = require('./components/items/tab');
 var Panel = require('./components/items/panel');
 
 module.exports.COMPONENTS = [
-  { alias: 'empty', constructor: Empty },
-  { alias: 'text', constructor: FormText},
-  { alias: 'password', constructor: FormPassword},
-  { alias: 'select', constructor: FormSelect},
-  { alias: 'select_multiple', constructor: FormSelectMultiple},
-  { alias: 'checkbox', constructor: FormCheckbox},
-  { alias: 'checkbox_inline', constructor: FormCheckboxInline},
-  { alias: 'radio', constructor: FormRadio},
-  { alias: 'radio_inline', constructor: FormRadioInline},
-  { alias: 'textarea', constructor: FormTextarea},
-  { alias: 'table', constructor: Table},
-  { alias: 'calendar', constructor: Calendar},
-  { alias: 'master_saerch_box', constructor: MasterSearchBox},
-  { alias: 'hr', constructor: Hr},
-  { alias: 'button', constructor: Button},
-  { alias: 'pagination', constructor: Pagination},
-  { alias: 'label', constructor: Label},
-  { alias: 'alert', constructor: Alert},
-  { alias: 'html', constructor: Html},
-  { alias: 'tab', constructor: Tab},
-  { alias: 'panel', constructor: Panel}
+  {
+    label: 'system',
+    components: [
+      { alias: 'empty', constructor: Empty }
+    ]
+  },
+  {
+    label: 'labeled',
+    components: [
+      { alias: 'text', constructor: FormText},
+      { alias: 'password', constructor: FormPassword},
+      { alias: 'select', constructor: FormSelect},
+      { alias: 'select_multiple', constructor: FormSelectMultiple},
+      { alias: 'checkbox', constructor: FormCheckbox},
+      { alias: 'checkbox_inline', constructor: FormCheckboxInline},
+      { alias: 'radio', constructor: FormRadio},
+      { alias: 'radio_inline', constructor: FormRadioInline},
+      { alias: 'textarea', constructor: FormTextarea},
+      { alias: 'table', constructor: Table},
+      { alias: 'calendar', constructor: Calendar},
+      { alias: 'master_saerch_box', constructor: MasterSearchBox}
+    ]
+  },
+  {
+    label: 'non-labeled',
+    components: [
+      { alias: 'hr', constructor: Hr},
+      { alias: 'button', constructor: Button},
+      { alias: 'pagination', constructor: Pagination},
+      { alias: 'label', constructor: Label},
+      { alias: 'alert', constructor: Alert},
+      { alias: 'html', constructor: Html}
+    ]
+  },
+  {
+    label: 'container',
+    components: [
+      { alias: 'panel', constructor: Panel},
+      { alias: 'tab', constructor: Tab}
+    ]
+  }
 ];
 

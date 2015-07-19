@@ -86,15 +86,21 @@ var Toolbox = React.createClass({
     PageAction.updateCell(newState);
   },
   _calcAvailableTypes: function() {
-    var options = [];
     var PageStore = ToolboxStore.getPageStore();
     var freeSpace = PageStore.calcFreeSpace(this.state.dataid);
+    var optgroups = [];
     for (var i = 0, len = ToolboxConstants.COMPONENTS.length; i < len; i++) {
-      var component = ToolboxConstants.COMPONENTS[i];
-      var disabled = component.constructor.minSize > freeSpace
-      options.push(<option disabled={disabled}>{component.alias}</option>);
+      var group = ToolboxConstants.COMPONENTS[i];
+      var label = group.label;
+      var options = [];
+      for (var j = 0, jlen = group.components.length; j < jlen; j++) {
+        var component = group.components[j];
+        var disabled = component.constructor.minSize > freeSpace;
+        options.push(<option disabled={disabled}>{component.alias}</option>);
+      }
+      optgroups.push(<optgroup label={label}>{options}</optgroup>);
     }
-    return options;
+    return optgroups;
   },
   _changeName: function(e) {
     ToolboxAction.updateName(e.target.value);
