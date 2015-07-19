@@ -6,6 +6,7 @@ var Label = React.createClass({
   statics: {
     editors: {
       name: false,
+      toggleLabel: false,
       label: true,
       size: true,
       align: true,

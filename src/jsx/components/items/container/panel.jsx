@@ -6,6 +6,7 @@ var Panel = React.createClass({
   statics: {
     editors: {
       name: true,
+      toggleLabel: true,
       label: true,
       size: true,
       align: false,
@@ -16,7 +17,7 @@ var Panel = React.createClass({
       table: false
     },
     defaultLabel: 'Default Label',
-    minSize: 4,
+    minSize: 1,
     maxSize: 12
   },
   mixins: [Component],

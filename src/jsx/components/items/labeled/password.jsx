@@ -16,7 +16,7 @@ var FormPassword = React.createClass({
       table: false
     },
     defaultLabel: 'Default Label',
-    minSize: 3,
+    minSize: 4,
     maxSize: 12
   },
   mixins: [Component],

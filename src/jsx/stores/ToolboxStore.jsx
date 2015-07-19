@@ -21,7 +21,6 @@ function updateType(type) {
     var colorIndex = component.editors.color.indexOf(_color);
     if (colorIndex === -1) _color = component.editors.color[0];
   }
-  if (component.editors.forceShowLabel) _showLabel = false; // Buttonのために使用
   if (_size > component.maxSize) _size = component.maxSize;
   if (typeof(_label) === 'undefined') _label = component.defaultLabel;
   updateHTML();

@@ -6,8 +6,7 @@ var FormRadio = React.createClass({
   statics: {
     editors: {
       name: true,
-      showLabel: true,
-      label: true,
+      label: false,
       size: true,
       align: false,
       color: [ 'default', 'warning', 'error', 'success' ],
@@ -15,8 +14,7 @@ var FormRadio = React.createClass({
       rowSize: false,
       table: false
     },
-    defaultLabel: 'Default Label',
-    minSize: 4,
+    minSize: 1,
     maxSize: 12
   },
   getDefaultProps: function() {
@@ -42,7 +40,6 @@ var FormRadio = React.createClass({
     });
     return (
 <div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
-  {this.label()}
   <div className={sizeClassName}>
     { options }
   </div>

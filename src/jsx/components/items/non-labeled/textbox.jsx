@@ -6,21 +6,19 @@ var Util = require('../../../Util');
 var FormText = React.createClass({
   statics: {
     editors: {
-      name: true,                                           // name属性エディタの表示フラグ
-      toggleLabel: false,                                   // ラベルの表示・非表示エディタの表示フラグ
-      showLabel: true,                                      // ラベルのサイズを考慮するかどうか
-      label: true,                                          // ラベルエティタの表示フラグ
-      size: true,                                           // サイズエディタの表示フラグ
-      align: false,                                         // alignエディタの表示フラグ
-      color: [ 'default', 'warning', 'error', 'success' ],  // 選択可能な色の一覧
-      option: false,                                        // オプションエディタ表示フラグ
-      rowSize: false,                                       // rowサイズエディタの表示フラグ
-      preText: true,                                        // preテキストエディタの表示フラグ
-      postText: true,                                       // postテキストエディタの表示フラグ
-      table: false                                          // tableエディタの表示フラグ
+      name: true,
+      showLabel: false,
+      label: false,
+      size: true,
+      align: false,
+      color: [ 'default', 'warning', 'error', 'success' ],
+      option: false,
+      rowSize: false,
+      preText: true,
+      postText: true,
+      table: false
     },
-    defaultLabel: 'Default Label',
-    minSize: 4,
+    minSize: 1,
     maxSize: 12
   },
   mixins: [Component],
@@ -48,7 +46,6 @@ var FormText = React.createClass({
     var componentClassName = "epd-component" + (this.props.selected ? " selected" : "") + ' has-' + color;
     return (
       <div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
-        {this.label()}
         <div className={PageStore.getCellType() + "-" + this.calcSizeClassName()}>
           {this._inputGroup()}
         </div>

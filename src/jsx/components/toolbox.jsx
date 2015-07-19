@@ -162,13 +162,13 @@ var Toolbox = React.createClass({
     return <TableEditor type={this.state.type} columns={this.state.columns}/>;
   },
 
-  _showLabelEditor: function() {
+  _toggleLabelEditor: function() {
     var component = ToolboxStore.findComponentConstructor(this.state.type);
-    if (!component || component.editors.forceShowLabel || !component.editors.label) return null;
+    if (!component || component.editors.toggleLabel !== true) return null;
     return (
       <div className="checkbox">
         <label>
-          <input type="checkbox" checked={this.state.showLabel} onChange={this._changeShowLabel} disabled={this.state.size < 3} /> Show Label
+          <input type="checkbox" checked={this.state.showLabel} onChange={this._changeShowLabel}/> Show Label
         </label>
       </div>
     );
@@ -176,7 +176,6 @@ var Toolbox = React.createClass({
   _labelEditor: function() {
     var component = ToolboxStore.findComponentConstructor(this.state.type);
     if (!component || !component.editors.label) return null;
-    if (!component.editors.forceShowLabel && !this.state.showLabel) return null;
     return (
       <div className="form-group">
         <label htmlFor="label">Label</label>
@@ -321,7 +320,7 @@ var Toolbox = React.createClass({
         </div>
         { this._typeEditor() }
         { this._nameEditor() }
-        { this._showLabelEditor() }
+        { this._toggleLabelEditor() }
         { this._labelEditor() }
         { this._preTextEditor() }
         { this._postTextEditor() }

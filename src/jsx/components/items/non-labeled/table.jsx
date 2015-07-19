@@ -6,16 +6,14 @@ var Table = React.createClass({
   statics: {
     editors: {
       name: false,
-      showLabel: true,
-      label: true,
+      label: false,
       size: true,
       align: false,
       option: false,
       rowSize: false,
       table: true 
     },
-    defaultLabel: 'Default Label',
-    minSize: 4
+    minSize: 1
   },
   getDefaultProps: function() {
     return {
@@ -32,7 +30,6 @@ var Table = React.createClass({
     columns = columns ? columns : [{label:'sample', sample: 'value'}];
     return (
       <div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
-        {this.label()}
         <div className={sizeClassName}>
           <table className="table table-bordered table-striped">
             <thead>

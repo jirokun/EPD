@@ -6,8 +6,9 @@ var MasterSearchBox = React.createClass({
   statics: {
     editors: {
       name: true,
-      showLabel: true,
-      label: true,
+      toggleLabel: false,
+      showLabel: false,
+      label: false,
       size: true,
       align: false,
       color: [ 'default', 'warning', 'error', 'success' ],
@@ -15,8 +16,7 @@ var MasterSearchBox = React.createClass({
       rowSize: false,
       table: false
     },
-    defaultLabel: 'Default Label',
-    minSize: 4,
+    minSize: 1,
     maxSize: 12
   },
   mixins: [Component],
@@ -26,7 +26,6 @@ var MasterSearchBox = React.createClass({
     var componentClassName = "epd-component" + (this.props.selected ? " selected" : "") + ' has-' + color;
     return (
       <div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
-        {this.label()}
         <div className={PageStore.getCellType() + "-" + this.calcSizeClassName()}>
           <div className="input-group">
             <input type="text" className="form-control" />

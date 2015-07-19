@@ -26,27 +26,47 @@ module.exports = {
 };
 module.exports.COMPONENTS = [];
 
-var Empty =                   require('./components/items/system/empty');
-var FormText =                require('./components/items/labeled/textbox');
-var FormPassword =            require('./components/items/labeled/password');
-var FormSelect =              require('./components/items/labeled/select');
-var FormSelectMultiple =      require('./components/items/labeled/select_multiple');
-var FormCheckbox =            require('./components/items/labeled/checkbox');
-var FormCheckboxInline =      require('./components/items/labeled/checkbox_inline');
-var FormRadio =               require('./components/items/labeled/radio');
-var FormRadioInline =         require('./components/items/labeled/radio_inline');
-var FormTextarea =            require('./components/items/labeled/textarea');
-var Table =                   require('./components/items/labeled/table');
-var Calendar =                require('./components/items/labeled/calendar');
-var MasterSearchBox =         require('./components/items/labeled/master_search_box');
-var Hr =                      require('./components/items/non-labeled/hr');
-var Label =                   require('./components/items/non-labeled/label');
-var Button =                  require('./components/items/non-labeled/button');
-var Pagination =              require('./components/items/non-labeled/pagination');
-var Alert =                   require('./components/items/non-labeled/alert');
-var Html =                    require('./components/items/non-labeled/html');
-var Tab =                     require('./components/items/container/tab');
-var Panel =                   require('./components/items/container/panel');
+// system components
+var Empty =                             require('./components/items/system/empty');
+
+// labeled components
+var FormText =                          require('./components/items/labeled/textbox');
+var FormPassword =                      require('./components/items/labeled/password');
+var FormSelect =                        require('./components/items/labeled/select');
+var FormSelectMultiple =                require('./components/items/labeled/select_multiple');
+var FormCheckbox =                      require('./components/items/labeled/checkbox');
+var FormCheckboxInline =                require('./components/items/labeled/checkbox_inline');
+var FormRadio =                         require('./components/items/labeled/radio');
+var FormRadioInline =                   require('./components/items/labeled/radio_inline');
+var FormTextarea =                      require('./components/items/labeled/textarea');
+var Table =                             require('./components/items/labeled/table');
+var Calendar =                          require('./components/items/labeled/calendar');
+var MasterSearchBox =                   require('./components/items/labeled/master_search_box');
+
+// non-labeled components
+var FormTextNonLabeled =                require('./components/items/non-labeled/textbox');
+var FormPasswordNonLabeled =            require('./components/items/non-labeled/password');
+var FormSelectNonLabeled =              require('./components/items/non-labeled/select');
+var FormSelectMultipleNonLabeled =      require('./components/items/non-labeled/select_multiple');
+var FormCheckboxNonLabeled =            require('./components/items/non-labeled/checkbox');
+var FormCheckboxInlineNonLabeled =      require('./components/items/non-labeled/checkbox_inline');
+var FormRadioNonLabeled =               require('./components/items/non-labeled/radio');
+var FormRadioInlineNonLabeled =         require('./components/items/non-labeled/radio_inline');
+var FormTextareaNonLabeled =            require('./components/items/non-labeled/textarea');
+var TableNonLabeled =                   require('./components/items/non-labeled/table');
+var CalendarNonLabeled =                require('./components/items/non-labeled/calendar');
+var MasterSearchBoxNonLabeled =         require('./components/items/non-labeled/master_search_box');
+
+var Hr =                                require('./components/items/non-labeled/hr');
+var Label =                             require('./components/items/non-labeled/label');
+var Button =                            require('./components/items/non-labeled/button');
+var Pagination =                        require('./components/items/non-labeled/pagination');
+var Alert =                             require('./components/items/non-labeled/alert');
+var Html =                              require('./components/items/non-labeled/html');
+
+// container components
+var Tab =                               require('./components/items/container/tab');
+var Panel =                             require('./components/items/container/panel');
 
 module.exports.COMPONENTS = [
   {
@@ -75,6 +95,19 @@ module.exports.COMPONENTS = [
   {
     label: 'non-labeled',
     components: [
+      { alias: 'text_non_labeled',                constructor: FormTextNonLabeled},
+      { alias: 'password_non_labeled',            constructor: FormPasswordNonLabeled},
+      { alias: 'select_non_labeled',              constructor: FormSelectNonLabeled},
+      { alias: 'select_multiple_non_labeled',     constructor: FormSelectMultipleNonLabeled},
+      { alias: 'checkbox_non_labeled',            constructor: FormCheckboxNonLabeled},
+      { alias: 'checkbox_inline_non_labeled',     constructor: FormCheckboxInlineNonLabeled},
+      { alias: 'radio_non_labeled',               constructor: FormRadioNonLabeled},
+      { alias: 'radio_inline_non_labeled',        constructor: FormRadioInlineNonLabeled},
+      { alias: 'textarea_non_labeled',            constructor: FormTextareaNonLabeled},
+      { alias: 'table_non_labeled',               constructor: TableNonLabeled},
+      { alias: 'calendar_non_labeled',            constructor: CalendarNonLabeled},
+      { alias: 'master_saerch_box_non_labeled',   constructor: MasterSearchBoxNonLabeled},
+
       { alias: 'hr',                  constructor: Hr},
       { alias: 'button',              constructor: Button},
       { alias: 'pagination',          constructor: Pagination},

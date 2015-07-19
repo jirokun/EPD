@@ -6,7 +6,6 @@ var Alert = React.createClass({
   statics: {
     editors: {
       name: false,
-      forceShowLabel: true,
       label: true,
       size: true,
       align: true,

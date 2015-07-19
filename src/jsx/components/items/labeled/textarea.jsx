@@ -6,6 +6,7 @@ var FormTextarea = React.createClass({
   statics: {
     editors: {
       name: false,
+      showLabel: true,
       label: true,
       size: true,
       align: false,
@@ -15,7 +16,7 @@ var FormTextarea = React.createClass({
       table: false
     },
     defaultLabel: 'Default Label',
-    minSize: 3,
+    minSize: 4,
     maxSize: 12
   },
   mixins: [Component],

@@ -6,6 +6,7 @@ var Hr = React.createClass({
   statics: {
     editors: {
       name: false,
+      toggleLabel: false,
       label: false,
       showLabel: false,
       size: true,

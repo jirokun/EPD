@@ -6,6 +6,7 @@ var Tab = React.createClass({
   statics: {
     editors: {
       name: true,
+      toggleLabel: false,
       label: false,
       size: true,
       align: false,
@@ -15,7 +16,7 @@ var Tab = React.createClass({
       tab: true,
       table: false
     },
-    minSize: 4,
+    minSize: 1,
     maxSize: 12
   },
   mixins: [Component],

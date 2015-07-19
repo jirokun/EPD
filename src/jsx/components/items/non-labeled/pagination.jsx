@@ -6,7 +6,6 @@ var Pagination = React.createClass({
   statics: {
     editors: {
       name: true,
-      forceShowLabel: false,
       label: false,
       size: true,
       align: false,
