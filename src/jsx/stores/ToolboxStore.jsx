@@ -9,7 +9,7 @@ var merge = require('react/lib/merge');
 var CHANGE_EVENT = 'change';
 var CELL_CHANGE_EVENT = 'cellSelect';
 
-var _pageTitle, _editMode = true, _showLabel = false, _dataid, _name, _label, _preText, _postText,
+var _pageTitle, _editMode = true, _showLabel = false, _dataid, _name, _label, _preHtml, _postHtml,
     _type, _size, _html, _rowSize, _options, _columns, _tabs, _align, _color, _leftButtons = [], _rows,
     _rightButtons = [], _containerMode = 'container-fluid', _cellType = 'col-md';
 
@@ -43,8 +43,8 @@ var ToolboxStore = merge(EventEmitter.prototype, {
   getDataid: function() { return _dataid; },
   getName: function() { return _name; },
   getLabel: function() { return _label; },
-  getPreText: function() { return _preText; },
-  getPostText: function() { return _postText; },
+  getPreHtml: function() { return _preHtml; },
+  getPostHtml: function() { return _postHtml; },
   getType: function() { return _type; },
   getAlign: function() { return _align; },
   getSize: function() { return _size; },
@@ -132,11 +132,11 @@ ToolboxDispatcher.register(function(payload) {
       ToolboxStore.emitChange();
       break;
     case ToolboxConstants.UPDATE_PRE_TEXT:
-      _preText = payload.preText;
+      _preHtml = payload.preHtml;
       ToolboxStore.emitChange();
       break;
     case ToolboxConstants.UPDATE_POST_TEXT:
-      _postText = payload.postText;
+      _postHtml = payload.postHtml;
       ToolboxStore.emitChange();
       break;
     case ToolboxConstants.UPDATE_ALIGN:
@@ -192,8 +192,8 @@ ToolboxDispatcher.register(function(payload) {
             _dataid = cell.dataid;
             _showLabel = cell.showLabel;
             _label = cell.label;
-            _preText = cell.preText;
-            _postText = cell.postText;
+            _preHtml = cell.preHtml;
+            _postHtml = cell.postHtml;
             _type = cell.type;
             _align = cell.align;
             _size = cell.size;

@@ -15,8 +15,8 @@ var FormText = React.createClass({
       color: [ 'default', 'warning', 'error', 'success' ],  // 選択可能な色の一覧
       option: false,                                        // オプションエディタ表示フラグ
       rowSize: false,                                       // rowサイズエディタの表示フラグ
-      preText: true,                                        // preテキストエディタの表示フラグ
-      postText: true,                                       // postテキストエディタの表示フラグ
+      preHtml: true,                                        // preテキストエディタの表示フラグ
+      postHtml: true,                                       // postテキストエディタの表示フラグ
       table: false                                          // tableエディタの表示フラグ
     },
     defaultLabel: 'Default Label',
@@ -24,21 +24,21 @@ var FormText = React.createClass({
     maxSize: 12
   },
   mixins: [Component],
-  _preText: function() {
-    if (Util.isEmpty(this.props.cell.preText)) return null;
-    return <span className="input-group-addon" dangerouslySetInnerHTML={{__html: this.props.cell.preText}}/>
+  _preHtml: function() {
+    if (Util.isEmpty(this.props.cell.preHtml)) return null;
+    return <span className="input-group-addon" dangerouslySetInnerHTML={{__html: this.props.cell.preHtml}}/>
   },
-  _postText: function() {
-    if (Util.isEmpty(this.props.cell.postText)) return null;
-    return <span className="input-group-addon" dangerouslySetInnerHTML={{__html: this.props.cell.postText}}/>
+  _postHtml: function() {
+    if (Util.isEmpty(this.props.cell.postHtml)) return null;
+    return <span className="input-group-addon" dangerouslySetInnerHTML={{__html: this.props.cell.postHtml}}/>
   },
   _inputGroup: function() {
-    var inputGroupClassName = Util.isEmpty(this.props.cell.preText) && Util.isEmpty(this.props.cell.postText) ? '' : 'input-group';
+    var inputGroupClassName = Util.isEmpty(this.props.cell.preHtml) && Util.isEmpty(this.props.cell.postHtml) ? '' : 'input-group';
     return (
       <div className={inputGroupClassName}>
-        {this._preText()}
+        {this._preHtml()}
         <input type="text" className="form-control" />
-        {this._postText()}
+        {this._postHtml()}
       </div>
     );
   },

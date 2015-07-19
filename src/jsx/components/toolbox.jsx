@@ -62,8 +62,8 @@ var Toolbox = React.createClass({
       name: ToolboxStore.getName(),
       showLabel: ToolboxStore.isShowLabel(),
       label: ToolboxStore.getLabel(),
-      preText: ToolboxStore.getPreText(),
-      postText: ToolboxStore.getPostText(),
+      preHtml: ToolboxStore.getPreHtml(),
+      postHtml: ToolboxStore.getPostHtml(),
       type: ToolboxStore.getType(),
       align: ToolboxStore.getAlign(),
       size: ToolboxStore.getSize(),
@@ -111,11 +111,11 @@ var Toolbox = React.createClass({
   _changeLabel: function(e) {
     ToolboxAction.updateLabel(e.target.value);
   },
-  _changePreText: function(e) {
-    ToolboxAction.updatePreText(e.target.value);
+  _changePreHtml: function(e) {
+    ToolboxAction.updatePreHtml(e.target.value);
   },
-  _changePostText: function(e) {
-    ToolboxAction.updatePostText(e.target.value);
+  _changePostHtml: function(e) {
+    ToolboxAction.updatePostHtml(e.target.value);
   },
   _changeType: function(e) {
     ToolboxAction.updateType(e.target.value);
@@ -183,23 +183,23 @@ var Toolbox = React.createClass({
       </div>
     );
   },
-  _preTextEditor: function() {
+  _preHtmlEditor: function() {
     var component = ToolboxStore.findComponentConstructor(this.state.type);
-    if (!component || !component.editors.preText) return null;
+    if (!component || !component.editors.preHtml) return null;
     return (
       <div className="form-group">
-        <label htmlFor="label">PreText</label>
-        <input type="text" className="form-control" value={this.state.preText} onChange={this._changePreText}/>
+        <label htmlFor="label">Pre HTML</label>
+        <input type="text" className="form-control" value={this.state.preHtml} onChange={this._changePreHtml}/>
       </div>
     );
   },
-  _postTextEditor: function() {
+  _postHtmlEditor: function() {
     var component = ToolboxStore.findComponentConstructor(this.state.type);
-    if (!component || !component.editors.postText) return null;
+    if (!component || !component.editors.postHtml) return null;
     return (
       <div className="form-group">
-        <label htmlFor="label">PostText</label>
-        <input type="text" className="form-control" value={this.state.postText} onChange={this._changePostText}/>
+        <label htmlFor="label">Post HTML</label>
+        <input type="text" className="form-control" value={this.state.postHtml} onChange={this._changePostHtml}/>
       </div>
     );
   },
@@ -322,8 +322,8 @@ var Toolbox = React.createClass({
         { this._nameEditor() }
         { this._toggleLabelEditor() }
         { this._labelEditor() }
-        { this._preTextEditor() }
-        { this._postTextEditor() }
+        { this._preHtmlEditor() }
+        { this._postHtmlEditor() }
         { this._sizeEditor() }
         { this._alignEditor() }
         { this._colorEditor() }
