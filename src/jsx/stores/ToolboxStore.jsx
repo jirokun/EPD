@@ -66,6 +66,8 @@ var ToolboxStore = merge(EventEmitter.prototype, {
     _leftButtons = json.leftButtons;
     _rightButtons = json.rightButtons;
     _pageTitle = json.pageTitle;
+    _containerMode = json.containerMode;
+    _cellType = json.cellType;
     this.emitChange();
   },
   findComponentConstructor: function(type) {
