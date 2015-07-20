@@ -109,7 +109,7 @@ var ToolboxTabPage = React.createClass({
         </div>
         <div className="form-group">
           <label htmlFor="container-mode">Container Mode</label>
-          <select className="form-control" id="container-mode" value={this.state.contaierMode} onChange={this._onChangeContainerMode}>
+          <select className="form-control" id="container-mode" value={this.state.containerMode} onChange={this._onChangeContainerMode}>
             <option value="container-fluid">container-fluid</option>
             <option value="container">container</option>
           </select>
