@@ -7,6 +7,7 @@ var plumber = require('gulp-plumber');
 var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
 var merge = require('event-stream').merge;
+var run = require('gulp-run');
 
 gulp.task('build', ['copy', 'sass', 'webpack']);
 
@@ -41,6 +42,10 @@ gulp.task('copy', function () {
     gulp.src('./main.js').pipe(gulp.dest('./dist/')),
     gulp.src('./package.json').pipe(gulp.dest('./dist/'))
   ).pipe(connect.reload());
+});
+
+gulp.task('package', ['build'], function() {
+  return run('electron-packager dist/ epd --platform=win32,darwin --arch=x64 --version=0.30.0').exec();
 });
 
 gulp.task('watch', function () {
