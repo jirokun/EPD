@@ -100,13 +100,13 @@ var template = [
   {
     label: 'ReadUs',
     submenu: [
-      {label: 'Quit', accelerator: 'Command+Q', click: function () {app.quit();}}
+      {label: 'Quit', accelerator: 'CommandOrControl+Q', click: function () {app.quit();}}
     ]
   }, {
     label: 'File',
     submenu: [
-      {label: 'Open', accelerator: 'Command+O', click: open},
-      {label: 'Save', accelerator: 'Command+S', click: save},
+      {label: 'Open', accelerator: 'CommandOrControl+O', click: open},
+      {label: 'Save', accelerator: 'CommandOrControl+S', click: save},
       {label: 'Save as New', click: saveAsNew},
       {label: 'Save as HTML', click: saveAsHTML}
     ]

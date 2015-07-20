@@ -56,8 +56,8 @@ var ToolboxTabPage = React.createClass({
     var PageStore = ToolboxStore.getPageStore();
     try {
       var json = JSON.parse(this.state.interfaceText);
-      PageStore.load(json);
       ToolboxStore.load(json);
+      PageStore.load(json);
     } catch(e) {
       console.error(e);
     }

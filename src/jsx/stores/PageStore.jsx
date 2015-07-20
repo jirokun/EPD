@@ -230,6 +230,7 @@ var PageStore = merge(EventEmitter.prototype, {
   },
   load: function(json) {
     _rows = json.rows;
+    _selectedCell = _rows[0][0];
     _pageTitle = json.pageTitle;
     _leftButtons = json.leftButtons;
     _rightButtons = json.rightButtons;
