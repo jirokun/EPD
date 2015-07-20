@@ -1,4 +1,3 @@
-$topHeight: 50;
 $titleHeight: 25;
 
 html,body {
@@ -19,24 +18,17 @@ iframe#preview {
   background-color: #d9edf7;
   padding: 0 0 0 10px;
 }
-#top {
-  height: #{$topHeight}px;
-  border-bottom: 2px solid #ccc;
-  box-sizing: border-box;
-}
 #main {
   width: calc(100% - 220px);
-  height: calc(100% - #{$topHeight}px);
+  height: 100%;
   position: fixed;
   border-right: 2px solid #ccc;
   box-sizing: border-box;
-  top: #{$topHeight}px;
 }
 #right {
   width: 220px;
-  height: calc(100% - #{$topHeight}px);
+  height: 100%;
   position: fixed;
-  top: #{$topHeight}px;
   right: 0;
   .toolbox-container {
     height: calc(100% - #{$titleHeight}px);
