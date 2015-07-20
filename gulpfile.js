@@ -37,7 +37,9 @@ gulp.task('copy', function () {
     gulp.src('./bower_components/handsontable/dist/handsontable.full.js').pipe(gulp.dest('./dist/scripts/')),
     gulp.src('./bower_components/handsontable/dist/handsontable.full.min.css').pipe(gulp.dest('./dist/styles/')),
     gulp.src('./node_modules/bootstrap/dist/css/bootstrap.min.css').pipe(gulp.dest('./dist/styles/')),
-    gulp.src('./node_modules/bootstrap/dist/fonts/*').pipe(gulp.dest('./dist/fonts/'))
+    gulp.src('./node_modules/bootstrap/dist/fonts/*').pipe(gulp.dest('./dist/fonts/')),
+    gulp.src('./main.js').pipe(gulp.dest('./dist/')),
+    gulp.src('./package.json').pipe(gulp.dest('./dist/'))
   ).pipe(connect.reload());
 });
 

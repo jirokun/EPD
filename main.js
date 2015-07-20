@@ -85,7 +85,7 @@ app.on('ready', function() {
 
   // ブラウザ(Chromium)の起動, 初期画面のロード
   mainWindow = new BrowserWindow({width: 1400, height: 800});
-  mainWindow.loadUrl('file://' + __dirname + '/dist/index.html');
+  mainWindow.loadUrl('file://' + __dirname + '/index.html');
   //mainWindow.openDevTools();
 
   mainWindow.on('closed', function() {

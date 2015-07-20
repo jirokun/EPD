@@ -3,3 +3,5 @@ node_modules
 bower_components
 *.swp
 npm-debug.log
+dist/main.js
+dist/package.json
