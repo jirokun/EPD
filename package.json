@@ -1,5 +1,6 @@
 {
   "name": "epd",
+  "main": "main.js",
   "devDependencies": {
     "css-loader": "^0.9.1",
     "event-stream": "^3.2.2",
