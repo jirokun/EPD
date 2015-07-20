@@ -82,6 +82,19 @@ var ToolboxTabPage = React.createClass({
   _onChangeCellType: function(e) {
     ToolboxAction.updateCellType(e.target.value);
   },
+  _renderExports: function() {
+    if (window.navigator.userAgent.toLowerCase().indexOf('electron') !== -1) return null;
+    return (
+      <div>
+        <div className="btn-group">
+          <button type="button" className="btn btn-primary" onClick={this._onClickExport}>Export</button>
+          <button type="button" className="btn btn-danger" onClick={this._onClickImport}>Import</button>
+          <button type="button" className="btn btn-success" onClick={this._onClickHTML}>HTML</button>
+        </div>
+        <textarea className="form-control" value={this.state.interfaceText} onChange={this._onChangeInterfaceText}/>
+      </div>
+    );
+  },
   render: function() {
     return  (
       <form>
@@ -110,12 +123,7 @@ var ToolboxTabPage = React.createClass({
             <option value="col-lg">col-lg</option>
           </select>
         </div>
-        <div className="btn-group">
-          <button type="button" className="btn btn-primary" onClick={this._onClickExport}>Export</button>
-          <button type="button" className="btn btn-danger" onClick={this._onClickImport}>Import</button>
-          <button type="button" className="btn btn-success" onClick={this._onClickHTML}>HTML</button>
-        </div>
-        <textarea className="form-control" value={this.state.interfaceText} onChange={this._onChangeInterfaceText}/>
+        {this._renderExports()}
       </form>
     );
   }
