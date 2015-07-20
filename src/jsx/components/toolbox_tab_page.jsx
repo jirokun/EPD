@@ -56,42 +56,15 @@ var ToolboxTabPage = React.createClass({
     var PageStore = ToolboxStore.getPageStore();
     try {
       var json = JSON.parse(this.state.interfaceText);
-      PageStore.load(json);
       ToolboxStore.load(json);
+      PageStore.load(json);
     } catch(e) {
       console.error(e);
     }
   },
   _onClickHTML: function(e) {
-    var previewIframe = document.getElementById(this.props.preview);
-    var el = previewIframe.contentWindow.document.getElementById('container').cloneNode(true);
-    Util.removeSystemAttributes(el);
-    var html = '<!doctype html>\
-<html class="no-js">\
-  <head>\
-    <meta charset="utf-8">\
-    <title>EPD</title>\
-    <meta name="viewport" content="width=device-width">\
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">\
-    <style>\
-      .docked-footer {\
-        position: fixed;\
-        bottom: 0;\
-        left: 0;\
-        width: 100%;\
-        box-shadow: 10px 10px 10px 10px black;\
-        background: #fff;\
-        z-index: 5;\
-      }\
-    </style>\
-  </head>\
-  <body>\
-    ' + el.outerHTML + '\
-  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>\
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>\
-  </body>\
-</html>';
-    html = beautify_html(html, { indent_size: 2 });
+    var PageStore = ToolboxStore.getPageStore();
+    var html = PageStore.toHTML();
     this.setState({interfaceText: html});
   },
   _changePageTitle: function(e) {
@@ -108,6 +81,19 @@ var ToolboxTabPage = React.createClass({
   },
   _onChangeCellType: function(e) {
     ToolboxAction.updateCellType(e.target.value);
+  },
+  _renderExports: function() {
+    if (window.navigator.userAgent.toLowerCase().indexOf('electron') !== -1) return null;
+    return (
+      <div>
+        <div className="btn-group">
+          <button type="button" className="btn btn-primary" onClick={this._onClickExport}>Export</button>
+          <button type="button" className="btn btn-danger" onClick={this._onClickImport}>Import</button>
+          <button type="button" className="btn btn-success" onClick={this._onClickHTML}>HTML</button>
+        </div>
+        <textarea className="form-control" value={this.state.interfaceText} onChange={this._onChangeInterfaceText}/>
+      </div>
+    );
   },
   render: function() {
     return  (
@@ -137,12 +123,7 @@ var ToolboxTabPage = React.createClass({
             <option value="col-lg">col-lg</option>
           </select>
         </div>
-        <div className="btn-group">
-          <button type="button" className="btn btn-primary" onClick={this._onClickExport}>Export</button>
-          <button type="button" className="btn btn-danger" onClick={this._onClickImport}>Import</button>
-          <button type="button" className="btn btn-success" onClick={this._onClickHTML}>HTML</button>
-        </div>
-        <textarea className="form-control" value={this.state.interfaceText} onChange={this._onChangeInterfaceText}/>
+        {this._renderExports()}
       </form>
     );
   }

@@ -3,3 +3,7 @@ node_modules
 bower_components
 *.swp
 npm-debug.log
+dist/main.js
+dist/package.json
+epd-darwin-x64/
+epd-win32-x64/
