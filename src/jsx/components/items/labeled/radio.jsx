@@ -33,7 +33,7 @@ var FormRadio = React.createClass({
     var sizeClassName = PageStore.getCellType() + "-" + this.calcSizeClassName();
     var options = this.props.cell.options.map(function(option) {
       return (
-        <div className="checkbox">
+        <div className="radio">
           <label>
             <input type="radio" name={_this.props.cell.name} value={option.value}/>&nbsp;{option.label}
           </label>
