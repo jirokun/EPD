@@ -1,7 +1,9 @@
+window.EPD = {};
 var React = require('react');
 var Dispatcher = require('flux').Dispatcher;
 var Toolbox = require('./components/toolbox');
 var ToolboxStore = require('./stores/ToolboxStore');
+var reactTools = require('react-tools');
 
 var Main = React.createClass({
   propTypes: {},
@@ -46,6 +48,14 @@ var Main = React.createClass({
       });
       ipc.on('showVersion', function(event, arg) {
         $(_this.refs['version-modal'].getDOMNode()).modal('show');
+      });
+      ipc.on('loadAddon', function(jsx) {
+        var js = reactTools.transform(jsx);
+        console.log(js);
+        eval(js);
+        var previewIframe = document.getElementById('preview');
+        var w = previewIframe.contentWindow;
+        w.eval(js);
       });
     } catch(e) {
       console.warn(e);
@@ -165,3 +175,6 @@ $(function () {
   "use strict";
   React.render(<Main/>, document.body);
 });
+window.EPD.React = React;
+window.EPD.Component = require('./components/items/component');
+window.EPD.ToolboxAction = require('./actions/ToolboxAction');

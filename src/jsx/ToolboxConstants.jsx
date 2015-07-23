@@ -20,6 +20,7 @@ module.exports = {
   UPDATE_PRE_TEXT:          'UPDATE_PRE_TEXT',
   UPDATE_POST_TEXT:         'UPDATE_POST_TEXT',
   TOOLBOX_INITIALIZED:      'TOOLBOX_INITIALIZED',
+  ADD_COMPONENTS:           'ADD_COMPONENTS',
   ALIGN_LEFT:               'left',
   ALIGN_CENTER:             'center',
   ALIGN_RIGHT:              'right'
@@ -68,7 +69,7 @@ var Html =                              require('./components/items/non-labeled/
 var Tab =                               require('./components/items/container/tab');
 var Panel =                             require('./components/items/container/panel');
 
-module.exports.COMPONENTS = [
+([
   {
     label: 'system',
     components: [
@@ -123,5 +124,6 @@ module.exports.COMPONENTS = [
       { alias: 'tab',                 constructor: Tab}
     ]
   }
-];
-
+]).forEach(function(componentGroup) {
+  module.exports.COMPONENTS.push(componentGroup);
+});

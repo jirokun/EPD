@@ -35,6 +35,7 @@ var Toolbox = React.createClass({
     ToolboxStore.addChangeListener(this._onToolboxStoreChange);
     ToolboxStore.addCellChangeListener(this._onCellChange);
     ToolboxAction.initializeToolbox();
+    ToolboxStore.loadAddon();
   },
   componentWillUpdate: function(nextProps, nextState) {
   },
@@ -85,23 +86,6 @@ var Toolbox = React.createClass({
     if (!newState.dataid) return;
     PageAction.updateCell(newState);
   },
-  _calcAvailableTypes: function() {
-    var PageStore = ToolboxStore.getPageStore();
-    var freeSpace = PageStore.calcFreeSpace(this.state.dataid);
-    var optgroups = [];
-    for (var i = 0, len = ToolboxConstants.COMPONENTS.length; i < len; i++) {
-      var group = ToolboxConstants.COMPONENTS[i];
-      var label = group.label;
-      var options = [];
-      for (var j = 0, jlen = group.components.length; j < jlen; j++) {
-        var component = group.components[j];
-        var disabled = component.constructor.minSize > freeSpace;
-        options.push(<option disabled={disabled}>{component.alias}</option>);
-      }
-      optgroups.push(<optgroup label={label}>{options}</optgroup>);
-    }
-    return optgroups;
-  },
   _changeName: function(e) {
     ToolboxAction.updateName(e.target.value);
   },
@@ -140,7 +124,7 @@ var Toolbox = React.createClass({
       <div className="form-group">
         <label htmlFor="type">Component Type</label>
         <select ref="componentType" className="form-control" id="type" value={this.state.type} onChange={this._changeType}>
-          {this._calcAvailableTypes()}
+          {ToolboxStore.calcAvailableTypes()}
         </select>
       </div>
     );
