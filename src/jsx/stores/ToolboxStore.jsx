@@ -1,3 +1,4 @@
+var React = require('react');
 var ToolboxConstants = require('../ToolboxConstants');
 var ToolboxDispatcher = require('../dispatchers/ToolboxDispatcher');
 var EventEmitter = require('events').EventEmitter;
@@ -11,7 +12,8 @@ var CELL_CHANGE_EVENT = 'cellSelect';
 
 var _pageTitle, _editMode = true, _showLabel = false, _dataid, _name, _label, _preHtml, _postHtml,
     _type, _size, _html, _rowSize, _options, _columns, _tabs, _align, _color, _leftButtons = [], _rows,
-    _rightButtons = [], _containerMode = 'container-fluid', _cellType = 'col-md';
+    _rightButtons = [], _containerMode = 'container-fluid', _cellType = 'col-md',
+    _components = ToolboxConstants.COMPONENTS;
 
 function updateType(type) {
   _type = type;
@@ -24,6 +26,12 @@ function updateType(type) {
   if (_size > component.maxSize) _size = component.maxSize;
   if (typeof(_label) === 'undefined') _label = component.defaultLabel;
   updateHTML();
+  ToolboxStore.emitChange();
+}
+function addComponents(components) {
+  components.forEach(function(c) {
+    _components.push(c);
+  });
   ToolboxStore.emitChange();
 }
 function updateHTML() {
@@ -62,6 +70,31 @@ var ToolboxStore = merge(EventEmitter.prototype, {
       var w = previewIframe.contentWindow;
       return w.PageStore;
   },
+  calcAvailableTypes: function() {
+    var PageStore = this.getPageStore();
+    var freeSpace = PageStore.calcFreeSpace(this.getDataid());
+    var optgroups = [];
+    for (var i = 0, len = _components.length; i < len; i++) {
+      var group = _components[i];
+      var label = group.label;
+      var options = [];
+      for (var j = 0, jlen = group.components.length; j < jlen; j++) {
+        var component = group.components[j];
+        var disabled = component.constructor.minSize > freeSpace;
+        options.push(<option disabled={disabled}>{component.alias}</option>);
+      }
+      optgroups.push(<optgroup label={label}>{options}</optgroup>);
+    }
+    return optgroups;
+  },
+  loadAddon: function() {
+    if (!window.EPD_ADDON) return;
+    _components = ToolboxConstants.COMPONENTS;
+    EPD_ADDON.forEach(function(addon) {
+      _components.push(addon);
+    });
+    this.emitChange();
+  },
   load: function(json) {
     _leftButtons = json.leftButtons;
     _rightButtons = json.rightButtons;
@@ -71,8 +104,8 @@ var ToolboxStore = merge(EventEmitter.prototype, {
     this.emitChange();
   },
   findComponentConstructor: function(type) {
-    for (var i = 0, len = ToolboxConstants.COMPONENTS.length; i < len; i++) {
-      var group = ToolboxConstants.COMPONENTS[i];
+    for (var i = 0, len = _components.length; i < len; i++) {
+      var group = _components[i];
       var label = group.label;
       var options = [];
       for (var j = 0, jlen = group.components.length; j < jlen; j++) {
@@ -183,6 +216,9 @@ ToolboxDispatcher.register(function(payload) {
       break;
     case ToolboxConstants.UPDATE_TYPE:
       updateType(payload.type);
+      break;
+    case ToolboxConstants.ADD_COMPONENTS:
+      addComponents(payload.components);
       break;
     case ToolboxConstants.TOOLBOX_INITIALIZED:
       var previewIframe = document.getElementById('preview');

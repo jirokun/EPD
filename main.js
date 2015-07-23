@@ -50,6 +50,14 @@ function saveAsNew() {
 function saveAsHTML() {
   mainWindow.webContents.send('requestHTML');
 }
+function loadAddon() {
+  var fname = __dirname + '/addon.jsx';
+  console.log(fname);
+  var exists = fs.existsSync(fname);
+  if (!exists) return;
+  var jsx = fs.readFileSync(fname, { encoding: 'utf-8'});
+  mainWindow.webContents.send('loadAddon', jsx);
+}
 function showShortcuts() {
   mainWindow.webContents.send('showShortcuts');
 }
@@ -86,14 +94,15 @@ app.on('ready', function() {
   // ブラウザ(Chromium)の起動, 初期画面のロード
   mainWindow = new BrowserWindow({width: 1400, height: 800});
   mainWindow.loadUrl('file://' + __dirname + '/index.html');
+  mainWindow.webContents.on('did-finish-load', function() {
+    loadAddon();
+  });
   //mainWindow.openDevTools();
 
   mainWindow.on('closed', function() {
     mainWindow = null;
   });
 });
-
-
 
 // メニュー情報の作成
 var template = [
@@ -127,6 +136,4 @@ var template = [
     ]
   }
 ];
-
-
 var menu = Menu.buildFromTemplate(template);
