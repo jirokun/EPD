@@ -128,6 +128,12 @@ var ToolboxAction = {
       cell:cell 
     });
   },
+  addComponents: function(components) {
+    ToolboxDispatcher.dispatch({
+      actionType: ToolboxConstants.ADD_COMPONENTS,
+      components: components
+    });
+  },
   initializeToolbox: function() {
     ToolboxDispatcher.dispatch({
       actionType: ToolboxConstants.TOOLBOX_INITIALIZED
