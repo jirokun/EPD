@@ -6,7 +6,6 @@ var Menu = require('menu');
 var fs = require('fs');
 var ipc = require('ipc');
 var dialog = require('dialog');
-var reactTools = require('react-tools');
 require('crash-reporter').start();
 
 var mainWindow = null;
@@ -53,11 +52,11 @@ function saveAsHTML() {
 }
 function loadAddon() {
   var fname = __dirname + '/addon.jsx';
+  console.log(fname);
   var exists = fs.existsSync(fname);
   if (!exists) return;
   var jsx = fs.readFileSync(fname, { encoding: 'utf-8'});
-  var js = reactTools.transform(jsx);
-  mainWindow.webContents.send('loadAddon', js);
+  mainWindow.webContents.send('loadAddon', jsx);
 }
 function showShortcuts() {
   mainWindow.webContents.send('showShortcuts');

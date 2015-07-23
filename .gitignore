@@ -7,3 +7,4 @@ dist/main.js
 dist/package.json
 epd-darwin-x64/
 epd-win32-x64/
+.DS_Store
