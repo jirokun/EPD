@@ -10,7 +10,23 @@ require('crash-reporter').start();
 
 var mainWindow = null;
 var openedFile = null; // 開いている最中のファイル
+var dataChanged = false;
 
+function setChanged(bool) {
+  var fname;
+  if (!openedFile) {
+    fname = '';
+  } else {
+    fname = openedFile;
+  }
+  if (bool) {
+    mainWindow.setTitle('EPD ' + fname + ' *');
+    dataChanged = true;
+  } else {
+    mainWindow.setTitle('EPD ' + fname);
+    dataChanged = false;
+  }
+}
 function open() {
   // 「ファイルを開く」ダイアログの呼び出し
   dialog.showOpenDialog({
@@ -22,10 +38,10 @@ function open() {
     if (!files) return;
     var file = files[0];
     openedFile = file;
-    mainWindow.setTitle('EPD: ' + file);
     var text = fs.readFileSync(file);
     var json = JSON.parse(text);
     mainWindow.webContents.send('loadJSON', json);
+    setChanged(false);
   });
 }
 
@@ -44,6 +60,7 @@ function saveAsNew() {
   }, function (filename) {
     if (!filename) return;
     openedFile = filename;
+    setChanged(false);
     save();
   });
 }
@@ -52,7 +69,6 @@ function saveAsHTML() {
 }
 function loadAddon() {
   var fname = __dirname + '/addon.jsx';
-  console.log(fname);
   var exists = fs.existsSync(fname);
   if (!exists) return;
   var jsx = fs.readFileSync(fname, { encoding: 'utf-8'});
@@ -69,6 +85,7 @@ ipc.on('responseJSON', function(event, json) {
   fs.writeFile(openedFile, text, function(err) {
     console.error(err);
   });
+  setChanged(false);
 });
 ipc.on('responseHTML', function(event, html) {
   dialog.showSaveDialog({
@@ -80,7 +97,14 @@ ipc.on('responseHTML', function(event, html) {
     fs.writeFile(filename, html, function(err) {
       console.error(err);
     });
+    setChanged(false);
   });
+});
+ipc.on('changeData', function() {
+  setChanged(true);
+});
+ipc.on('loadComplete', function() {
+  setChanged(false);
 });
 
 app.on('window-all-closed', function() {
@@ -99,6 +123,21 @@ app.on('ready', function() {
   });
   //mainWindow.openDevTools();
 
+  mainWindow.on('close', function(e) {
+    if (!dataChanged) return;
+    e.preventDefault();
+    dialog.showMessageBox(mainWindow, {
+      type: 'warning',
+      title: 'Exit without saving',
+      message: 'Are you sure to exit without saving?',
+      buttons: ['Cancel', 'OK'],
+      cancelId: 0
+    }, function(id) {
+      if (id == 0) return;
+      mainWindow.destroy();
+      app.quit();
+    });
+  });
   mainWindow.on('closed', function() {
     mainWindow = null;
   });
@@ -107,25 +146,21 @@ app.on('ready', function() {
 // メニュー情報の作成
 var template = [
   {
-    label: 'ReadUs',
-    submenu: [
-      {label: 'Quit', accelerator: 'CommandOrControl+Q', click: function () {app.quit();}}
-    ]
-  }, {
     label: 'File',
     submenu: [
       {label: 'Open', accelerator: 'CommandOrControl+O', click: open},
       {label: 'Save', accelerator: 'CommandOrControl+S', click: save},
       {label: 'Save as New', click: saveAsNew},
-      {label: 'Save as HTML', click: saveAsHTML}
+      {label: 'Save as HTML', click: saveAsHTML},
+      {label: 'Quit', accelerator: 'CommandOrControl+Q', click: function () {app.quit();}}
     ]
   },
 
   {
     label: 'View',
     submenu: [
-      { label: 'Reload', accelerator: 'Command+R', click: function() { BrowserWindow.getFocusedWindow().reloadIgnoringCache(); } },
-      { label: 'Toggle DevTools', accelerator: 'Alt+Command+I', click: function() { BrowserWindow.getFocusedWindow().toggleDevTools(); } }
+      { label: 'Reload', accelerator: 'CommandOrControl+R', click: function() { BrowserWindow.getFocusedWindow().reloadIgnoringCache(); } },
+      { label: 'Toggle DevTools', accelerator: 'Alt+CommandOrControl+I', click: function() { BrowserWindow.getFocusedWindow().toggleDevTools(); } }
     ]
   },
   {
