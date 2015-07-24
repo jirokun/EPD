@@ -15,6 +15,13 @@ var _pageTitle, _editMode = true, _showLabel = false, _dataid, _name, _label, _p
     _rightButtons = [], _containerMode = 'container-fluid', _cellType = 'col-md',
     _components = ToolboxConstants.COMPONENTS;
 
+function changeData() {
+  // fo electron
+  try {
+    var ipc = window.require('ipc');
+    ipc.send('changeData');
+  } catch(e) { }
+}
 function updateType(type) {
   _type = type;
   var component = ToolboxStore.findComponentConstructor(_type);
@@ -244,6 +251,12 @@ ToolboxDispatcher.register(function(payload) {
             _rows = cell.rows;
             ToolboxStore.emitCellChange();
             ToolboxStore.emitChange();
+            break;
+          case PageConstants.UPDATE_CELL:
+          case PageConstants.UPDATE_PAGE_TITLE:
+          case PageConstants.UPDATE_LEFT_BUTTONS:
+          case PageConstants.UPDATE_RIGHT_BUTTONS:
+            changeData();
             break;
           default:
             break;

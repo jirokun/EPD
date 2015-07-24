@@ -34,6 +34,7 @@ var Main = React.createClass({
       ipc.on('loadJSON', function(json) {
         ToolboxStore.load(json);
         ToolboxStore.getPageStore().load(json);
+        ipc.send('loadComplete');
       });
       ipc.on('requestJSON', function(event, arg) {
         var json = ToolboxStore.getPageStore().toJSON();
@@ -51,11 +52,11 @@ var Main = React.createClass({
       });
       ipc.on('loadAddon', function(jsx) {
         var js = reactTools.transform(jsx);
-        console.log(js);
         eval(js);
         var previewIframe = document.getElementById('preview');
         var w = previewIframe.contentWindow;
         w.eval(js);
+        ipc.send('loadComplete');
       });
     } catch(e) {
       console.warn(e);
