@@ -24,13 +24,19 @@ var TableEditor = React.createClass({
   componentDidMount: function() {
     var _this = this;
     this._handsontable = new Handsontable(this.refs.handsontable.getDOMNode(), {
-      data: this._convertColumns(this.props.columns),
+      data: this.props.columns,
       columns: [
-        { type: 'text' },
-        { type: 'text' }
+        { data: 'label', type: 'text' },
+        {
+          data: 'type',
+          type: 'text',
+          editor: 'select',
+          selectOptions: [ 'text', 'link', 'select', 'checkbox', 'radio', 'textarea', 'calendar', 'master_search_box' ]
+        },
+        { data: 'sample', type: 'text' }
       ],
-      colHeaders: ['Label', 'Sample'],
-      colWidths: [100, 100],
+      colHeaders: ['Label', 'Type', 'Sample'],
+      colWidths: [70, 60, 60],
       width: 200,
       minHeight: 50,
       minRows: 2,
@@ -38,7 +44,7 @@ var TableEditor = React.createClass({
       contextMenu: ["row_above", "row_below", "remove_row", "undo", "redo"],
       afterChange: function(changes, source) {
         if (ToolboxDispatcher.isDispatching()) return;
-        var columns = this.getData().map(function(arr) { return {label: arr[0], sample: arr[1] }; });
+        var columns = this.getData();
         columns.splice(columns.length - 1, 1);
         ToolboxAction.updateColumns(columns);
       }
@@ -49,9 +55,6 @@ var TableEditor = React.createClass({
   },
   componentWillUnmount: function() {
     this._handsontable.destroy();
-  },
-  _convertColumns: function(columns) {
-    return columns.map(function(column) { return [column.label, column.sample]});
   },
   render: function() {
     return (

@@ -25,7 +25,59 @@ var Table = React.createClass({
     };
   },
   mixins: [Component],
+  _renderCell: function(c) {
+    switch(c.type) {
+      case 'textarea':
+        return <textarea className="form-control"></textarea>
+        break;
+      case 'link':
+        return <a href="javascript:void(0);">{c.sample}</a>;
+        break;
+      case 'select':
+        return (
+          <select className="form-control">
+            <option>sample1</option>
+            <option>sample2</option>
+          </select>
+          );
+        break;
+      case 'checkbox':
+        return <input type="checkbox"/>
+        break;
+      case 'radio':
+        return <input type="radio"/>
+        break;
+      case 'calendar':
+        return (
+          <div className="input-group">
+            <input type="text" className="form-control" />
+            <span className="input-group-btn">
+              <button className="btn btn-default">
+                <span className="glyphicon glyphicon-calendar" />
+              </button>
+            </span>
+          </div>
+        );
+        break;
+      case 'master_search_box':
+        return (
+          <div className="input-group">
+            <input type="text" className="form-control" />
+            <span className="input-group-btn">
+              <button className="btn btn-default">
+                <span className="glyphicon glyphicon-search" />
+              </button>
+            </span>
+          </div>
+        );
+        break;
+      default:
+        return c.sample;
+        break;
+    }
+  },
   render: function() {
+    var _this = this;
     var sizeClassName = PageStore.getCellType() + "-" + this.calcSizeClassName();
     var componentClassName = "epd-component" + (this.props.selected ? " selected" : "");
     var columns = this.props.cell.columns;
@@ -41,9 +93,9 @@ var Table = React.createClass({
               </tr>
             </thead>
             <tbody>
-              <tr>{ columns.map(function(c) { return <td>{ c.sample }</td>; }) }</tr>
-              <tr>{ columns.map(function(c) { return <td>{ c.sample }</td>; }) }</tr>
-              <tr>{ columns.map(function(c) { return <td>{ c.sample }</td>; }) }</tr>
+              <tr>{ columns.map(function(c) { return <td>{ _this._renderCell(c) }</td>; }) }</tr>
+              <tr>{ columns.map(function(c) { return <td>{ _this._renderCell(c) }</td>; }) }</tr>
+              <tr>{ columns.map(function(c) { return <td>{ _this._renderCell(c) }</td>; }) }</tr>
             </tbody>
           </table>
         </div>
