@@ -12,7 +12,7 @@ var CELL_CHANGE_EVENT = 'cellSelect';
 
 var _pageTitle, _editMode = true, _showLabel = false, _dataid, _name, _label, _preHtml, _postHtml,
     _type, _size, _html, _rowSize, _options, _columns, _tabs, _align, _color, _leftButtons = [], _rows,
-    _rightButtons = [], _containerMode = 'container-fluid', _cellType = 'col-md',
+    _rightButtons = [], _containerMode = 'container-fluid', _cellType = 'col-md', _value, _href,
     _components = ToolboxConstants.COMPONENTS;
 
 function changeData() {
@@ -32,6 +32,7 @@ function updateType(type) {
   }
   if (_size > component.maxSize) _size = component.maxSize;
   if (typeof(_label) === 'undefined') _label = component.defaultLabel;
+  if (typeof(_value) === 'undefined' && component.defaultValue) _value = component.defaultValue;
   updateHTML();
   ToolboxStore.emitChange();
 }
@@ -58,6 +59,8 @@ var ToolboxStore = merge(EventEmitter.prototype, {
   getDataid: function() { return _dataid; },
   getName: function() { return _name; },
   getLabel: function() { return _label; },
+  getValue: function() { return _value; },
+  getHref: function() { return _href; },
   getPreHtml: function() { return _preHtml; },
   getPostHtml: function() { return _postHtml; },
   getType: function() { return _type; },
@@ -173,6 +176,14 @@ ToolboxDispatcher.register(function(payload) {
       _label = payload.label;
       ToolboxStore.emitChange();
       break;
+    case ToolboxConstants.UPDATE_VALUE:
+      _value = payload.value;
+      ToolboxStore.emitChange();
+      break;
+    case ToolboxConstants.UPDATE_HREF:
+      _href = payload.href;
+      ToolboxStore.emitChange();
+      break;
     case ToolboxConstants.UPDATE_PRE_TEXT:
       _preHtml = payload.preHtml;
       ToolboxStore.emitChange();
@@ -237,6 +248,8 @@ ToolboxDispatcher.register(function(payload) {
             _dataid = cell.dataid;
             _showLabel = cell.showLabel;
             _label = cell.label;
+            _value = cell.value;
+            _href = cell.href;
             _preHtml = cell.preHtml;
             _postHtml = cell.postHtml;
             _type = cell.type;
