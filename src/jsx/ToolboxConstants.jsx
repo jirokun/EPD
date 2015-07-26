@@ -17,6 +17,8 @@ module.exports = {
   UPDATE_COLOR:             'UPDATE_COLOR',
   UPDATE_SHOW_LABEL:        'UPDATE_SHOW_LABEL',
   UPDATE_LABEL:             'UPDATE_LABEL',
+  UPDATE_VALUE:             'UPDATE_VALUE',
+  UPDATE_HREF:              'UPDATE_HREF',
   UPDATE_PRE_TEXT:          'UPDATE_PRE_TEXT',
   UPDATE_POST_TEXT:         'UPDATE_POST_TEXT',
   TOOLBOX_INITIALIZED:      'TOOLBOX_INITIALIZED',
@@ -31,6 +33,7 @@ module.exports.COMPONENTS = [];
 var Empty =                             require('./components/items/system/empty');
 
 // labeled components
+var Link =                              require('./components/items/labeled/link');
 var FormText =                          require('./components/items/labeled/textbox');
 var FormPassword =                      require('./components/items/labeled/password');
 var FormSelect =                        require('./components/items/labeled/select');
@@ -45,6 +48,7 @@ var Calendar =                          require('./components/items/labeled/cale
 var MasterSearchBox =                   require('./components/items/labeled/master_search_box');
 
 // non-labeled components
+var LinkNonLabeld =                              require('./components/items/non-labeled/link');
 var FormTextNonLabeled =                require('./components/items/non-labeled/textbox');
 var FormPasswordNonLabeled =            require('./components/items/non-labeled/password');
 var FormSelectNonLabeled =              require('./components/items/non-labeled/select');
@@ -79,6 +83,7 @@ var Panel =                             require('./components/items/container/pa
   {
     label: 'labeled',
     components: [
+      { alias: 'link',                constructor: Link},
       { alias: 'text',                constructor: FormText},
       { alias: 'password',            constructor: FormPassword},
       { alias: 'select',              constructor: FormSelect},
@@ -96,6 +101,7 @@ var Panel =                             require('./components/items/container/pa
   {
     label: 'non-labeled',
     components: [
+      { alias: 'link_non_labeled',                constructor: LinkNonLabeld},
       { alias: 'text_non_labeled',                constructor: FormTextNonLabeled},
       { alias: 'password_non_labeled',            constructor: FormPasswordNonLabeled},
       { alias: 'select_non_labeled',              constructor: FormSelectNonLabeled},

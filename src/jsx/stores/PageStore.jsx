@@ -103,6 +103,8 @@ function replaceCell(newCell) {
       cell.showLabel = newCell.showLabel;
       cell.type = newCell.type;
       cell.label = newCell.label;
+      cell.value = newCell.value;
+      cell.href = newCell.href;
       cell.preHtml = newCell.preHtml;
       cell.postHtml = newCell.postHtml;
       cell.align = newCell.align;
@@ -112,6 +114,7 @@ function replaceCell(newCell) {
       cell.rowSize = newCell.rowSize;
       cell.options = newCell.options;
       cell.columns = newCell.columns;
+      console.log(cell.href);
       if (cell.type === 'tab') {
         cell.tabs = replaceDataid(newCell.tabs);
       }

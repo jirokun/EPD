@@ -63,6 +63,8 @@ var Toolbox = React.createClass({
       name: ToolboxStore.getName(),
       showLabel: ToolboxStore.isShowLabel(),
       label: ToolboxStore.getLabel(),
+      value: ToolboxStore.getValue(),
+      href: ToolboxStore.getHref(),
       preHtml: ToolboxStore.getPreHtml(),
       postHtml: ToolboxStore.getPostHtml(),
       type: ToolboxStore.getType(),
@@ -94,6 +96,12 @@ var Toolbox = React.createClass({
   },
   _changeLabel: function(e) {
     ToolboxAction.updateLabel(e.target.value);
+  },
+  _changeValue: function(e) {
+    ToolboxAction.updateValue(e.target.value);
+  },
+  _changeHref: function(e) {
+    ToolboxAction.updateHref(e.target.value);
   },
   _changePreHtml: function(e) {
     ToolboxAction.updatePreHtml(e.target.value);
@@ -164,6 +172,26 @@ var Toolbox = React.createClass({
       <div className="form-group">
         <label htmlFor="label">Label</label>
         <input ref="componentLabel" type="text" className="form-control" id="label" value={this.state.label} onChange={this._changeLabel}/>
+      </div>
+    );
+  },
+  _valueEditor: function() {
+    var component = ToolboxStore.findComponentConstructor(this.state.type);
+    if (!component || !component.editors.value) return null;
+    return (
+      <div className="form-group">
+        <label htmlFor="value">Value</label>
+        <input type="text" className="form-control" id="value" value={this.state.value} onChange={this._changeValue}/>
+      </div>
+    );
+  },
+  _hrefEditor: function() {
+    var component = ToolboxStore.findComponentConstructor(this.state.type);
+    if (!component || !component.editors.href) return null;
+    return (
+      <div className="form-group">
+        <label htmlFor="href">Href</label>
+        <input type="text" className="form-control" id="href" value={this.state.href} onChange={this._changeHref}/>
       </div>
     );
   },
@@ -306,6 +334,8 @@ var Toolbox = React.createClass({
         { this._nameEditor() }
         { this._toggleLabelEditor() }
         { this._labelEditor() }
+        { this._valueEditor() }
+        { this._hrefEditor() }
         { this._preHtmlEditor() }
         { this._postHtmlEditor() }
         { this._sizeEditor() }

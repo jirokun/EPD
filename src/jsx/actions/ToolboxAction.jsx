@@ -50,6 +50,18 @@ var ToolboxAction = {
       label: label
     });
   },
+  updateValue: function(value) {
+    ToolboxDispatcher.dispatch({
+      actionType: ToolboxConstants.UPDATE_VALUE,
+      value: value
+    });
+  },
+  updateHref: function(href) {
+    ToolboxDispatcher.dispatch({
+      actionType: ToolboxConstants.UPDATE_HREF,
+      href: href 
+    });
+  },
   updatePreHtml: function(preHtml) {
     ToolboxDispatcher.dispatch({
       actionType: ToolboxConstants.UPDATE_PRE_TEXT,
