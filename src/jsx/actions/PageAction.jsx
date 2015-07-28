@@ -2,6 +2,21 @@ var PageDispatcher = require('../dispatchers/PageDispatcher');
 var PageConstants = require('../PageConstants');
 
 var PageAction = {
+  undo: function() {
+    PageDispatcher.dispatch({
+      actionType: PageConstants.UNDO
+    });
+  },
+  redo: function() {
+    PageDispatcher.dispatch({
+      actionType: PageConstants.REDO
+    });
+  },
+  del: function() {
+    PageDispatcher.dispatch({
+      actionType: PageConstants.DELETE
+    });
+  },
   updatePageInfo: function(info) {
     PageDispatcher.dispatch({
       actionType: PageConstants.UPDATE_PAGE_INFO,

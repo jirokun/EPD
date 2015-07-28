@@ -45,6 +45,6 @@
     "js-beautify": "^1.5.10",
     "react": "^0.12.2",
     "react-tools": "^0.13.3",
-    "underscore": "^1.7.0"
+    "underscore": "^1.8.3"
   }
 }
