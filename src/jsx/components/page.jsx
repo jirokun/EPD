@@ -27,8 +27,13 @@ var Page = React.createClass({
     window.PageStore = PageStore;
     window.PageDispatcher = PageDispatcher;
     document.addEventListener('keydown', function(e) {
+      // inputやselectに入力された場合にはこれらの処理は行わない
+      if (e.target.tagName.toLowerCase() !== 'body') return;
       if (e.keyCode == 67) PageAction.copy();
+      else if (e.keyCode == 46) PageAction.del();
       else if (e.keyCode == 86) PageAction.paste();
+      else if (e.keyCode == 90) PageAction.undo();
+      else if (e.keyCode == 89) PageAction.redo();
     }, false);
   },
   _leftButtons: function() {

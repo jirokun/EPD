@@ -11,7 +11,8 @@ var ROWS_CHANGE= 'ROWS_CHANGE';
 var PAGE_STATE_CHANGE = 'PAGE_STATE_CHANGE';
 
 var _pageTitle, _editMode = true, _selectedCell = {}, _selectedElement, _rows = [], _sequence = 0,
-  _copiedCell, _leftButtons = [], _rightButtons = [], _containerMode, _cellType = 'col-md';
+  _copiedCell, _leftButtons = [], _rightButtons = [], _containerMode, _cellType = 'col-md',
+  _undoStack = [], _undoStackTimeout, _redoStack = [], _lastJSON;
 
 function createEmpty() {
   return {
@@ -26,6 +27,46 @@ function createEmpty() {
     columns: [],
     tabs: []
   };
+}
+
+// type to empty
+function del() {
+  if (!_selectedCell) return;
+  var newCell = JSON.parse(JSON.stringify(_selectedCell));
+  newCell.type = 'empty';
+  newCell.size = 1;
+  replaceCell(newCell);
+  PageStore.emitChange();
+}
+function undo() {
+  if (_undoStack.length === 0) return;
+  var lastJSON = _undoStack.pop();
+  var currentJSON = JSON.stringify(PageStore.toJSON());
+  if (currentJSON === lastJSON) {
+    if (_undoStack.length === 0) return;
+    lastJSON = _undoStack.pop();
+  }
+  _redoStack.push(currentJSON);
+  PageStore.load(JSON.parse(lastJSON), true);
+}
+function redo() {
+  if (_redoStack.length === 0) return;
+  var lastJSON = _redoStack.pop();
+  var currentJSON = JSON.stringify(PageStore.toJSON());
+  _undoStack.push(currentJSON);
+  PageStore.load(JSON.parse(lastJSON), true);
+}
+function pushUndoStackInner() {
+  var lastJSON = _undoStack[_undoStack.length - 1];
+  var currentJSON = JSON.stringify(PageStore.toJSON());
+  if (lastJSON === currentJSON) return;
+  _undoStack.push(currentJSON);
+  _redoStack = [];
+}
+
+function pushUndoStack() {
+  if (_undoStackTimeout) clearTimeout(_undoStackTimeout);
+  _undoStackTimeout = setTimeout(pushUndoStackInner, 500);
 }
 
 // for container. like tab
@@ -114,7 +155,6 @@ function replaceCell(newCell) {
       cell.rowSize = newCell.rowSize;
       cell.options = newCell.options;
       cell.columns = newCell.columns;
-      console.log(cell.href);
       if (cell.type === 'tab') {
         cell.tabs = replaceDataid(newCell.tabs);
       }
@@ -231,7 +271,7 @@ var PageStore = merge(EventEmitter.prototype, {
       sequence: _sequence
     };
   },
-  load: function(json) {
+  load: function(json, ignoreUndostack) {
     _rows = json.rows;
     _selectedCell = _rows[0][0];
     _pageTitle = json.pageTitle;
@@ -240,7 +280,7 @@ var PageStore = merge(EventEmitter.prototype, {
     _containerMode = json.containerMode;
     _cellType = json.cellType;
     _sequence = json.sequence;
-    this.emitChange();
+    this.emitChange(ignoreUndostack);
   },
   
   // if rows isn't specified, check _rows variables
@@ -266,8 +306,10 @@ var PageStore = merge(EventEmitter.prototype, {
     }
     return freeSpace;
   },
-  emitChange: function() {
+  emitChange: function(ignoreUndostack) {
     this.emit(PAGE_STORE_CHANGE);
+    if (ignoreUndostack) return;
+    pushUndoStack();
   },  
   addListener: function(callback) {
     this.on(PAGE_STORE_CHANGE, callback);
@@ -317,6 +359,15 @@ PageDispatcher.register(function(payload) {
       break;
     case PageConstants.COPY:
       _copiedCell = JSON.parse(JSON.stringify(_selectedCell));
+      break;
+    case PageConstants.UNDO:
+      undo();
+      break;
+    case PageConstants.REDO:
+      redo();
+      break;
+    case PageConstants.DELETE:
+      del();
       break;
     default:
       return true;

@@ -114,7 +114,7 @@ var Main = React.createClass({
             <div className="modal-body">
               <div className="row">
                 <div className="col-xs-12">
-                  <h5>Cell shortcuts</h5>
+                  <h5>Preview shortcuts</h5>
                 </div>
               </div>
               <div className="row">
@@ -124,6 +124,18 @@ var Main = React.createClass({
               <div className="row">
                 <div className="col-xs-3 text-right">Paste</div>
                 <div className="col-xs-3">v</div>
+              </div>
+              <div className="row">
+                <div className="col-xs-3 text-right">Undo</div>
+                <div className="col-xs-3">z</div>
+              </div>
+              <div className="row">
+                <div className="col-xs-3 text-right">Redo</div>
+                <div className="col-xs-3">y</div>
+              </div>
+              <div className="row">
+                <div className="col-xs-3 text-right">Delete</div>
+                <div className="col-xs-3">DELETE</div>
               </div>
               <div className="row">
                 <div className="col-xs-12">
