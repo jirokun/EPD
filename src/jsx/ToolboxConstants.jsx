@@ -33,6 +33,7 @@ module.exports.COMPONENTS = [];
 var Empty =                             require('./components/items/system/empty');
 
 // labeled components
+var Header =                            require('./components/items/labeled/header');
 var Link =                              require('./components/items/labeled/link');
 var FormText =                          require('./components/items/labeled/textbox');
 var FormPassword =                      require('./components/items/labeled/password');
@@ -83,6 +84,7 @@ var Panel =                             require('./components/items/container/pa
   {
     label: 'labeled',
     components: [
+      { alias: 'header',              constructor: Header},
       { alias: 'link',                constructor: Link},
       { alias: 'text',                constructor: FormText},
       { alias: 'password',            constructor: FormPassword},
