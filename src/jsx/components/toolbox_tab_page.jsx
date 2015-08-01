@@ -18,7 +18,8 @@ var ToolboxTabPage = React.createClass({
       pageTitle: '',
       interfaceText: '',
       containerMode: 'container-fluid',
-      cellType: 'col-md'
+      cellType: 'col-md',
+      buttonMode: 'bottom-docked'
     };
   },
   componentDidMount: function() {
@@ -39,6 +40,7 @@ var ToolboxTabPage = React.createClass({
       pageTitle: ToolboxStore.getPageTitle(),
       editMode: ToolboxStore.isEditMode(),
       containerMode: ToolboxStore.getContainerMode(),
+      buttonMode: ToolboxStore.getButtonMode(),
       cellType: ToolboxStore.getCellType()
     };
     this.setState(newState);
@@ -82,6 +84,9 @@ var ToolboxTabPage = React.createClass({
   _onChangeCellType: function(e) {
     ToolboxAction.updateCellType(e.target.value);
   },
+  _onChangeButtonMode: function(e) {
+    ToolboxAction.updateButtonMode(e.target.value);
+  },
   _renderExports: function() {
     if (window.navigator.userAgent.toLowerCase().indexOf('electron') !== -1) return null;
     return (
@@ -121,6 +126,15 @@ var ToolboxTabPage = React.createClass({
             <option value="col-sm">col-sm</option>
             <option value="col-md">col-md</option>
             <option value="col-lg">col-lg</option>
+          </select>
+        </div>
+        <div className="form-group">
+          <label htmlFor="button-mode">Button Mode</label>
+          <select className="form-control" id="button-mode" value={this.state.buttonMode} onChange={this._onChangeButtonMode}>
+            <option value="bottom-docked">Bottom Docked</option>
+            <option value="bottom">Bottom</option>
+            <option value="top">top</option>
+            <option value="both">Both</option>
           </select>
         </div>
         {this._renderExports()}
