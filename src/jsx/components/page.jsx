@@ -11,6 +11,7 @@ var Page = React.createClass({
       editMode: true,
       pageTitle: "",
       containerMode: 'container-fluid',
+      footerMode: 'docked',
       selectedDataid: null,
       rows: [],
       buttons: []
@@ -70,24 +71,46 @@ var Page = React.createClass({
       rows: PageStore.getRows(),
       editMode: PageStore.isEditMode(),
       pageTitle: PageStore.getPageTitle(),
-      containerMode: PageStore.getContainerMode()
+      containerMode: PageStore.getContainerMode(),
+      footerMode: PageStore.getFooterMode()
     });
+  },
+  _buttons: function(className) {
+    return (
+      <div className={className}>
+        <div className={this.state.containerMode}>
+          {this._leftButtons()}
+          {this._rightButtons()}
+        </div>
+      </div>
+    );
+  },
+  _buttonsTop: function() {
+    if (this.state.footerMode !== 'both') return null;
+    return this._buttons('buttons-top');
+  },
+  _buttonsBottom: function() {
+    if (this.state.footerMode === 'docked') return this._buttons('docked-footer');
+    if (this.state.footerMode === 'both') return this._buttons('buttons-bottom');
+    if (this.state.footerMode === 'bottom-only') return this._buttons('buttons-bottom');
+    return null;
+  },
+  _title: function() {
+    if (!this.state.pageTitle || this.state.pageTitle === '') return null;
+    return <h1>{this.state.pageTitle}</h1>;
   },
   render: function() {
     var containerClassName = "form-horizontal " + this.state.containerMode;
     var className = this.state.editMode ? 'edit-mode' : '';
+    var footerClassName = this.state.footerMode === 'docked' ? 'docked-footer' : '';
     return (
 <div className={containerClassName}>
+  {this._buttonsTop()}
   <div ref="container" className={className}>
-    <h1>{this.state.pageTitle}</h1>
+    {this._title()}
     <Grid rows={this.state.rows} selectedDataid={this.state.selectedDataid}/>
   </div>
-  <div className="docked-footer">
-    <div className={this.state.containerMode}>
-      {this._leftButtons()}
-      {this._rightButtons()}
-    </div>
-  </div>
+  {this._buttonsBottom()}
 </div>
     );
   },
