@@ -38,7 +38,8 @@ var Main = React.createClass({
       });
       ipc.on('requestJSON', function(event, arg) {
         var json = ToolboxStore.getPageStore().toJSON();
-        ipc.send('responseJSON', json);
+        var jsonStr = JSON.stringify(json);
+        ipc.send('responseJSON', jsonStr);
       });
       ipc.on('requestHTML', function(event, arg) {
         var html = ToolboxStore.getPageStore().toHTML();

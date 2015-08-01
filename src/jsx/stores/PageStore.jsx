@@ -116,7 +116,7 @@ function deleteRow(dataid) {
   }
 }
 
-function paste(newCell) {
+function paste() {
   if (!_copiedCell || !_selectedCell) return;
   var dataid = _selectedCell.dataid;
   var freeSpace = PageStore.calcFreeSpace(dataid);

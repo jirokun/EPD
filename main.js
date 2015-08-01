@@ -80,9 +80,8 @@ function showShortcuts() {
 function showVersion() {
   mainWindow.webContents.send('showVersion');
 }
-ipc.on('responseJSON', function(event, json) {
-  var text = JSON.stringify(json, true);
-  fs.writeFile(openedFile, text, function(err) {
+ipc.on('responseJSON', function(event, jsonStr) {
+  fs.writeFile(openedFile, jsonStr, function(err) {
     console.error(err);
   });
   setChanged(false);
