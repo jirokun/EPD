@@ -20,6 +20,12 @@ var ToolboxAction = {
       containerMode: mode 
     });
   },
+  updateButtonMode: function(mode) {
+    ToolboxDispatcher.dispatch({
+      actionType: ToolboxConstants.UPDATE_BUTTON_MODE,
+      buttonMode: mode 
+    });
+  },
   updateCellType: function(type) {
     ToolboxDispatcher.dispatch({
       actionType: ToolboxConstants.UPDATE_CELL_TYPE,
