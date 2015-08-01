@@ -11,7 +11,7 @@ var ROWS_CHANGE= 'ROWS_CHANGE';
 var PAGE_STATE_CHANGE = 'PAGE_STATE_CHANGE';
 
 var _pageTitle, _editMode = true, _selectedCell = {}, _selectedElement, _rows = [], _sequence = 0,
-  _copiedCell, _leftButtons = [], _rightButtons = [], _containerMode, _footerMode, _cellType = 'col-md',
+  _copiedCell, _leftButtons = [], _rightButtons = [], _containerMode, _buttonMode, _cellType = 'col-md',
   _undoStack = [], _undoStackTimeout, _redoStack = [], _lastJSON;
 
 function createEmpty() {
@@ -219,7 +219,7 @@ var PageStore = merge(EventEmitter.prototype, {
   getPageTitle: function() { return _pageTitle; },
   isEditMode: function() { return _editMode; },
   getContainerMode: function() { return _containerMode; },
-  getFooterMode: function() { return _footerMode; },
+  getButtonMode: function() { return _buttonMode; },
   getCellType: function() { return _cellType; },
   getSelectedCell: function() { return _selectedCell; },  
   getSelectedElement: function() { return _selectedElement; },
@@ -268,7 +268,7 @@ var PageStore = merge(EventEmitter.prototype, {
       leftButtons: _leftButtons,
       rightButtons: _rightButtons,
       containerMode: _containerMode,
-      footerMode: _footerMode,
+      buttonMode: _buttonMode,
       cellType: _cellType,
       sequence: _sequence
     };
@@ -280,7 +280,7 @@ var PageStore = merge(EventEmitter.prototype, {
     _leftButtons = json.leftButtons;
     _rightButtons = json.rightButtons;
     _containerMode = json.containerMode;
-    _footerMode = json.footerMode;
+    _buttonMode = json.buttonMode;
     _cellType = json.cellType;
     _sequence = json.sequence;
     this.emitChange(ignoreUndostack);
@@ -329,7 +329,7 @@ PageDispatcher.register(function(payload) {
       _pageTitle = payload.info.pageTitle;
       _editMode = payload.info.editMode;
       _containerMode = payload.info.containerMode;
-      _footerMode = payload.info.footerMode;
+      _buttonMode = payload.info.buttonMode;
       _cellType = payload.info.cellType;
       PageStore.emitChange();
       break;

@@ -11,7 +11,7 @@ var Page = React.createClass({
       editMode: true,
       pageTitle: "",
       containerMode: 'container-fluid',
-      footerMode: 'docked',
+      buttonMode: 'bottom-docked',
       selectedDataid: null,
       rows: [],
       buttons: []
@@ -72,7 +72,7 @@ var Page = React.createClass({
       editMode: PageStore.isEditMode(),
       pageTitle: PageStore.getPageTitle(),
       containerMode: PageStore.getContainerMode(),
-      footerMode: PageStore.getFooterMode()
+      buttonMode: PageStore.getButtonMode()
     });
   },
   _buttons: function(className) {
@@ -86,13 +86,13 @@ var Page = React.createClass({
     );
   },
   _buttonsTop: function() {
-    if (this.state.footerMode !== 'both') return null;
-    return this._buttons('buttons-top');
+    if (this.state.buttonMode === 'both' || this.state.buttonMode === 'top') return this._buttons('buttons-top');
+    return null;
   },
   _buttonsBottom: function() {
-    if (this.state.footerMode === 'docked') return this._buttons('docked-footer');
-    if (this.state.footerMode === 'both') return this._buttons('buttons-bottom');
-    if (this.state.footerMode === 'bottom-only') return this._buttons('buttons-bottom');
+    if (this.state.buttonMode === 'bottom-docked') return this._buttons('docked-footer');
+    if (this.state.buttonMode === 'bottom') return this._buttons('buttons-bottom');
+    if (this.state.buttonMode === 'both') return this._buttons('buttons-bottom');
     return null;
   },
   _title: function() {
@@ -102,7 +102,7 @@ var Page = React.createClass({
   render: function() {
     var containerClassName = "form-horizontal " + this.state.containerMode;
     var className = this.state.editMode ? 'edit-mode' : '';
-    var footerClassName = this.state.footerMode === 'docked' ? 'docked-footer' : '';
+    var footerClassName = this.state.buttonMode === 'docked' ? 'docked-footer' : '';
     return (
 <div className={containerClassName}>
   {this._buttonsTop()}

@@ -20,10 +20,10 @@ var ToolboxAction = {
       containerMode: mode 
     });
   },
-  updateFooterMode: function(mode) {
+  updateButtonMode: function(mode) {
     ToolboxDispatcher.dispatch({
-      actionType: ToolboxConstants.UPDATE_FOOTER_MODE,
-      footerMode: mode 
+      actionType: ToolboxConstants.UPDATE_BUTTON_MODE,
+      buttonMode: mode 
     });
   },
   updateCellType: function(type) {
