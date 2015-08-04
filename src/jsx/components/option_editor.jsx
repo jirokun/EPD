@@ -23,11 +23,15 @@ var OptionEditor = React.createClass({
   },
   componentDidMount: function() {
     var _this = this;
+    var data;
+    var options = this.props.options;
+    if (options.length === 1 && typeof options.label === 'undefined') data = [];
+    else data = options;
     this._handsontable = new Handsontable(this.refs.handsontable.getDOMNode(), {
-      data: this._convertOptions(this.props.options),
+      data: data,
       columns: [
-        { type: 'text' },
-        { type: 'text' }
+        { data: 'label', type: 'text' },
+        { data: 'value', type: 'text' }
       ],
       colHeaders: ['Label', 'Value'],
       colWidths: [100, 100],
@@ -36,9 +40,10 @@ var OptionEditor = React.createClass({
       minRows: 2,
       minSpareRows: 1,
       contextMenu: ["row_above", "row_below", "remove_row", "undo", "redo"],
-      afterChange: function(changes, source) {
+      afterChange: function(changes, eventName) {
+        if (eventName === 'loadData') return;
         if (ToolboxDispatcher.isDispatching()) return;
-        var options = this.getData().map(function(arr) { return {label: arr[0], value: arr[1] }; });
+        var options = this.getData();
         options.splice(options.length - 1, 1);
         ToolboxAction.updateOptions(options);
       }
@@ -46,15 +51,11 @@ var OptionEditor = React.createClass({
     this._handsontable.render();
   },
   componentWillUpdate: function(nextProp, nextState) {
+    this._handsontable.loadData(nextProp.options);
   },
   componentWillUnmount: function() {
     this._handsontable.destroy();
   },
-
-  _convertOptions: function(options) {
-    return options.map(function(option) { return [option.label, option.value]});
-  },
-
   render: function() {
     return (
       <div className="form-group">
