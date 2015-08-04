@@ -32,8 +32,8 @@ var Main = React.createClass({
     try {
       var ipc = window.require('ipc');
       ipc.on('loadJSON', function(json) {
-        ToolboxStore.load(json);
         ToolboxStore.getPageStore().load(json);
+        ToolboxStore.load(json);
         ipc.send('loadComplete');
       });
       ipc.on('requestJSON', function(event, arg) {
