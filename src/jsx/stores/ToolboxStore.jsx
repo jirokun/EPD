@@ -15,6 +15,27 @@ var _pageTitle, _editMode = true, _showLabel = false, _dataid, _name, _label, _p
     _rightButtons = [], _containerMode = 'container-fluid', _buttonMode = 'bottom-docked', _cellType = 'col-md', _value, _href,
     _components = ToolboxConstants.COMPONENTS;
 
+function componentSelect(cell) {
+  _dataid = cell.dataid;
+  _showLabel = cell.showLabel;
+  _label = cell.label;
+  _value = cell.value;
+  _href = cell.href;
+  _preHtml = cell.preHtml;
+  _postHtml = cell.postHtml;
+  _type = cell.type;
+  _align = cell.align;
+  _size = cell.size;
+  _html = cell.html;
+  _color = cell.color;
+  _rowSize = cell.rowSize;
+  _options = cell.options;
+  _columns = cell.columns;
+  _tabs = cell.tabs;
+  _rows = cell.rows;
+  ToolboxStore.emitCellChange();
+  ToolboxStore.emitChange();
+}
 function changeData() {
   // fo electron
   try {
@@ -113,6 +134,7 @@ var ToolboxStore = merge(EventEmitter.prototype, {
     _containerMode = json.containerMode;
     _buttonMode = json.buttonMode;
     _cellType = json.cellType;
+    componentSelect(json.rows[0][0]);
     this.emitChange();
   },
   findComponentConstructor: function(type) {
@@ -250,26 +272,7 @@ ToolboxDispatcher.register(function(payload) {
       w.PageDispatcher.register(function(payload) {
         switch(payload.actionType) {
           case PageConstants.COMPONENT_SELECT:
-            var cell = payload.cell;
-            _dataid = cell.dataid;
-            _showLabel = cell.showLabel;
-            _label = cell.label;
-            _value = cell.value;
-            _href = cell.href;
-            _preHtml = cell.preHtml;
-            _postHtml = cell.postHtml;
-            _type = cell.type;
-            _align = cell.align;
-            _size = cell.size;
-            _html = cell.html;
-            _color = cell.color;
-            _rowSize = cell.rowSize;
-            _options = cell.options;
-            _columns = cell.columns;
-            _tabs = cell.tabs;
-            _rows = cell.rows;
-            ToolboxStore.emitCellChange();
-            ToolboxStore.emitChange();
+            componentSelect(payload.cell);
             break;
           case PageConstants.UPDATE_CELL:
           case PageConstants.UPDATE_PAGE_TITLE:
