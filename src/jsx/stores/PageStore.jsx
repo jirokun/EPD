@@ -155,7 +155,6 @@ function replaceCell(newCell) {
       cell.rowSize = newCell.rowSize;
       cell.options = newCell.options;
       cell.columns = newCell.columns;
-      console.log(cell.options);
       if (cell.type === 'tab') {
         cell.tabs = replaceDataid(newCell.tabs);
       }

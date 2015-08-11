@@ -26,7 +26,7 @@ var FormSelectMultiple = React.createClass({
   render: function() {
     var color = this.props.cell.color;
     if (color == 'danger') color = 'error';
-    var componentClassName = "epd-component" + (this.props.selected ? " selected" : "") + ' has-' + color;
+    var componentClassName = 'epd-' + this.props.cell.type + " epd-component" + (this.props.selected ? " selected" : "") + ' has-' + color;
     var sizeClassName = PageStore.getCellType() + "-" + this.calcSizeClassName();
     var options = this.props.cell.options.map(function(option) { return <option value={option.value}>{option.label}</option>; });
     return (

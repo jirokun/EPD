@@ -24,7 +24,7 @@ var Empty = React.createClass({
   },
   render: function() {
     var sizeClassName = PageStore.getCellType() + "-" + this.props.cell.size + " empty";
-    var componentClassName = "epd-component" + (this.props.selected ? " selected" : "");
+    var componentClassName = 'epd-' + this.props.cell.type + " epd-component" + (this.props.selected ? " selected" : "");
     return (
 <div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
   <div className={sizeClassName}></div>

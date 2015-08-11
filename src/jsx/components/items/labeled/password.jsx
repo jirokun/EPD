@@ -24,7 +24,7 @@ var FormPassword = React.createClass({
     var sizeClassName = PageStore.getCellType() + "-" + this.calcSizeClassName();
     var color = this.props.cell.color;
     if (color == 'danger') color = 'error';
-    var componentClassName = "epd-component" + (this.props.selected ? " selected" : "") + ' has-' + color;
+    var componentClassName = 'epd-' + this.props.cell.type + " epd-component" + (this.props.selected ? " selected" : "") + ' has-' + color;
     return (
 <div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
   {this.label()}

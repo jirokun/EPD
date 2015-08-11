@@ -23,7 +23,7 @@ var Button = React.createClass({
   },
   mixins: [Component],
   render: function() {
-    var componentClassName = "epd-component" + (this.props.selected ? " selected" : "");
+    var componentClassName = 'epd-' + this.props.cell.type + " epd-component" + (this.props.selected ? " selected" : "");
     var sizeClassName = PageStore.getCellType() + '-' + this.calcSizeClassName();
     var className = 'btn btn-block btn-' + this.props.cell.color;
     return (

@@ -29,7 +29,7 @@ var Link = React.createClass({
   render: function() {
     var color = this.props.cell.color;
     if (color == 'danger') color = 'error';
-    var componentClassName = "epd-component" + (this.props.selected ? " selected" : "") + ' has-' + color;
+    var componentClassName = 'epd-' + this.props.cell.type + " epd-component" + (this.props.selected ? " selected" : "") + ' has-' + color;
     var style = {
       textAlign: this.props.cell.align
     };

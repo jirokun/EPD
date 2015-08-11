@@ -22,7 +22,7 @@ var Alert = React.createClass({
   },
   mixins: [Component],
   render: function() {
-    var componentClassName = "epd-component" + (this.props.selected ? " selected" : "");
+    var componentClassName = 'epd-' + this.props.cell.type + " epd-component" + (this.props.selected ? " selected" : "");
     var sizeClassName = PageStore.getCellType() + '-' + this.calcSizeClassName();
     var className = 'alert alert-' + this.props.cell.color;
     var style = {
