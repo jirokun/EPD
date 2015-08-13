@@ -11,7 +11,7 @@ var CHANGE_EVENT = 'change';
 var CELL_CHANGE_EVENT = 'cellSelect';
 
 var _pageTitle, _editMode = true, _showLabel = false, _dataid, _name, _label, _preHtml, _postHtml,
-    _type, _size, _html, _rowSize, _options, _columns, _tabs, _align, _color, _leftButtons = [], _rows,
+    _type, _size, _html, _rowSize, _options, _columns, _tabs, _align, _color, _leftButtons = [], _rows, _className,
     _rightButtons = [], _containerMode = 'container-fluid', _buttonMode = 'bottom-docked', _cellType = 'col-md', _value, _href,
     _components = ToolboxConstants.COMPONENTS;
 
@@ -26,6 +26,7 @@ function componentSelect(cell) {
   _type = cell.type;
   _align = cell.align;
   _size = cell.size;
+  _className = cell.className;
   _html = cell.html;
   _color = cell.color;
   _rowSize = cell.rowSize;
@@ -88,6 +89,7 @@ var ToolboxStore = merge(EventEmitter.prototype, {
   getType: function() { return _type; },
   getAlign: function() { return _align; },
   getSize: function() { return _size; },
+  getClassName: function() { return _className; },
   getHtml: function() { return _html; },
   getColor: function() { return _color; },
   getRowSize: function() { return _rowSize; },
@@ -226,6 +228,10 @@ ToolboxDispatcher.register(function(payload) {
       break;
     case ToolboxConstants.UPDATE_SIZE:
       _size = parseInt(payload.size, 10);
+      ToolboxStore.emitChange();
+      break;
+    case ToolboxConstants.UPDATE_CLASS_NAME:
+      _className = payload.className;
       ToolboxStore.emitChange();
       break;
     case ToolboxConstants.UPDATE_HTML:

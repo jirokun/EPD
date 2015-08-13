@@ -9,6 +9,7 @@ var Tab = React.createClass({
       toggleLabel: false,
       label: false,
       size: true,
+      className: true,
       align: false,
       color: false,
       option: false,

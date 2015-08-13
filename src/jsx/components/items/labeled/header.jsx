@@ -13,6 +13,7 @@ var Header = React.createClass({
       value: false,                                         // 値の表示フラグ
       href: false,                                          // リンク先の表示フラグ
       size: true,                                           // サイズエディタの表示フラグ
+      className: true,                                      // クラスを定義する
       align: true,                                          // alignエディタの表示フラグ
       color: [ 'default', 'warning', 'error', 'success' ],  // 選択可能な色の一覧
       option: false,                                        // オプションエディタ表示フラグ
@@ -29,7 +30,7 @@ var Header = React.createClass({
   render: function() {
     var color = this.props.cell.color;
     if (color == 'danger') color = 'error';
-    var componentClassName = 'epd-' + this.props.cell.type + " epd-component" + (this.props.selected ? " selected" : "") + ' has-' + color;
+    var componentClassName = this.props.cell.className + ' epd-' + this.props.cell.type + " epd-component" + (this.props.selected ? " selected" : "") + ' has-' + color;
     var className = PageStore.getCellType() + '-' + this.props.cell.size + ' control-label text-' + this.props.cell.color;
     var style = {
       textAlign: this.props.cell.align

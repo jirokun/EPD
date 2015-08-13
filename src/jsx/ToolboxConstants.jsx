@@ -7,6 +7,7 @@ module.exports = {
   UPDATE_CELL_TYPE:         'UPDATE_CELL_TYPE',
   UPDATE_TYPE:              'UPDATE_TYPE',
   UPDATE_SIZE:              'UPDATE_SIZE',
+  UPDATE_CLASS_NAME:        'UPDATE_CLASS_NAME',
   UPDATE_HTML:              'UPDATE_HTML',
   UPDATE_SELECT_SIZE:       'UPDATE_SELECT_SIZE',
   UPDATE_OPTIONS:           'UPDATE_OPTIONS',

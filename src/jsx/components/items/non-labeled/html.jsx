@@ -10,6 +10,7 @@ var Html = React.createClass({
       label: false,
       showLabel: false,
       size: true,
+      className: false,
       align: false,
       color: false,
       option: false,

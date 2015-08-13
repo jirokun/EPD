@@ -8,6 +8,7 @@ var FormTextarea = React.createClass({
       name: false,
       label: false,
       size: true,
+      className: true,
       align: false,
       color: [ 'default', 'warning', 'error', 'success' ],
       option: false,
@@ -21,7 +22,7 @@ var FormTextarea = React.createClass({
   render: function() {
     var color = this.props.cell.color;
     if (color == 'danger') color = 'error';
-    var componentClassName = 'epd-' + this.props.cell.type + " epd-component" + (this.props.selected ? " selected" : "") + ' has-' + color;
+    var componentClassName = this.props.cell.className + ' epd-' + this.props.cell.type + " epd-component" + (this.props.selected ? " selected" : "") + ' has-' + color;
     var sizeClassName = PageStore.getCellType() + "-" + this.calcSizeClassName();
     return (
 <div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>

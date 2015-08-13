@@ -92,6 +92,12 @@ var ToolboxAction = {
       size: size
     });
   },
+  updateClassName: function(className) {
+    ToolboxDispatcher.dispatch({
+      actionType: ToolboxConstants.UPDATE_CLASS_NAME,
+      className: className 
+    });
+  },
   updateHtml: function(html) {
     ToolboxDispatcher.dispatch({
       actionType: ToolboxConstants.UPDATE_HTML,

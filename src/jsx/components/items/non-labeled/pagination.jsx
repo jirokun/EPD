@@ -9,6 +9,7 @@ var Pagination = React.createClass({
       label: false,
       showLabel: false,
       size: true,
+      className: true,
       align: false,
       color: false,
       option: false,
@@ -23,7 +24,7 @@ var Pagination = React.createClass({
   mixins: [Component],
   render: function() {
     var sizeClassName = PageStore.getCellType() + "-" + (this.props.cell.size);
-    var componentClassName = 'epd-' + this.props.cell.type + " epd-component" + (this.props.selected ? " selected" : "");
+    var componentClassName = this.props.cell.className + ' epd-' + this.props.cell.type + " epd-component" + (this.props.selected ? " selected" : "");
     return (
 <div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
   <nav className={sizeClassName}>

@@ -9,6 +9,7 @@ var Table = React.createClass({
       showLabel: true,
       label: true,
       size: true,
+      className: true,
       align: false,
       option: false,
       rowSize: false,
@@ -82,7 +83,7 @@ var Table = React.createClass({
   render: function() {
     var _this = this;
     var sizeClassName = PageStore.getCellType() + "-" + this.calcSizeClassName();
-    var componentClassName = 'epd-' + this.props.cell.type + " epd-component" + (this.props.selected ? " selected" : "");
+    var componentClassName = this.props.cell.className + ' epd-' + this.props.cell.type + " epd-component" + (this.props.selected ? " selected" : "");
     var columns = this.props.cell.columns;
     columns = columns ? columns : [{label:'sample', sample: 'value'}];
     return (

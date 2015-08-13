@@ -9,6 +9,7 @@ var Button = React.createClass({
       toggleLabel: false,
       label: true,
       size: true,
+      className: true,
       align: false,
       color: [ 'default', 'primary', 'success', 'info', 'warning', 'danger', 'link' ],
       option: false,
@@ -23,7 +24,7 @@ var Button = React.createClass({
   },
   mixins: [Component],
   render: function() {
-    var componentClassName = 'epd-' + this.props.cell.type + " epd-component" + (this.props.selected ? " selected" : "");
+    var componentClassName = this.props.cell.className + ' epd-' + this.props.cell.type + " epd-component" + (this.props.selected ? " selected" : "");
     var sizeClassName = PageStore.getCellType() + '-' + this.calcSizeClassName();
     var className = 'btn btn-block btn-' + this.props.cell.color;
     return (

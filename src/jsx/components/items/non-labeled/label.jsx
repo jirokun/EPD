@@ -9,6 +9,7 @@ var Label = React.createClass({
       toggleLabel: false,
       label: true,
       size: true,
+      className: true,
       align: true,
       color: [ 'default', 'muted', 'primary', 'success', 'info', 'warning', 'danger' ],
       option: false,
@@ -23,7 +24,7 @@ var Label = React.createClass({
   },
   mixins: [Component],
   render: function() {
-    var componentClassName = 'epd-' + this.props.cell.type + " epd-component" + (this.props.selected ? " selected" : "");
+    var componentClassName = this.props.cell.className + ' epd-' + this.props.cell.type + " epd-component" + (this.props.selected ? " selected" : "");
     var className = PageStore.getCellType() + '-' + this.props.cell.size + ' control-label text-' + this.props.cell.color;
     var style = {
       textAlign: this.props.cell.align

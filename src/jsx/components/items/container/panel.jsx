@@ -9,6 +9,7 @@ var Panel = React.createClass({
       toggleLabel: true,
       label: true,
       size: true,
+      className: true,
       align: false,
       color: ['default', 'primary', 'success', 'info', 'warning', 'danger'],
       option: false,
