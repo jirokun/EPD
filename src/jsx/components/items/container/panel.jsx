@@ -9,6 +9,7 @@ var Panel = React.createClass({
       toggleLabel: true,
       label: true,
       size: true,
+      className: true,
       align: false,
       color: ['default', 'primary', 'success', 'info', 'warning', 'danger'],
       option: false,
@@ -38,10 +39,11 @@ var Panel = React.createClass({
     var sizeClassName = PageStore.getCellType() + "-" + this.props.cell.size;
     var panelClassName = "panel panel-" + this.props.cell.color;
     var selectedDataid = PageStore.getSelectedCell().dataid;
+    var componentClassName = 'epd-' + this.props.cell.type + " epd-component";
     if (this.props.cell.showLabel || PageStore.isEditMode()) {
       var label = this.props.cell.showLabel ? this.props.cell.label : 'This border is not shown when editMode is disabled';
       return (
-        <div key={this.props.cell.dataid} className="epd-component" onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
+        <div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
           <div className={sizeClassName}>
             <div className={panelClassName}>
               <div className="panel-heading">{label}</div>

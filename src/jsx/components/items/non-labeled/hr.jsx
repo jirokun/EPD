@@ -10,6 +10,7 @@ var Hr = React.createClass({
       label: false,
       showLabel: false,
       size: true,
+      className: true,
       align: false,
       color: false,
       option: false,
@@ -24,7 +25,7 @@ var Hr = React.createClass({
   mixins: [Component],
   render: function() {
     var sizeClassName = PageStore.getCellType() + "-" + this.props.cell.size;
-    var componentClassName = "epd-component" + (this.props.selected ? " selected" : "");
+    var componentClassName = this.props.cell.className + ' epd-' + this.props.cell.type + " epd-component" + (this.props.selected ? " selected" : "");
     var columns = this.props.cell.columns;
     columns = columns ? columns : [{label:'sample', sample: 'value'}];
     return (

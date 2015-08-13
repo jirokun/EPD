@@ -23,6 +23,7 @@ var Toolbox = React.createClass({
       label: '',
       type: 'empty',
       size: 12,
+      className: '',
       interfaceText: '',
       options: [],
       columns: [],
@@ -70,6 +71,7 @@ var Toolbox = React.createClass({
       type: ToolboxStore.getType(),
       align: ToolboxStore.getAlign(),
       size: ToolboxStore.getSize(),
+      className: ToolboxStore.getClassName(),
       html: ToolboxStore.getHtml(),
       color: ToolboxStore.getColor(),
       rowSize: ToolboxStore.getRowSize(),
@@ -108,6 +110,9 @@ var Toolbox = React.createClass({
   },
   _changePostHtml: function(e) {
     ToolboxAction.updatePostHtml(e.target.value);
+  },
+  _changeClassName: function(e) {
+    ToolboxAction.updateClassName(e.target.value);
   },
   _changeType: function(e) {
     ToolboxAction.updateType(e.target.value);
@@ -279,6 +284,16 @@ var Toolbox = React.createClass({
       </div>
     );
   },
+  _classNameEditor: function() {
+    var component = ToolboxStore.findComponentConstructor(this.state.type);
+    if (!component || !component.editors.className) return null;
+    return (
+      <div className="form-group">
+        <label htmlFor="classname">Class Name</label>
+        <input id="classname" type="text" className="form-control" value={this.state.className} onChange={this._changeClassName}/>
+      </div>
+    );
+  },
   _optionEditor: function() {
     var component = ToolboxStore.findComponentConstructor(this.state.type);
     if (!component || !component.editors.option) return null;
@@ -332,6 +347,7 @@ var Toolbox = React.createClass({
         </div>
         { this._typeEditor() }
         { this._nameEditor() }
+        { this._classNameEditor() }
         { this._toggleLabelEditor() }
         { this._labelEditor() }
         { this._valueEditor() }

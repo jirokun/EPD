@@ -11,6 +11,7 @@ var FormText = React.createClass({
       showLabel: true,                                      // ラベルのサイズを考慮するかどうか
       label: true,                                          // ラベルエティタの表示フラグ
       size: true,                                           // サイズエディタの表示フラグ
+      className: true,
       align: false,                                         // alignエディタの表示フラグ
       color: [ 'default', 'warning', 'error', 'success' ],  // 選択可能な色の一覧
       option: false,                                        // オプションエディタ表示フラグ
@@ -45,7 +46,7 @@ var FormText = React.createClass({
   render: function() {
     var color = this.props.cell.color;
     if (color == 'danger') color = 'error';
-    var componentClassName = "epd-component" + (this.props.selected ? " selected" : "") + ' has-' + color;
+    var componentClassName = this.props.cell.className + ' epd-' + this.props.cell.type + " epd-component" + (this.props.selected ? " selected" : "") + ' has-' + color;
     return (
       <div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
         {this.label()}

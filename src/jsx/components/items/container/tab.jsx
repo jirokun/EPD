@@ -9,6 +9,7 @@ var Tab = React.createClass({
       toggleLabel: false,
       label: false,
       size: true,
+      className: true,
       align: false,
       color: false,
       option: false,
@@ -43,8 +44,9 @@ var Tab = React.createClass({
   },
   render: function() {
     var sizeClassName = PageStore.getCellType() + "-" + this.props.cell.size;
+    var componentClassName = 'epd-' + this.props.cell.type + " epd-component";
     return (
-      <div key={this.props.cell.dataid} className="epd-component" onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
+      <div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
         <div className={sizeClassName}>
           <ul className="nav nav-tabs" role="tablist">
             {this._labels()}

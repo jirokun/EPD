@@ -10,6 +10,7 @@ var Html = React.createClass({
       label: false,
       showLabel: false,
       size: true,
+      className: false,
       align: false,
       color: false,
       option: false,
@@ -26,7 +27,7 @@ var Html = React.createClass({
   },
   mixins: [Component],
   render: function() {
-    var componentClassName = "epd-component" + (this.props.selected ? " selected" : "");
+    var componentClassName = 'epd-' + this.props.cell.type + " epd-component" + (this.props.selected ? " selected" : "");
     return (
 <div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid} dangerouslySetInnerHTML={{__html: this.props.cell.html}}/>
     );

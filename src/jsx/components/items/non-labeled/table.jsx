@@ -8,6 +8,7 @@ var Table = React.createClass({
       name: false,
       label: false,
       size: true,
+      className: true,
       align: false,
       option: false,
       rowSize: false,
@@ -25,8 +26,11 @@ var Table = React.createClass({
   mixins: [Component],
   _renderCell: function(c) {
     switch(c.type) {
+      case 'text':
+        return <input type="text" className="form-control"/>;
+        break;
       case 'textarea':
-        return <textarea className="form-control"></textarea>
+        return <textarea className="form-control"></textarea>;
         break;
       case 'link':
         return <a href="javascript:void(0);">{c.sample}</a>;
@@ -77,13 +81,13 @@ var Table = React.createClass({
   render: function() {
     var _this = this;
     var sizeClassName = PageStore.getCellType() + "-" + this.calcSizeClassName();
-    var componentClassName = "epd-component" + (this.props.selected ? " selected" : "");
+    var componentClassName = this.props.cell.className + ' epd-' + this.props.cell.type + " epd-component" + (this.props.selected ? " selected" : "");
     var columns = this.props.cell.columns;
     columns = columns ? columns : [{label:'sample', sample: 'value'}];
     return (
       <div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
         <div className={sizeClassName}>
-          <table className="table table-bordered table-striped">
+          <table className="table table-bordered table-striped table-condensed">
             <thead>
               <tr>
                 { columns.map(function(c) { return <th>{ c.label }</th>; }) }

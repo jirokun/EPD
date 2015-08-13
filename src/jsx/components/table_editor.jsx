@@ -31,7 +31,7 @@ var TableEditor = React.createClass({
           data: 'type',
           type: 'text',
           editor: 'select',
-          selectOptions: [ 'text', 'link', 'select', 'checkbox', 'radio', 'textarea', 'calendar', 'master_search_box' ]
+          selectOptions: [ 'label', 'text', 'link', 'select', 'checkbox', 'radio', 'textarea', 'calendar', 'master_search_box' ]
         },
         { data: 'sample', type: 'text' }
       ],

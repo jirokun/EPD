@@ -10,6 +10,7 @@ var MasterSearchBox = React.createClass({
       showLabel: false,
       label: false,
       size: true,
+      className: true,
       align: false,
       color: [ 'default', 'warning', 'error', 'success' ],
       option: false,
@@ -23,7 +24,7 @@ var MasterSearchBox = React.createClass({
   render: function() {
     var color = this.props.cell.color;
     if (color == 'danger') color = 'error';
-    var componentClassName = "epd-component" + (this.props.selected ? " selected" : "") + ' has-' + color;
+    var componentClassName = this.props.cell.className + ' epd-' + this.props.cell.type + " epd-component" + (this.props.selected ? " selected" : "") + ' has-' + color;
     return (
       <div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
         <div className={PageStore.getCellType() + "-" + this.calcSizeClassName()}>

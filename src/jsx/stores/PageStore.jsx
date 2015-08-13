@@ -20,6 +20,7 @@ function createEmpty() {
     align: ToolboxConstants.ALIGN_LEFT,
     showLabel: true,
     size: 1,
+    className: '',
     color: 'default',
     options: [],
     dataid: ++_sequence,
@@ -150,12 +151,12 @@ function replaceCell(newCell) {
       cell.postHtml = newCell.postHtml;
       cell.align = newCell.align;
       cell.size = newCell.size;
+      cell.className = newCell.className;
       cell.html = newCell.html;
       cell.color = newCell.color;
       cell.rowSize = newCell.rowSize;
       cell.options = newCell.options;
       cell.columns = newCell.columns;
-      console.log(cell.options);
       if (cell.type === 'tab') {
         cell.tabs = replaceDataid(newCell.tabs);
       }

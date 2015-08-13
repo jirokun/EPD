@@ -13,6 +13,7 @@ var Link = React.createClass({
       value: true,                                          // 値の表示フラグ
       href: true,                                           // リンク先の表示フラグ
       size: true,                                           // サイズエディタの表示フラグ
+      className: true,                                      // クラスを定義する
       align: false,                                         // alignエディタの表示フラグ
       color: [ 'default', 'warning', 'error', 'success' ],  // 選択可能な色の一覧
       option: false,                                        // オプションエディタ表示フラグ
@@ -30,7 +31,7 @@ var Link = React.createClass({
   render: function() {
     var color = this.props.cell.color;
     if (color == 'danger') color = 'error';
-    var componentClassName = "epd-component" + (this.props.selected ? " selected" : "") + ' has-' + color;
+    var componentClassName = this.props.cell.className + ' epd-' + this.props.cell.type + " epd-component" + (this.props.selected ? " selected" : "") + ' has-' + color;
     return (
       <div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
         {this.label()}

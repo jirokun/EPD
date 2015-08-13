@@ -8,6 +8,7 @@ var Alert = React.createClass({
       name: false,
       label: true,
       size: true,
+      className: true,
       align: true,
       color: [ 'success', 'info', 'warning', 'danger' ],
       option: false,
@@ -22,7 +23,7 @@ var Alert = React.createClass({
   },
   mixins: [Component],
   render: function() {
-    var componentClassName = "epd-component" + (this.props.selected ? " selected" : "");
+    var componentClassName = this.props.cell.className + ' epd-' + this.props.cell.type + " epd-component" + (this.props.selected ? " selected" : "");
     var sizeClassName = PageStore.getCellType() + '-' + this.calcSizeClassName();
     var className = 'alert alert-' + this.props.cell.color;
     var style = {
