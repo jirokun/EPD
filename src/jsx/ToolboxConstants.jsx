@@ -36,6 +36,7 @@ var Empty =                             require('./components/items/system/empty
 
 // labeled components
 var Header =                            require('./components/items/labeled/header');
+var StaticText =                        require('./components/items/labeled/static_text');
 var Link =                              require('./components/items/labeled/link');
 var FormText =                          require('./components/items/labeled/textbox');
 var FormPassword =                      require('./components/items/labeled/password');
@@ -51,7 +52,8 @@ var Calendar =                          require('./components/items/labeled/cale
 var MasterSearchBox =                   require('./components/items/labeled/master_search_box');
 
 // non-labeled components
-var LinkNonLabeld =                              require('./components/items/non-labeled/link');
+var StaticTextNonLabeled =              require('./components/items/non-labeled/static_text');
+var LinkNonLabeld =                     require('./components/items/non-labeled/link');
 var FormTextNonLabeled =                require('./components/items/non-labeled/textbox');
 var FormPasswordNonLabeled =            require('./components/items/non-labeled/password');
 var FormSelectNonLabeled =              require('./components/items/non-labeled/select');
@@ -86,6 +88,7 @@ var Panel =                             require('./components/items/container/pa
   {
     label: 'labeled',
     components: [
+      { alias: 'static_text',         constructor: StaticText},
       { alias: 'header',              constructor: Header},
       { alias: 'link',                constructor: Link},
       { alias: 'text',                constructor: FormText},
@@ -105,6 +108,7 @@ var Panel =                             require('./components/items/container/pa
   {
     label: 'non-labeled',
     components: [
+      { alias: 'static_text_non_labeled',         constructor: StaticTextNonLabeled},
       { alias: 'link_non_labeled',                constructor: LinkNonLabeld},
       { alias: 'text_non_labeled',                constructor: FormTextNonLabeled},
       { alias: 'password_non_labeled',            constructor: FormPasswordNonLabeled},
