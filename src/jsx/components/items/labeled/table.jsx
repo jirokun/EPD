@@ -84,7 +84,8 @@ var Table = React.createClass({
     var _this = this;
     var sizeClassName = PageStore.getCellType() + "-" + this.calcSizeClassName();
     var componentClassName = this.props.cell.className + ' epd-' + this.props.cell.type + " epd-component" + (this.props.selected ? " selected" : "");
-    var columns = this.props.cell.columns;
+    var cell = this.props.cell;
+    var columns = cell.columns;
     columns = columns ? columns : [{label:'sample', sample: 'value'}];
     return (
       <div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
@@ -93,13 +94,23 @@ var Table = React.createClass({
           <table className="table table-bordered table-striped table-condensed">
             <thead>
               <tr>
+                { cell.tableCheckbox ? <th><input type="checkbox" className="epd-select-all-checkbox"/></th> : null }
                 { columns.map(function(c) { return <th>{ c.label }</th>; }) }
               </tr>
             </thead>
             <tbody>
-              <tr>{ columns.map(function(c) { return <td>{ _this._renderCell(c) }</td>; }) }</tr>
-              <tr>{ columns.map(function(c) { return <td>{ _this._renderCell(c) }</td>; }) }</tr>
-              <tr>{ columns.map(function(c) { return <td>{ _this._renderCell(c) }</td>; }) }</tr>
+              <tr>
+                { cell.tableCheckbox ? <td><input type="checkbox" className="epd-row-checkbox"/></td> : null }
+                { columns.map(function(c) { return <td>{ _this._renderCell(c) }</td>; }) }
+              </tr>
+              <tr>
+                { cell.tableCheckbox ? <td><input type="checkbox" className="epd-row-checkbox"/></td> : null }
+                { columns.map(function(c) { return <td>{ _this._renderCell(c) }</td>; }) }
+              </tr>
+              <tr>
+                { cell.tableCheckbox ? <td><input type="checkbox" className="epd-row-checkbox"/></td> : null }
+                { columns.map(function(c) { return <td>{ _this._renderCell(c) }</td>; }) }
+              </tr>
             </tbody>
           </table>
         </div>

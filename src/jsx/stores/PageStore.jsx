@@ -148,6 +148,7 @@ function replaceCell(newCell) {
       cell.value = newCell.value;
       cell.href = newCell.href;
       cell.preHtml = newCell.preHtml;
+      cell.tableCheckbox = newCell.tableCheckbox;
       cell.postHtml = newCell.postHtml;
       cell.align = newCell.align;
       cell.size = newCell.size;

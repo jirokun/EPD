@@ -67,6 +67,7 @@ var Toolbox = React.createClass({
       value: ToolboxStore.getValue(),
       href: ToolboxStore.getHref(),
       preHtml: ToolboxStore.getPreHtml(),
+      tableCheckbox: ToolboxStore.getTableCheckbox(),
       postHtml: ToolboxStore.getPostHtml(),
       type: ToolboxStore.getType(),
       align: ToolboxStore.getAlign(),
@@ -95,6 +96,9 @@ var Toolbox = React.createClass({
   },
   _changeShowLabel: function(e) {
     ToolboxAction.updateShowLabel(e.target.checked);
+  },
+  _changeTableCheckbox: function(e) {
+    ToolboxAction.updateTableCheckbox(e.target.checked);
   },
   _changeLabel: function(e) {
     ToolboxAction.updateLabel(e.target.value);
@@ -153,6 +157,17 @@ var Toolbox = React.createClass({
     );
   },
 
+  _tableCheckboxEditor: function() {
+    var component = ToolboxStore.findComponentConstructor(this.state.type);
+    if (!component || !component.editors.table) return null;
+    return (
+      <div className="checkbox">
+        <label>
+          <input type="checkbox" checked={this.state.tableCheckbox} onChange={this._changeTableCheckbox}/> Show Row Select Checkbox
+        </label>
+      </div>
+    );
+  },
   _tableEditor: function() {
     var component = ToolboxStore.findComponentConstructor(this.state.type);
     if (!component || !component.editors.table) return null;
@@ -361,6 +376,7 @@ var Toolbox = React.createClass({
         { this._optionEditor() }
         { this._htmlEditor() }
         { this._tabEditor() }
+        { this._tableCheckboxEditor() }
         { this._tableEditor() }
       </form>
     </div>

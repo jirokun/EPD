@@ -10,7 +10,7 @@ var merge = require('react/lib/merge');
 var CHANGE_EVENT = 'change';
 var CELL_CHANGE_EVENT = 'cellSelect';
 
-var _pageTitle, _editMode = true, _showLabel = false, _dataid, _name, _label, _preHtml, _postHtml,
+var _pageTitle, _editMode = true, _showLabel = false, _dataid, _name, _label, _preHtml, _postHtml, _tableCheckbox,
     _type, _size, _html, _rowSize, _options, _columns, _tabs, _align, _color, _leftButtons = [], _rows, _className,
     _rightButtons = [], _containerMode = 'container-fluid', _buttonMode = 'bottom-docked', _cellType = 'col-md', _value, _href,
     _components = ToolboxConstants.COMPONENTS;
@@ -22,6 +22,7 @@ function componentSelect(cell) {
   _value = cell.value;
   _href = cell.href;
   _preHtml = cell.preHtml;
+  _tableCheckbox = cell.tableCheckbox;
   _postHtml = cell.postHtml;
   _type = cell.type;
   _align = cell.align;
@@ -85,6 +86,7 @@ var ToolboxStore = merge(EventEmitter.prototype, {
   getValue: function() { return _value; },
   getHref: function() { return _href; },
   getPreHtml: function() { return _preHtml; },
+  getTableCheckbox: function() { return _tableCheckbox; },
   getPostHtml: function() { return _postHtml; },
   getType: function() { return _type; },
   getAlign: function() { return _align; },
@@ -216,6 +218,10 @@ ToolboxDispatcher.register(function(payload) {
       break;
     case ToolboxConstants.UPDATE_PRE_TEXT:
       _preHtml = payload.preHtml;
+      ToolboxStore.emitChange();
+      break;
+    case ToolboxConstants.UPDATE_TABLE_CHECKBOX:
+      _tableCheckbox = payload.tableCheckbox;
       ToolboxStore.emitChange();
       break;
     case ToolboxConstants.UPDATE_POST_TEXT:
