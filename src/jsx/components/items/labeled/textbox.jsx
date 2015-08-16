@@ -10,6 +10,7 @@ var FormText = React.createClass({
       toggleLabel: false,                                   // ラベルの表示・非表示エディタの表示フラグ
       showLabel: true,                                      // ラベルのサイズを考慮するかどうか
       label: true,                                          // ラベルエティタの表示フラグ
+      value: true,
       size: true,                                           // サイズエディタの表示フラグ
       className: true,
       align: false,                                         // alignエディタの表示フラグ
@@ -38,7 +39,7 @@ var FormText = React.createClass({
     return (
       <div className={inputGroupClassName}>
         {this._preHtml()}
-        <input type="text" className="form-control" />
+        <input type="text" className="form-control" value={this.props.cell.value} onChange={this.onValueChange}/>
         {this._postHtml()}
       </div>
     );

@@ -9,6 +9,7 @@ var FormPassword = React.createClass({
       label: false,
       showLabel: false,
       size: true,
+      value: true,
       className: true,
       align: false,
       color: [ 'default', 'warning', 'error', 'success' ],
@@ -28,7 +29,7 @@ var FormPassword = React.createClass({
     return (
 <div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
   <div className={sizeClassName}>
-    <input type="password" name={this.props.cell.name} className="form-control" />
+    <input type="password" name={this.props.cell.name} className="form-control" value={this.props.cell.value} onChange={this.onValueChange}/>
   </div>
 </div>
     );

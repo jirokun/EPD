@@ -148,6 +148,7 @@ function replaceCell(newCell) {
       cell.value = newCell.value;
       cell.href = newCell.href;
       cell.preHtml = newCell.preHtml;
+      cell.tableCheckbox = newCell.tableCheckbox;
       cell.postHtml = newCell.postHtml;
       cell.align = newCell.align;
       cell.size = newCell.size;
@@ -233,6 +234,11 @@ var PageStore = merge(EventEmitter.prototype, {
   },
   createEmptyCells: createEmptyCells,
   toHTML: function() {
+    var json = this.toJSON();
+    var clearedJSON = this.toJSON();
+    clearedJSON.rows = [createEmptyCells()];
+    this.load(clearedJSON); // for default value
+    this.load(json); // for default value
     var el = document.getElementById('container').cloneNode(true);
     Util.removeSystemAttributes(el);
     var html = '<!doctype html>\
@@ -354,6 +360,12 @@ PageDispatcher.register(function(payload) {
       break;
     case PageConstants.DELETE_ROW:
       deleteRow(payload.dataid);
+      PageStore.emitChange();
+      break;
+    case PageConstants.UPDATE_VALUE:
+      var cell = payload.cell;
+      cell.value = payload.value;
+      replaceCell(cell);
       PageStore.emitChange();
       break;
     case PageConstants.UPDATE_CELL:

@@ -35,6 +35,7 @@ gulp.task('sass', function() {
 gulp.task('copy', function () {
   merge(
     gulp.src('./src/www/**/*').pipe(gulp.dest('./dist/')),
+    gulp.src('./node_modules/jquery/dist/jquery.min.js').pipe(gulp.dest('./dist/scripts/')),
     gulp.src('./bower_components/handsontable/dist/handsontable.full.js').pipe(gulp.dest('./dist/scripts/')),
     gulp.src('./bower_components/handsontable/dist/handsontable.full.min.css').pipe(gulp.dest('./dist/styles/')),
     gulp.src('./node_modules/bootstrap/dist/css/bootstrap.min.css').pipe(gulp.dest('./dist/styles/')),

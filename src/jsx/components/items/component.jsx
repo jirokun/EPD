@@ -13,6 +13,9 @@ var Component = {
     if (this.constructor.editors.showLabel === true) return this.props.cell.size - 2;
     return this.props.cell.size;
   },
+  onValueChange: function(e) {
+    PageAction.updateValue(this.props.cell, e.target.value);
+  },
   onComponentSelect: function(e) {
     e.stopPropagation();
     PageAction.componentSelect(this.props.cell, e.target);

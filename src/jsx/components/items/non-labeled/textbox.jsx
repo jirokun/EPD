@@ -10,6 +10,7 @@ var FormText = React.createClass({
       showLabel: false,
       label: false,
       size: true,
+      value: true,
       className: true,
       align: false,
       color: [ 'default', 'warning', 'error', 'success' ],
@@ -36,7 +37,7 @@ var FormText = React.createClass({
     return (
       <div className={inputGroupClassName}>
         {this._preHtml()}
-        <input type="text" className="form-control" />
+        <input type="text" className="form-control" value={this.props.cell.value} onChange={this.onValueChange}/>
         {this._postHtml()}
       </div>
     );

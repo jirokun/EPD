@@ -9,6 +9,7 @@ var MasterSearchBox = React.createClass({
       toggleLabel: false,
       showLabel: false,
       label: false,
+      value: true,
       size: true,
       className: true,
       align: false,
@@ -29,7 +30,7 @@ var MasterSearchBox = React.createClass({
       <div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
         <div className={PageStore.getCellType() + "-" + this.calcSizeClassName()}>
           <div className="input-group">
-            <input type="text" className="form-control" />
+            <input type="text" className="form-control" value={this.props.cell.value} onChange={this.onValueChange}/>
             <span className="input-group-btn">
               <button className="btn btn-default"><span className="glyphicon glyphicon-search"></span></button>
             </span>

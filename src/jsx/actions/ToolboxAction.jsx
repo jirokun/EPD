@@ -74,6 +74,12 @@ var ToolboxAction = {
       preHtml: preHtml
     });
   },
+  updateTableCheckbox: function(tableCheckbox) {
+    ToolboxDispatcher.dispatch({
+      actionType: ToolboxConstants.UPDATE_TABLE_CHECKBOX,
+      tableCheckbox:tableCheckbox 
+    });
+  },
   updatePostHtml: function(postHtml) {
     ToolboxDispatcher.dispatch({
       actionType: ToolboxConstants.UPDATE_POST_TEXT,
