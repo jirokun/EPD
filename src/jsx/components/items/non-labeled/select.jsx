@@ -34,7 +34,7 @@ var FormSelect = React.createClass({
     return (
 <div className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
   <div className={sizeClassName}>
-    <select name={this.props.cell.name} className="form-control">{options}</select>
+    <select name={this.props.cell.name} className="form-control" value={this.props.cell.value} onChange={this.onValueChange}>{options}</select>
   </div>
 </div>
     );

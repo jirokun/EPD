@@ -8,6 +8,8 @@ var FormTextarea = React.createClass({
       name: false,
       label: false,
       size: true,
+      value: true,
+      valueMultipleLine: true,
       className: true,
       align: false,
       color: [ 'default', 'warning', 'error', 'success' ],
@@ -27,7 +29,7 @@ var FormTextarea = React.createClass({
     return (
 <div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
   <div className={sizeClassName}>
-    <textarea className="form-control" rows={this.props.cell.rowSize}/>
+    <textarea className="form-control" rows={this.props.cell.rowSize} value={this.props.cell.value} onChange={this.onValueChange}/>
   </div>
 </div>
     );

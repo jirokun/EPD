@@ -29,10 +29,10 @@ var Table = React.createClass({
   _renderCell: function(c) {
     switch(c.type) {
       case 'text':
-        return <input type="text" className="form-control"/>;
+        return <input type="text" className="form-control" value={c.sample}/>;
         break;
       case 'textarea':
-        return <textarea className="form-control"></textarea>
+        return <textarea className="form-control" value={c.sample}></textarea>
         break;
       case 'link':
         return <a href="javascript:void(0);">{c.sample}</a>;
@@ -40,8 +40,7 @@ var Table = React.createClass({
       case 'select':
         return (
           <select className="form-control">
-            <option>sample1</option>
-            <option>sample2</option>
+            <option>{c.sample}</option>
           </select>
         );
         break;
@@ -54,7 +53,7 @@ var Table = React.createClass({
       case 'calendar':
         return (
           <div className="input-group">
-            <input type="text" className="form-control" />
+            <input type="text" className="form-control" value={c.sample}/>
             <span className="input-group-btn">
               <button className="btn btn-default">
                 <span className="glyphicon glyphicon-calendar" />
@@ -66,7 +65,7 @@ var Table = React.createClass({
       case 'master_search_box':
         return (
           <div className="input-group">
-            <input type="text" className="form-control" />
+            <input type="text" className="form-control" value={c.sample}/>
             <span className="input-group-btn">
               <button className="btn btn-default">
                 <span className="glyphicon glyphicon-search" />

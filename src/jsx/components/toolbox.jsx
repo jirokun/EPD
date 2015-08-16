@@ -198,12 +198,21 @@ var Toolbox = React.createClass({
   _valueEditor: function() {
     var component = ToolboxStore.findComponentConstructor(this.state.type);
     if (!component || !component.editors.value) return null;
-    return (
-      <div className="form-group">
-        <label htmlFor="value">Value</label>
-        <input type="text" className="form-control" id="value" value={this.state.value} onChange={this._changeValue}/>
-      </div>
-    );
+    if (component.editors.valueMultipleLine) {
+      return (
+        <div className="form-group">
+          <label htmlFor="value">Value</label>
+          <textarea className="form-control" id="value" value={this.state.value} onChange={this._changeValue}/>
+        </div>
+      );
+    } else {
+      return (
+        <div className="form-group">
+          <label htmlFor="value">Value</label>
+          <input type="text" className="form-control" id="value" value={this.state.value} onChange={this._changeValue}/>
+        </div>
+      );
+    }
   },
   _hrefEditor: function() {
     var component = ToolboxStore.findComponentConstructor(this.state.type);
