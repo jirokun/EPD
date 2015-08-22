@@ -17,6 +17,13 @@ var PageAction = {
       actionType: PageConstants.DELETE
     });
   },
+  updateLabel: function(cell, label) {
+    PageDispatcher.dispatch({
+      actionType: PageConstants.UPDATE_LABEL,
+      cell: cell,
+      label: label
+    });
+  },
   updateValue: function(cell, value) {
     PageDispatcher.dispatch({
       actionType: PageConstants.UPDATE_VALUE,

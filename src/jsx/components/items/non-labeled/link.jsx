@@ -27,6 +27,10 @@ var Link = React.createClass({
     maxSize: 12
   },
   mixins: [Component],
+  onValueTextChange: function(e) {
+    var value = e.target.innerText || e.target.textContent;
+    PageAction.updateValue(this.props.cell, value);
+  },
   render: function() {
     var color = this.props.cell.color;
     if (color == 'danger') color = 'error';
@@ -37,7 +41,7 @@ var Link = React.createClass({
     return (
       <div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
         <div className={PageStore.getCellType() + "-" + this.calcSizeClassName()} style={style}>
-          <a className="btn btn-link" href={this.props.cell.href}>{this.props.cell.value}</a>
+          <a className="btn btn-link" href={this.props.cell.href} contentEditable="true" onInput={this.onValueTextChange}>{this.props.cell.value}</a>
         </div>
       </div>
     );

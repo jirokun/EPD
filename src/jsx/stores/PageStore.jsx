@@ -362,6 +362,12 @@ PageDispatcher.register(function(payload) {
       deleteRow(payload.dataid);
       PageStore.emitChange();
       break;
+    case PageConstants.UPDATE_LABEL:
+      var cell = payload.cell;
+      cell.label = payload.label;
+      replaceCell(cell);
+      PageStore.emitChange();
+      break;
     case PageConstants.UPDATE_VALUE:
       var cell = payload.cell;
       cell.value = payload.value;

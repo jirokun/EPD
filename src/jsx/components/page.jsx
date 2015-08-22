@@ -28,6 +28,7 @@ var Page = React.createClass({
     window.PageStore = PageStore;
     window.PageDispatcher = PageDispatcher;
     document.addEventListener('keydown', function(e) {
+      console.log(e);
       // inputやselectに入力された場合にはこれらの処理は行わない
       if (e.target.tagName.toLowerCase() !== 'body') return;
       if (e.keyCode == 67) PageAction.copy();

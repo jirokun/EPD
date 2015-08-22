@@ -30,7 +30,7 @@ var Button = React.createClass({
     return (
 <div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
   <div className={sizeClassName}>
-    <button type="button" className={className}>{this.props.cell.label}</button>
+    <button type="button" className={className} contentEditable="true" onInput={this.onLabelChange}>{this.props.cell.label}</button>
   </div>
 </div>
     );

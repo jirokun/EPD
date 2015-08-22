@@ -38,7 +38,7 @@ var Header = React.createClass({
     return (
       <div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
         <div className={className}>
-          <h3 style={style}>{this.props.cell.label}</h3>
+          <h3 contentEditable="true" onInput={this.onLabelChange} style={style}>{this.props.cell.label}</h3>
         </div>
       </div>
     );
