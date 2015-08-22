@@ -22,6 +22,8 @@ var ContextMenu = React.createClass({
         pageX: e.pageX,
         pageY: e.pageY
       });
+      var cell = PageStore.getCell(dataid);
+      PageAction.componentSelect(cell, this);
     });
     $(window).on('click', function(e) {
       if (e.button !== 0) return;
@@ -38,6 +40,8 @@ var ContextMenu = React.createClass({
     return (
 <div className="dropdown contextmenu" style={style}>
   <ul className="dropdown-menu">
+    <li><a href="#" onClick={this._onClickCopy}><span className="glyphicon glyphicon-copy"></span> Copy</a></li>
+    <li><a href="#" onClick={this._onClickPaste}><span className="glyphicon glyphicon-paste"></span> Paste</a></li>
     <li><a href="#" onClick={this._onClickInsertRowAbove}><span className="glyphicon glyphicon-arrow-up"></span> Insert Row Above</a></li>
     <li><a href="#" onClick={this._onClickInsertRowBelow}><span className="glyphicon glyphicon-arrow-down"></span> Insert Row Below</a></li>
     <li><a href="#" onClick={this._onClickDeleteRow}><span className="glyphicon glyphicon-remove text-danger"></span> Delete Row</a></li>
@@ -56,6 +60,14 @@ var ContextMenu = React.createClass({
   _onClickDeleteRow: function(e) {
     this.setState({show: false});
     PageAction.deleteRow(this.state.dataid);
+  },
+  _onClickCopy: function(e) {
+    this.setState({show: false});
+    PageAction.copy();
+  },
+  _onClickPaste: function(e) {
+    this.setState({show: false});
+    PageAction.paste();
   }
 });
 

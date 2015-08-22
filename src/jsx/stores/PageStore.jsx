@@ -70,6 +70,11 @@ function pushUndoStack() {
   _undoStackTimeout = setTimeout(pushUndoStackInner, 500);
 }
 
+function findCell(dataid) {
+  var rows = findTargetRows(_rows, dataid);
+  var index = findIndex(dataid);
+  return rows[index.y][index.x];
+}
 // for container. like tab
 function findTargetRows(rows, dataid) {
   for (var i = 0, len = rows.length; i < len; i++) {
@@ -229,6 +234,7 @@ var PageStore = merge(EventEmitter.prototype, {
   getRows: function() { return _rows; },
   getLeftButtons: function() { return _leftButtons; },
   getRightButtons: function() { return _rightButtons; },
+  getCell: function(dataid) { return findCell(dataid); },
   getSelectedCellRowIndex: function() {
     return this.getRowIndex(_selectedCell.dataid);
   },
