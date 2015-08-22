@@ -32,7 +32,7 @@ var Alert = React.createClass({
     return (
 <div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
   <div className={sizeClassName}>
-    <div className={className} style={style} contentEditable="true" onInput={this.onLabelChange}></div>
+    <div className={className} style={style} contentEditable="true" onInput={this.onLabelChange}>{this.props.cell.label}</div>
   </div>
 </div>
     );
