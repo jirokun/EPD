@@ -27,6 +27,10 @@ var StaticText = React.createClass({
     maxSize: 12
   },
   mixins: [Component],
+  onValueTextChange: function(e) {
+    var value = e.target.innerText || e.target.textContent;
+    PageAction.updateValue(this.props.cell, value);
+  },
   render: function() {
     var color = this.props.cell.color;
     if (color == 'danger') color = 'error';
@@ -34,7 +38,7 @@ var StaticText = React.createClass({
     return (
       <div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
         <div className={PageStore.getCellType() + "-" + this.calcSizeClassName()}>
-          <p className="form-control-static">{this.props.cell.value}</p>
+          <p className="form-control-static" contentEditable="true" onInput={this.onValueTextChange}>{this.props.cell.value}</p>
         </div>
       </div>
     );
