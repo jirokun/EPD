@@ -48,7 +48,7 @@ var ButtonEditor = React.createClass({
       contextMenu: ["row_above", "row_below", "remove_row", "undo", "redo"],
       afterChange: function(data, eventName) {
         if (eventName === 'loadData') return;
-        var buttons = this.getData().filter(function(obj) { return obj.label != '' && typeof obj.label !== 'undefined'});
+        var buttons = JSON.parse(JSON.stringify(this.getData().filter(function(obj) { return obj.label != '' && typeof obj.label !== 'undefined'})));
         _this.props.onChange(buttons);
       }
     });

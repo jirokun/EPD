@@ -44,7 +44,7 @@ var TableEditor = React.createClass({
       contextMenu: ["row_above", "row_below", "remove_row", "undo", "redo"],
       afterChange: function(changes, source) {
         if (ToolboxDispatcher.isDispatching()) return;
-        var columns = this.getData();
+        var columns= JSON.parse(JSON.stringify(this.getData()));
         columns.splice(columns.length - 1, 1);
         ToolboxAction.updateColumns(columns);
       }
