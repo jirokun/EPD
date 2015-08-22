@@ -31,7 +31,7 @@ var Label = React.createClass({
     };
     return (
 <div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
-  <label className={className} style={style}>{this.props.cell.label}</label>
+  <label contentEditable="true" className={className} style={style} onInput={this.onLabelChange}>{this.props.cell.label}</label>
 </div>
     );
   }

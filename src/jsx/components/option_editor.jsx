@@ -43,7 +43,7 @@ var OptionEditor = React.createClass({
       afterChange: function(changes, eventName) {
         if (eventName === 'loadData') return;
         if (ToolboxDispatcher.isDispatching()) return;
-        var options = this.getData();
+        var options = JSON.parse(JSON.stringify(this.getData()));
         options.splice(options.length - 1, 1);
         ToolboxAction.updateOptions(options);
       }

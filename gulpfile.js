@@ -46,7 +46,7 @@ gulp.task('copy', function () {
 });
 
 gulp.task('package', ['build'], function() {
-  return run('electron-packager dist/ epd --overwrite --platform=win32,darwin --arch=x64 --version=0.30.0').exec();
+  return run('electron-packager dist/ epd --overwrite --platform=win32,darwin --arch=x64 --version=0.31.0').exec();
 });
 
 gulp.task('watch', function () {

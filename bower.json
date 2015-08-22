@@ -2,6 +2,6 @@
   "name": "epd",
   "private": true,
   "dependencies": {
-    "handsontable": "~0.15.0-beta6"
+    "handsontable": "~0.16.1"
   }
 }
