@@ -11,6 +11,7 @@ var Link = React.createClass({
       showLabel: false,                                     // ラベルのサイズを考慮するかどうか
       label: false,                                         // ラベルエティタの表示フラグ
       value: true,                                          // 値の表示フラグ
+      valueMultipleLine: true,
       href: true,                                           // リンク先の表示フラグ
       size: true,                                           // サイズエディタの表示フラグ
       className: true,
@@ -27,9 +28,22 @@ var Link = React.createClass({
     maxSize: 12
   },
   mixins: [Component],
-  onValueTextChange: function(e) {
-    var value = e.target.innerText || e.target.textContent;
-    PageAction.updateValue(this.props.cell, value);
+  getInitialState: function() {
+    return {
+      editMode: false
+    };
+  },
+  renderInner: function() {
+    var _this = this;
+    if (this.state.editMode) {
+      return this.renderEditor();
+    } else {
+      var className = 'control-label text-' + this.props.cell.color;
+      var style = {
+        textAlign: this.props.cell.align
+      };
+      return <a className="btn btn-link" style={style} href={this.props.cell.href} onMouseDown={this.onEditorEnable} dangerouslySetInnerHTML={{__html: Util.nl2br(this.props.cell.value)}}/>;
+    }
   },
   render: function() {
     var color = this.props.cell.color;
@@ -41,7 +55,7 @@ var Link = React.createClass({
     return (
       <div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
         <div className={PageStore.getCellType() + "-" + this.calcSizeClassName()} style={style}>
-          <a className="btn btn-link" href={this.props.cell.href} contentEditable="true" onInput={this.onValueTextChange}>{this.props.cell.value}</a>
+          {this.renderInner()}
         </div>
       </div>
     );

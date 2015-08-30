@@ -13,16 +13,30 @@ var Component = {
     if (this.constructor.editors.showLabel === true) return this.props.cell.size - 2;
     return this.props.cell.size;
   },
+  onEditorEnable: function(e) {
+    this.setState({ editMode: true });
+  },
+  onEditorDisable: function(e) {
+    this.setState({ editMode: false });
+  },
   onLabelChange: function(e) {
     var value = e.target.innerText || e.target.textContent;
     PageAction.updateLabel(this.props.cell, value);
   },
-  onValueChange: function(e) {
+  onValueTextChange: function(e) {
     PageAction.updateValue(this.props.cell, e.target.value);
   },
   onComponentSelect: function(e) {
     e.stopPropagation();
     PageAction.componentSelect(this.props.cell, e.target);
+  },
+  renderEditor: function() {
+    var _this = this;
+    if (!this.state.editMode) return null;
+    setTimeout(function() {
+      _this.refs.labelEditor.getDOMNode().focus();
+    }, 1);
+    return <textarea ref="labelEditor" className="form-control" value={this.props.cell.value} onBlur={this.onEditorDisable} onChange={this.onValueTextChange} rows={this.props.cell.value.split('\n').length + 1}/>;
   }
 };
 

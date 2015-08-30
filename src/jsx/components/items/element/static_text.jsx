@@ -33,27 +33,15 @@ var StaticText = React.createClass({
       editMode: false
     };
   },
-  onValueTextChange: function(e) {
-    PageAction.updateValue(this.props.cell, e.target.value);
-  },
-  onMouseDown: function(e) {
-    this.setState({ editMode: true });
-  },
-  onBlur: function(e) {
-    this.setState({ editMode: false });
-  },
   renderInner: function() {
     var _this = this;
     if (this.state.editMode) {
-      setTimeout(function() {
-        _this.refs.static_text_editor.getDOMNode().focus();
-      }, 1);
-      return <textarea ref="static_text_editor" className="form-control" value={this.props.cell.value} onBlur={this.onBlur} onChange={this.onValueTextChange} rows={this.props.cell.value.split('\n').length + 1}/>;
+      return this.renderEditor();
     } else {
       var style = {
         textAlign: this.props.cell.align
       };
-      return <p style={style} className="form-control-static" contentEditable="true" onMouseDown={this.onMouseDown} dangerouslySetInnerHTML={{__html: Util.nl2br(this.props.cell.value)}}/>
+      return <p style={style} className="form-control-static" contentEditable="true" onMouseDown={this.onEditorEnable} dangerouslySetInnerHTML={{__html: Util.nl2br(this.props.cell.value)}}/>
     }
   },
   render: function() {
