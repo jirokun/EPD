@@ -8,6 +8,9 @@ module.exports = {
       this.removeSystemAttributes(node.children[i]);
     }
   },
+  nl2br: function(str) {
+    return str.replace(/\n/g, "<br/>");
+  },
   isEmpty: function(str) {
     return typeof(str) === 'undefined' || str === null || str === '';
   }

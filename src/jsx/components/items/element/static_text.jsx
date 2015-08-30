@@ -8,9 +8,10 @@ var StaticText = React.createClass({
     editors: {
       name: true,                                           // name属性エディタの表示フラグ
       toggleLabel: false,                                   // ラベルの表示・非表示エディタの表示フラグ
-      showLabel: true,                                      // ラベルのサイズを考慮するかどうか
-      label: true,                                          // ラベルエティタの表示フラグ
+      showLabel: false,                                     // ラベルのサイズを考慮するかどうか
+      label: false,                                         // ラベルエティタの表示フラグ
       value: true,                                          // 値の表示フラグ
+      valueMultipleLine: true,
       href: false,                                          // リンク先の表示フラグ
       size: true,                                           // サイズエディタの表示フラグ
       className: true,                                      // クラスを定義する
@@ -22,28 +23,47 @@ var StaticText = React.createClass({
       postHtml: false,                                      // postテキストエディタの表示フラグ
       table: false                                          // tableエディタの表示フラグ
     },
-    defaultLabel: 'Default Label',
     defaultValue: 'Default Value',
-    minSize: 4,
+    minSize: 1,
     maxSize: 12
   },
   mixins: [Component],
+  getInitialState: function() {
+    return {
+      editMode: false
+    };
+  },
   onValueTextChange: function(e) {
-    var value = e.target.innerText || e.target.textContent;
-    PageAction.updateValue(this.props.cell, value);
+    PageAction.updateValue(this.props.cell, e.target.value);
+  },
+  onMouseDown: function(e) {
+    this.setState({ editMode: true });
+  },
+  onBlur: function(e) {
+    this.setState({ editMode: false });
+  },
+  renderInner: function() {
+    var _this = this;
+    if (this.state.editMode) {
+      setTimeout(function() {
+        _this.refs.static_text_editor.getDOMNode().focus();
+      }, 1);
+      return <textarea ref="static_text_editor" className="form-control" value={this.props.cell.value} onBlur={this.onBlur} onChange={this.onValueTextChange} rows={this.props.cell.value.split('\n').length + 1}/>;
+    } else {
+      var style = {
+        textAlign: this.props.cell.align
+      };
+      return <p style={style} className="form-control-static" contentEditable="true" onMouseDown={this.onMouseDown} dangerouslySetInnerHTML={{__html: Util.nl2br(this.props.cell.value)}}/>
+    }
   },
   render: function() {
     var color = this.props.cell.color;
     if (color == 'danger') color = 'error';
     var componentClassName = this.props.cell.className + ' epd-' + this.props.cell.type + " epd-component" + (this.props.selected ? " selected" : "") + ' has-' + color;
-    var style = {
-      textAlign: this.props.cell.align
-    };
     return (
       <div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
-        {this.label()}
         <div className={PageStore.getCellType() + "-" + this.calcSizeClassName()}>
-          <p style={style} className="form-control-static" contentEditable="true" onInput={this.onValueTextChange}>{this.props.cell.value}</p>
+          { this.renderInner() }
         </div>
       </div>
     );

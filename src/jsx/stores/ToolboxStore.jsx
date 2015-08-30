@@ -294,6 +294,7 @@ ToolboxDispatcher.register(function(payload) {
             break;
           case PageConstants.UPDATE_LABEL:
           case PageConstants.UPDATE_VALUE:
+          case PageConstants.UPDATE_HTML:
             componentSelect(payload.cell);
             changeData();
             break;

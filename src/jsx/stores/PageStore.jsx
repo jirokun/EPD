@@ -380,6 +380,12 @@ PageDispatcher.register(function(payload) {
       replaceCell(cell);
       PageStore.emitChange();
       break;
+    case PageConstants.UPDATE_HTML:
+      var cell = payload.cell;
+      cell.html = payload.html;
+      replaceCell(cell);
+      PageStore.emitChange();
+      break;
     case PageConstants.UPDATE_CELL:
       replaceCell(payload.cell);
       PageStore.emitChange();

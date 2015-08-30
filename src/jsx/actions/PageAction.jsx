@@ -31,6 +31,13 @@ var PageAction = {
       value: value
     });
   },
+  updateHtml: function(cell, html) {
+    PageDispatcher.dispatch({
+      actionType: PageConstants.UPDATE_HTML,
+      cell: cell,
+      html: html 
+    });
+  },
   updatePageInfo: function(info) {
     PageDispatcher.dispatch({
       actionType: PageConstants.UPDATE_PAGE_INFO,
