@@ -29,6 +29,44 @@ function createEmpty() {
     tabs: []
   };
 }
+function convertGridSize(rows) {
+  var size = 0;
+  for (var i = 0, len = rows[0].length; i < len; i++) {
+    var obj = rows[0][i];
+    size += obj.size;
+  }
+  var scale = PageConstants.GRID_SIZE / size;
+  if (scale === 1) return;
+  convertGridSizeRecursive(rows, scale);
+}
+function convertGridSizeRecursive(rows, scale) {
+  for (var i = 0, len = rows.length; i < len; i++) {
+    var row = rows[i];
+    for (var j = 0, jlen = row.length; j < jlen; j++) {
+      var cell = row[j];
+      if (cell.type === 'empty') {
+        row.splice(j, 0, createEmpty());
+        jlen++;
+        j++;
+      } else if (cell.type === 'tab') {
+        for (var k = 0, klen = cell.tabs.length; k < klen; k++) {
+          var tab = cell.tabs[k];
+          convertGridSizeRecursive(tab.rows, scale);
+        }
+        cell.size *= scale;
+      } else if (cell.type === 'panel') {
+        convertGridSizeRecursive(cell.rows, scale);
+        cell.size *= scale;
+      } else if (cell.type === 'html') {
+        cell.html = cell.html.replace(/col-(xs|sm|md|lg)-(\d+)/g, function(matches, type, size) {
+          return 'col-' + type + '-' + parseInt(size, 10) * scale;
+        });
+      } else {
+        cell.size *= scale;
+      }
+    }
+  }
+}
 
 // type to empty
 function del() {
@@ -297,6 +335,7 @@ var PageStore = merge(EventEmitter.prototype, {
     _buttonMode = json.buttonMode;
     _cellType = json.cellType;
     _sequence = json.sequence;
+    convertGridSize(_rows);
     this.emitChange(ignoreUndostack);
   },
   
