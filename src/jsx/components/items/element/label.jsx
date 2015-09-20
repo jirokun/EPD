@@ -2,6 +2,7 @@ var React = require('react');
 var Component = require('../component');
 var PageStore = require('../../../stores/PageStore');
 var Util = require('../../../Util');
+var PageConstants = require('../../../PageConstants');
 
 var Label = React.createClass({
   statics: {
@@ -32,25 +33,26 @@ var Label = React.createClass({
   },
   renderInner: function() {
     var _this = this;
+    var sizeClassName = PageStore.getCellType() + '-' + this.props.cell.size;
     if (this.state.editMode) {
-      return this.renderEditor();
+      return (
+        <div className={sizeClassName}>
+          {this.renderEditor()}
+        </div>
+      );
     } else {
-      var className = 'control-label text-' + this.props.cell.color;
-      return <label className={className} onMouseDown={this.onEditorEnable} dangerouslySetInnerHTML={{__html: Util.nl2br(this.props.cell.value)}}/>;
+      var style = {};
+      if (this.props.cell.align !== 'default') style.textAlign = this.props.cell.align;
+      var className = sizeClassName + ' control-label text-' + this.props.cell.color;
+      return <label className={className} style={style} onMouseDown={this.onEditorEnable} dangerouslySetInnerHTML={{__html: Util.nl2br(this.props.cell.value)}}/>;
     }
   },
   render: function() {
     var componentClassName = this.props.cell.className + ' epd-' + this.props.cell.type + " epd-component" + (this.props.selected ? " selected" : "");
-    var sizeClassName = PageStore.getCellType() + '-' + this.props.cell.size;
-    var style = {
-      textAlign: this.props.cell.align
-    };
     return (
-<div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
-  <div className={sizeClassName} style={style}>
-    {this.renderInner()}
-  </div>
-</div>
+      <div key={this.props.cell.dataid} className={componentClassName} onClick={this.onComponentSelect} data-dataid={this.props.cell.dataid}>
+        {this.renderInner()}
+     </div>
     );
   }
 });

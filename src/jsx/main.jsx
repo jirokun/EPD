@@ -2,6 +2,7 @@ window.EPD = {};
 var React = require('react');
 var Dispatcher = require('flux').Dispatcher;
 var Toolbox = require('./components/toolbox');
+var PageConstants = require('./PageConstants');
 var ToolboxStore = require('./stores/ToolboxStore');
 var reactTools = require('react-tools');
 
@@ -104,6 +105,8 @@ var Main = React.createClass({
     );
   },
   _renderShortcuts: function() {
+    var fullSize = 'col-xs-' + PageConstants.GRID_SIZE;
+    var quarterSize = 'col-xs-' + PageConstants.GRID_SIZE / 4;
     return (
       <div ref="shortcut-modal" className="modal fade">
         <div className="modal-dialog">
@@ -114,42 +117,42 @@ var Main = React.createClass({
             </div>
             <div className="modal-body">
               <div className="row">
-                <div className="col-xs-12">
+                <div className={fullSize}>
                   <h5>Preview shortcuts</h5>
                 </div>
               </div>
               <div className="row">
-                <div className="col-xs-3 text-right">Copy</div>
-                <div className="col-xs-3">c</div>
+                <div className={quarterSize + ' text-right'}>Copy</div>
+                <div className={quarterSize}>c</div>
               </div>
               <div className="row">
-                <div className="col-xs-3 text-right">Paste</div>
-                <div className="col-xs-3">v</div>
+                <div className={quarterSize + ' text-right'}>Paste</div>
+                <div className={quarterSize}>v</div>
               </div>
               <div className="row">
-                <div className="col-xs-3 text-right">Undo</div>
-                <div className="col-xs-3">z</div>
+                <div className={quarterSize + ' text-right'}>Undo</div>
+                <div className={quarterSize}>z</div>
               </div>
               <div className="row">
-                <div className="col-xs-3 text-right">Redo</div>
-                <div className="col-xs-3">y</div>
+                <div className={quarterSize + ' text-right'}>Redo</div>
+                <div className={quarterSize}>y</div>
               </div>
               <div className="row">
-                <div className="col-xs-3 text-right">Delete</div>
-                <div className="col-xs-3">DELETE</div>
+                <div className={quarterSize + ' text-right'}>Delete</div>
+                <div className={quarterSize}>DELETE</div>
               </div>
               <div className="row">
-                <div className="col-xs-12">
+                <div className={fullSize}>
                   <h5>File shortcuts</h5>
                 </div>
               </div>
               <div className="row">
-                <div className="col-xs-3 text-right">Open file</div>
-                <div className="col-xs-3">CTRL + o</div>
+                <div className={quarterSize + ' text-right'}>Open file</div>
+                <div className={quarterSize}>CTRL + o</div>
               </div>
               <div className="row">
-                <div className="col-xs-3 text-right">Save File</div>
-                <div className="col-xs-3">CTRL + s</div>
+                <div className={quarterSize + ' text-right'}>Save File</div>
+                <div className={quarterSize}>CTRL + s</div>
               </div>
             </div>
             <div className="modal-footer">

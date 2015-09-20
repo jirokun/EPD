@@ -1,6 +1,7 @@
 var React = require('react');
 var Component = require('../component');
 var PageStore = require('../../../stores/PageStore');
+var PageConstants = require('../../../PageConstants');
 
 var Panel = React.createClass({
   statics: {
@@ -19,7 +20,7 @@ var Panel = React.createClass({
     },
     defaultLabel: 'Default Label',
     minSize: 1,
-    maxSize: 12
+    maxSize: PageConstants.GRID_SIZE
   },
   mixins: [Component],
   _tabContents: function() {

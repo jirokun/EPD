@@ -1,6 +1,7 @@
 var React = require('react');
 var Component = require('../component');
 var PageStore = require('../../../stores/PageStore');
+var PageConstants = require('../../../PageConstants');
 
 var Html = React.createClass({
   statics: {
@@ -20,7 +21,7 @@ var Html = React.createClass({
     },
     defaultLabel: 'Default Label',
     minSize: 1,
-    maxSize: 12
+    maxSize: PageConstants.GRID_SIZE
   },
   getDefaultProps: function() {
     return { };

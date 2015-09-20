@@ -2,6 +2,7 @@ var React = require('react');
 var Component = require('../component');
 var PageStore = require('../../../stores/PageStore');
 var Util = require('../../../Util');
+var PageConstants = require('../../../PageConstants');
 
 var StaticText = React.createClass({
   statics: {
@@ -25,7 +26,7 @@ var StaticText = React.createClass({
     },
     defaultValue: 'Default Value',
     minSize: 1,
-    maxSize: 12
+    maxSize: PageConstants.GRID_SIZE
   },
   mixins: [Component],
   getInitialState: function() {

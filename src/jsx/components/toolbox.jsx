@@ -9,6 +9,7 @@ var ToolboxAction = require('../actions/ToolboxAction');
 var ToolboxStore = require('../stores/ToolboxStore');
 var ToolboxDispatcher = require('../dispatchers/ToolboxDispatcher');
 var ToolboxConstants = require('../ToolboxConstants');
+var PageConstants = require('../PageConstants');
 require('bootstrap');
 
 var Toolbox = React.createClass({
@@ -22,7 +23,7 @@ var Toolbox = React.createClass({
       name: '',
       label: '',
       type: 'empty',
-      size: 12,
+      size: PageConstants.GRID_SIZE,
       className: '',
       interfaceText: '',
       options: [],
@@ -122,6 +123,7 @@ var Toolbox = React.createClass({
     ToolboxAction.updateType(e.target.value);
   },
   _changeAlign: function(e) {
+                  console.log(e.target.value);
     ToolboxAction.updateAlign(e.target.value);
   },
   _changeSize: function(e) {
@@ -248,28 +250,16 @@ var Toolbox = React.createClass({
   _alignEditor: function() {
     var component = ToolboxStore.findComponentConstructor(this.state.type);
     if (!component || !component.editors.align) return null;
-    var _this = this;
-    var radios = [
-      ToolboxConstants.ALIGN_LEFT,
-      ToolboxConstants.ALIGN_CENTER,
-      ToolboxConstants.ALIGN_RIGHT
-    ].map(function(align) {
-      return (
-        <label className="radio-inline">
-          <input
-            type="radio"
-            name="align"
-            value={align}
-            checked={_this.state.align === align}
-            onChange={_this._changeAlign}/> {align}
-        </label>
-      );
-    });
     return (
       <div className="form-group">
         <label>Align</label>
         <div>
-          {radios}
+          <select name="align" value={this.state.align} onChange={this._changeAlign}>
+            <option>default</option>
+            <option>left</option>
+            <option>center</option>
+            <option>right</option>
+          </select>
         </div>
       </div>
     );

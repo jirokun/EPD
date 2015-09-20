@@ -1,6 +1,7 @@
 var React = require('react');
 var Component = require('../component');
 var PageStore = require('../../../stores/PageStore');
+var PageConstants = require('../../../PageConstants');
 
 var FormCheckboxInline = React.createClass({
   statics: {
@@ -17,7 +18,7 @@ var FormCheckboxInline = React.createClass({
       table: false
     },
     minSize: 1,
-    maxSize: 12
+    maxSize: PageConstants.GRID_SIZE
   },
   getDefaultProps: function() {
     return {

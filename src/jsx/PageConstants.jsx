@@ -1,4 +1,5 @@
 module.exports = {
+  GRID_SIZE: 24,
   UNDO: 'UNDO',
   REDO: 'REDO',
   DELETE: 'DELETE',

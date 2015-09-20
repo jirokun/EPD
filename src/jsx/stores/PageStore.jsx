@@ -117,7 +117,7 @@ function deleteRow(dataid) {
   rows.splice(y, 1);
   if (rows.length === 0) {
     var row = [];
-    for (var j = 0; j < 12; j++) row.push(createEmpty());
+    for (var j = 0; j < PageConstants.GRID_SIZE; j++) row.push(createEmpty());
     rows.push(row);
   }
 }
@@ -204,7 +204,7 @@ function replaceDataid(obj, needLessClone) {
 
 function createEmptyCells() {
   var row = [];
-  for (var j = 0; j < 12; j++) row.push(createEmpty());
+  for (var j = 0; j < PageConstants.GRID_SIZE; j++) row.push(createEmpty());
   return row;
 }
 

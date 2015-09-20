@@ -1,6 +1,7 @@
 var React = require('react');
 var Component = require('../component');
 var PageStore = require('../../../stores/PageStore');
+var PageConstants = require('../../../PageConstants');
 
 var Pagination = React.createClass({
   statics: {
